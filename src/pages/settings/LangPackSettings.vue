@@ -45,7 +45,7 @@ import { ref, computed, onMounted } from "vue";
 import { useToast } from "vue-toastification";
 import { confirmDelete } from "@/lib/ui";
 import EmptyState from "@/components/base/EmptyState.vue";
-import { langPackApi } from "@/api/cs";
+import { langPackApi } from "@/api/settings";
 import { useI18nStore } from "@/stores/i18n";
 
 const toast = useToast();

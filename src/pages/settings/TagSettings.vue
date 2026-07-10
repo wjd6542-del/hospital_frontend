@@ -50,7 +50,7 @@ import { ref, onMounted } from "vue";
 import { useToast } from "vue-toastification";
 import EmptyState from "@/components/base/EmptyState.vue";
 import { confirmDelete } from "@/lib/ui";
-import { tagApi } from "@/api/cs";
+import { tagApi } from "@/api/settings";
 
 const PALETTE = ["#7a5cff", "#0ea88f", "#e07d16", "#e23b46", "#2f6df6", "#d6871e", "#c026d3", "#0891b2"];
 const toast = useToast();

@@ -84,23 +84,6 @@ export const supportApi = {
   remove: (id) => api.post("/support/delete", { id }).then((r) => r.data),
 };
 
-// FAQ
-export const faqApi = {
-  list: (body = {}) => api.post("/faq/list", body).then((r) => r.data),
-  popular: (body = {}) => api.post("/faq/popular", body).then((r) => r.data),
-  categories: () => api.post("/faq/categories", {}).then((r) => r.data),
-  get: (id) => api.post("/faq/get", { id }).then((r) => r.data),
-  save: (body) => api.post("/faq/save", body).then((r) => r.data),
-  remove: (id) => api.post("/faq/delete", { id }).then((r) => r.data),
-};
-
-// FAQ 분류 (환경설정)
-export const faqCategoryApi = {
-  list: (body = {}) => api.post("/faqCategory/list", body).then((r) => r.data),
-  save: (body) => api.post("/faqCategory/save", body).then((r) => r.data),
-  remove: (id) => api.post("/faqCategory/delete", { id }).then((r) => r.data),
-};
-
 // 환율
 export const exchangeRateApi = {
   list: (body = {}) => api.post("/exchangeRate/list", body).then((r) => r.data),
@@ -108,19 +91,3 @@ export const exchangeRateApi = {
   collect: () => api.post("/exchangeRate/collect", {}).then((r) => r.data),
 };
 
-// 다국어 번역팩
-export const langPackApi = {
-  list: (body = {}) => api.post("/langPack/list", body).then((r) => r.data),
-  save: (body) => api.post("/langPack/save", body).then((r) => r.data),
-  batchSave: (rows) => api.post("/langPack/batchSave", rows).then((r) => r.data),
-  batchDelete: (rows) => api.post("/langPack/batchDelete", rows).then((r) => r.data),
-  remove: (id) => api.post("/langPack/delete", { id }).then((r) => r.data),
-  translateText: (text) => api.post("/langPack/translateText", { text }).then((r) => r.data),
-};
-
-// 태그 (CS 공통)
-export const tagApi = {
-  list: (body = {}) => api.post("/tag/list", body).then((r) => r.data),
-  save: (body) => api.post("/tag/save", body).then((r) => r.data),
-  remove: (id) => api.post("/tag/delete", { id }).then((r) => r.data),
-};

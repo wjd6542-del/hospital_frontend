@@ -125,7 +125,7 @@ import MultiSelect from "@/components/base/MultiSelect.vue";
 import TagSelect from "@/components/base/TagSelect.vue";
 import TagChips from "@/components/base/TagChips.vue";
 import RichEditor from "@/components/base/RichEditor.vue";
-import { faqApi, faqCategoryApi } from "@/api/cs";
+import { faqApi, faqCategoryApi } from "@/api/faq";
 import { useAuthStore } from "@/stores/auth";
 
 const auth = useAuthStore();

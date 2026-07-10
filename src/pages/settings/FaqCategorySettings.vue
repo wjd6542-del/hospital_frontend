@@ -48,7 +48,7 @@ import { ref, onMounted } from "vue";
 import { useToast } from "vue-toastification";
 import EmptyState from "@/components/base/EmptyState.vue";
 import { confirmDelete } from "@/lib/ui";
-import { faqCategoryApi } from "@/api/cs";
+import { faqCategoryApi } from "@/api/faq";
 
 const toast = useToast();
 const rows = ref([]);

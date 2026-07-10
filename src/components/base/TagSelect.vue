@@ -36,7 +36,7 @@
 // @ts-nocheck
 import { ref, computed, onMounted, onBeforeUnmount, nextTick } from "vue";
 import { useToast } from "vue-toastification";
-import { tagApi } from "@/api/cs";
+import { tagApi } from "@/api/settings";
 
 const props = defineProps({
   modelValue: { type: Array, default: () => [] },

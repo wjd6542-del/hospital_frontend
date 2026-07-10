@@ -1,6 +1,6 @@
 // @ts-nocheck
 import { defineStore } from "pinia";
-import { langPackApi } from "@/api/cs";
+import { langPackApi } from "@/api/settings";
 
 export type LangCode = "ko" | "en" | "ja" | "zh";
 export type LocalizedName = Record<LangCode, string>;
