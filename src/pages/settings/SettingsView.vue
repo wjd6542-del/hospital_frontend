@@ -28,9 +28,6 @@
 <script setup lang="ts">
 // @ts-nocheck
 import { ref, computed, markRaw } from "vue";
-import GameCompanySettings from "@/pages/settings/GameCompanySettings.vue";
-import VendorSettings from "@/pages/settings/VendorSettings.vue";
-import SupportDeskSettings from "@/pages/settings/SupportDeskSettings.vue";
 import BoardSettings from "@/pages/settings/BoardSettings.vue";
 import FaqCategorySettings from "@/pages/settings/FaqCategorySettings.vue";
 import TagSettings from "@/pages/settings/TagSettings.vue";
@@ -39,12 +36,9 @@ import { useAuthStore } from "@/stores/auth";
 
 const auth = useAuthStore();
 const tabs = [
-  { key: "gameco", label: "게임사", icon: "fa-gamepad", perm: "gameCompany.view", comp: markRaw(GameCompanySettings), desc: "사용료를 지급하는 게임사를 등록·관리합니다. 정산·응대에서 이 목록을 사용합니다." },
-  { key: "vendor", label: "업체", icon: "fa-store", perm: "vendor.view", comp: markRaw(VendorSettings), desc: "사용대금을 회수하는 업체를 등록·관리합니다." },
-  { key: "supportdesk", label: "응대 유형", icon: "fa-headset", perm: "support.view", comp: markRaw(SupportDeskSettings), desc: "CS 응대 유형(desk)을 추가·관리합니다. 각 유형은 자체 대상 트리를 갖습니다." },
   { key: "board", label: "게시판", icon: "fa-clipboard-list", superOnly: true, comp: markRaw(BoardSettings), desc: "게시판을 만들고 권한(읽기/쓰기)·댓글·첨부 허용을 설정합니다." },
   { key: "faqcat", label: "FAQ 분류", icon: "fa-tags", perm: "faq.view", comp: markRaw(FaqCategorySettings), desc: "자주 하는 질문의 분류를 등록·관리합니다. FAQ 작성 시 이 분류를 선택합니다." },
-  { key: "tag", label: "태그", icon: "fa-tag", perm: ["support.view", "faq.view"], comp: markRaw(TagSettings), desc: "CS 응대·FAQ에 붙이는 공통 태그를 등록·관리합니다. 검색 중 없으면 즉시 만들 수도 있습니다." },
+  { key: "tag", label: "태그", icon: "fa-tag", perm: "faq.view", comp: markRaw(TagSettings), desc: "FAQ에 붙이는 공통 태그를 등록·관리합니다. 검색 중 없으면 즉시 만들 수도 있습니다." },
   { key: "lang", label: "다국어", icon: "fa-language", superOnly: true, comp: markRaw(LangPackSettings), desc: "화면 문구의 다국어 번역팩을 등록·관리합니다. 한국어를 키로 사용합니다." },
 ];
 function allowed(t) {
@@ -55,7 +49,7 @@ function allowed(t) {
 }
 const visibleTabs = computed(() => tabs.filter((t) => allowed(t)));
 
-const active = ref(visibleTabs.value[0]?.key || "gameco");
+const active = ref(visibleTabs.value[0]?.key || "board");
 const activeTab = computed(() => visibleTabs.value.find((t) => t.key === active.value) || visibleTabs.value[0]);
 </script>
 
