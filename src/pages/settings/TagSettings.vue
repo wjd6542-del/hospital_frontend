@@ -104,10 +104,6 @@ onMounted(reload);
 .swatch { width: 26px; height: 26px; flex-shrink: 0; border: 1px solid var(--border-strong); border-radius: var(--radius); box-shadow: var(--shadow-sm); cursor: pointer; }
 .swatch.sm { display: inline-block; width: 52px; height: 24px; box-shadow: var(--shadow-sm); }
 .tablewrap { border: 1px solid var(--border-strong); border-radius: var(--radius); overflow: hidden; background: var(--surface); box-shadow: var(--shadow-sm); }
-.tbl { width: 100%; border-collapse: collapse; }
-.tbl th { text-align: left; padding: 0.6rem 0.8rem; background: var(--surface-2); border-bottom: 1px solid var(--border-strong); font-weight: 600; font-size: 0.74rem; color: var(--text-muted); }
-.tbl td { padding: 0.5rem 0.8rem; border-bottom: 1px solid var(--border); font-size: 0.88rem; color: var(--text); }
-.tbl tbody tr:last-child td { border-bottom: none; }
 .c { text-align: center; } .w-sw { width: 84px; } .w-sort { width: 64px; } .w-act { width: 180px; }
 .muted { color: var(--text-muted); }
 .tchip { font-size: 0.66rem; color: var(--accent-fg); border: 1px solid var(--border-strong); border-radius: var(--radius); padding: 0.1rem 0.45rem; }

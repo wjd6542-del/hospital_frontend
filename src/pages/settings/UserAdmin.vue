@@ -123,10 +123,6 @@ onMounted(load);
 .c { color: var(--accent); margin-left: 0.25rem; }
 
 .tablewrap { border: 1px solid var(--border-strong); border-radius: var(--radius); overflow: hidden; background: var(--surface); }
-.tbl { width: 100%; border-collapse: collapse; }
-.tbl th { text-align: left; padding: 0.6rem 0.8rem; background: var(--surface-2); border-bottom: 1px solid var(--border-strong); font-weight: 700; font-size: 0.8rem; color: var(--text-muted); }
-.tbl td { padding: 0.55rem 0.8rem; border-bottom: 1px solid var(--border); font-size: 0.88rem; color: var(--text); }
-.tbl tbody tr:last-child td { border-bottom: none; }
 .c { text-align: center; }
 .w-act { width: 70px; }
 .nm { font-weight: 700; color: var(--text); }

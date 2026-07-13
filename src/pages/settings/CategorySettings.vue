@@ -23,10 +23,10 @@
         <table class="tbl">
           <thead>
             <tr>
-              <th class="th">{{ $t("표시명") }}</th>
-              <th class="th">{{ $t("코드값") }}</th>
-              <th class="th">{{ $t("활성") }}</th>
-              <th class="th"></th>
+              <th>{{ $t("표시명") }}</th>
+              <th>{{ $t("코드값") }}</th>
+              <th>{{ $t("활성") }}</th>
+              <th></th>
             </tr>
           </thead>
           <tbody>
@@ -34,10 +34,10 @@
               <td colspan="4"><EmptyState :title="$t('코드가 없습니다')" :desc="$t('위에서 코드를 추가하세요.')" compact /></td>
             </tr>
             <tr v-for="c in rows" :key="c.id">
-              <td class="td"><input v-model="c.text" class="cell-input" @change="update(c)" /></td>
-              <td class="td num">{{ c.value }}</td>
-              <td class="td"><BaseToggle v-model="c.is_active" size="sm" @update:modelValue="update(c)" /></td>
-              <td class="td"><button class="btn btn-xs btn-ghost" @click="remove(c)">{{ $t("삭제") }}</button></td>
+              <td><input v-model="c.text" class="cell-input" @change="update(c)" /></td>
+              <td class="num">{{ c.value }}</td>
+              <td><BaseToggle v-model="c.is_active" size="sm" @update:modelValue="update(c)" /></td>
+              <td><button class="btn btn-xs btn-ghost" @click="remove(c)">{{ $t("삭제") }}</button></td>
             </tr>
           </tbody>
         </table>

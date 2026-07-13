@@ -110,10 +110,6 @@ watch(slug, loadBoard);
 .desc { font-size: 0.85rem; color: var(--text-muted); margin-top: 0.2rem; }
 
 .tablewrap { border: 1px solid var(--border-strong); border-radius: var(--radius); overflow: hidden; background: var(--surface); box-shadow: var(--shadow-sm); }
-.tbl { width: 100%; border-collapse: collapse; }
-.tbl th { text-align: left; padding: 0.6rem 0.8rem; background: var(--surface-2); border-bottom: 1px solid var(--border-strong); font-weight: 600; font-size: 0.74rem; color: var(--text-muted); }
-.tbl td { padding: 0.55rem 0.8rem; border-bottom: 1px solid var(--border); font-size: 0.88rem; color: var(--text); }
-.tbl tbody tr:last-child td { border-bottom: none; }
 .c { text-align: center; }
 .w-no { width: 64px; } .w-au { width: 110px; } .w-vc { width: 64px; } .w-dt { width: 110px; }
 .row { cursor: pointer; }

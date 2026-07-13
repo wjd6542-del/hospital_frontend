@@ -124,10 +124,10 @@ onMounted(load);
 .hint { font-size: 0.78rem; color: var(--text-muted); margin-bottom: 0.8rem; }
 .hint code { font-size: 0.72rem; background: var(--surface-2); border: 1px solid var(--border); border-radius: var(--radius); padding: 0.02rem 0.3rem; }
 .tablewrap { border: 1px solid var(--border-strong); border-radius: var(--radius); overflow-x: auto; background: var(--surface); box-shadow: var(--shadow-sm); }
-.tbl { width: 100%; border-collapse: collapse; min-width: 860px; }
-.tbl th { text-align: left; padding: 0.55rem 0.7rem; background: var(--surface-2); border-bottom: 1px solid var(--border-strong); font-size: 0.72rem; color: var(--text-muted); white-space: nowrap; }
-.tbl td { padding: 0.35rem 0.5rem; border-bottom: 1px solid var(--border); }
-.tbl tbody tr:last-child td { border-bottom: none; }
+/* 편집 그리드 — 조밀하게, 좁으면 가로 스크롤 */
+.tbl { min-width: 860px; }
+.tbl th { padding: 0.55rem 0.7rem; font-size: 0.72rem; }
+.tbl td { padding: 0.35rem 0.5rem; }
 .c { text-align: center; } .w-act { width: 60px; } .w-st { width: 60px; } .w-del { width: 72px; }
 .cell { width: 100%; height: 30px; padding: 0 0.5rem; font-size: 0.84rem; border: 1px solid var(--border); border-radius: var(--radius); outline: none; background: var(--surface); }
 .cell:focus { border-color: var(--accent); box-shadow: var(--ring); }

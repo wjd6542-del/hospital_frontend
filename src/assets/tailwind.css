@@ -198,7 +198,30 @@
 
   .form-label { @apply block text-[11px] font-semibold text-[color:var(--text-muted)] mb-1; }
 
-  /* 테이블 셀 */
+  /* 데이터 테이블 — <table class="tbl"> 하나로 끝난다. 셀에 클래스를 붙이지 않는다. */
+  .tbl { width: 100%; border-collapse: collapse; }
+  .tbl th {
+    text-align: left;
+    padding: 0.6rem 0.8rem;
+    background: var(--surface-2);
+    border-bottom: 1px solid var(--border-strong);
+    font-weight: 600;
+    font-size: 0.74rem;
+    color: var(--text-muted);
+    white-space: nowrap;
+  }
+  .tbl td {
+    padding: 0.55rem 0.8rem;
+    border-bottom: 1px solid var(--border);
+    font-size: 0.88rem;
+    color: var(--text);
+    vertical-align: middle;
+  }
+  .tbl tbody tr:last-child td { border-bottom: none; }
+  /* 숫자·코드 열 우측 정렬용 */
+  .tbl td.right, .tbl th.right { text-align: right; }
+
+  /* 개별 셀 클래스 — .tbl 밖에서 쓸 때 */
   .th {
     @apply px-2 py-1.5 text-[11px] font-semibold uppercase tracking-wide
            text-[color:var(--text-subtle)]
@@ -234,6 +257,11 @@
     color: var(--text-subtle);
     white-space: nowrap;
   }
+  /* 필터바의 컨트롤은 늘어나지 않는다.
+     SearchSelect 루트가 w-full 이라 폭을 안 잡으면 flex가 한 줄을 통째로 먹는다. */
+  .filterbar > div { flex: 0 0 auto; width: 170px; }
+  .filterbar > .field { flex: 0 0 auto; }
+  .filterbar > .btn { flex: 0 0 auto; }
 
   /* 숫자 (금액 등) — 고정폭, 우측 정렬은 사용처에서 */
   .num { font-family: var(--font-num); font-variant-numeric: tabular-nums; }

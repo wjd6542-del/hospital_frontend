@@ -24,13 +24,13 @@
       <table class="tbl">
         <thead>
           <tr>
-            <th class="th">{{ $t("사번") }}</th>
-            <th class="th">{{ $t("이름") }}</th>
-            <th class="th">{{ $t("부서") }}</th>
-            <th class="th">{{ $t("직급") }}</th>
-            <th class="th">{{ $t("직종") }}</th>
-            <th class="th">{{ $t("입사일") }}</th>
-            <th class="th">{{ $t("상태") }}</th>
+            <th>{{ $t("사번") }}</th>
+            <th>{{ $t("이름") }}</th>
+            <th>{{ $t("부서") }}</th>
+            <th>{{ $t("직급") }}</th>
+            <th>{{ $t("직종") }}</th>
+            <th>{{ $t("입사일") }}</th>
+            <th>{{ $t("상태") }}</th>
           </tr>
         </thead>
         <tbody>
@@ -38,13 +38,13 @@
             <td colspan="7"><EmptyState icon="fa-user" :title="$t('직원이 없습니다')" :desc="$t('직원을 등록하면 여기에 표시됩니다.')" compact /></td>
           </tr>
           <tr v-for="e in rows" :key="e.id" class="rowclick" @click="openEdit(e.id)">
-            <td class="td num">{{ e.emp_no }}</td>
-            <td class="td">{{ e.name }}</td>
-            <td class="td">{{ e.department?.name || "-" }}</td>
-            <td class="td">{{ e.position?.text || "-" }}</td>
-            <td class="td">{{ e.job_type?.text || "-" }}</td>
-            <td class="td num">{{ fmt(e.hired_at) }}</td>
-            <td class="td">
+            <td class="num">{{ e.emp_no }}</td>
+            <td>{{ e.name }}</td>
+            <td>{{ e.department?.name || "-" }}</td>
+            <td>{{ e.position?.text || "-" }}</td>
+            <td>{{ e.job_type?.text || "-" }}</td>
+            <td class="num">{{ fmt(e.hired_at) }}</td>
+            <td>
               <span v-if="e.resigned_at" class="badge badge-neutral">{{ $t("퇴사") }}</span>
               <span v-else class="badge badge-success">{{ $t("재직") }}</span>
             </td>
