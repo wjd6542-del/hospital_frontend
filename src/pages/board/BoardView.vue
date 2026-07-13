@@ -105,22 +105,22 @@ watch(slug, loadBoard);
 <style scoped>
 .bview { max-width: 960px; margin: 0 auto; }
 .phead { display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 1.1rem; gap: 1rem; }
-.eyebrow { font-family: var(--font-pixel); font-size: 0.66rem; letter-spacing: 0.16em; color: var(--seal); }
-.ttl { font-family: var(--font-pixel); font-size: 1.4rem; color: var(--ink); margin-top: 0.25rem; }
-.desc { font-size: 0.85rem; color: var(--ink-muted); margin-top: 0.2rem; }
+.eyebrow { font-family: var(--font-sans); font-size: 0.66rem; letter-spacing: 0.16em; color: var(--accent); }
+.ttl { font-family: var(--font-sans); font-size: 1.4rem; color: var(--text); margin-top: 0.25rem; }
+.desc { font-size: 0.85rem; color: var(--text-muted); margin-top: 0.2rem; }
 
-.tablewrap { border: 2px solid var(--line-hard); border-radius: 4px; overflow: hidden; background: var(--surface); box-shadow: var(--shadow-hard); }
+.tablewrap { border: 2px solid var(--border-strong); border-radius: 4px; overflow: hidden; background: var(--surface); box-shadow: var(--shadow-sm); }
 .tbl { width: 100%; border-collapse: collapse; }
-.tbl th { text-align: left; padding: 0.6rem 0.8rem; background: var(--surface-2); border-bottom: 2px solid var(--line-strong); font-family: var(--font-pixel); font-weight: 600; font-size: 0.74rem; color: var(--ink-muted); }
-.tbl td { padding: 0.55rem 0.8rem; border-bottom: 1px solid var(--line); font-size: 0.88rem; color: var(--ink); }
+.tbl th { text-align: left; padding: 0.6rem 0.8rem; background: var(--surface-2); border-bottom: 2px solid var(--border-strong); font-family: var(--font-sans); font-weight: 600; font-size: 0.74rem; color: var(--text-muted); }
+.tbl td { padding: 0.55rem 0.8rem; border-bottom: 1px solid var(--border); font-size: 0.88rem; color: var(--text); }
 .tbl tbody tr:last-child td { border-bottom: none; }
 .c { text-align: center; }
 .w-no { width: 64px; } .w-au { width: 110px; } .w-vc { width: 64px; } .w-dt { width: 110px; }
 .row { cursor: pointer; }
 .row:hover { background: var(--surface-2); }
-.row:hover .ti { color: var(--seal); }
-.row.notice { background: rgba(122, 92, 255, 0.1); }
+.row:hover .ti { color: var(--accent); }
+.row.notice { background: var(--accent-soft); }
 .ti { font-weight: 600; }
-.cc { color: var(--seal); font-weight: 700; margin-left: 0.3rem; font-size: 0.8rem; }
-.muted { color: var(--ink-muted); }
+.cc { color: var(--accent); font-weight: 700; margin-left: 0.3rem; font-size: 0.8rem; }
+.muted { color: var(--text-muted); }
 </style>

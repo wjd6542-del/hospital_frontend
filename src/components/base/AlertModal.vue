@@ -2,20 +2,20 @@
   <teleport to="body">
     <div
       v-if="visible"
-      class="fixed inset-0 z-[300] flex items-center justify-center bg-[color:var(--line-hard)]/55"
+      class="fixed inset-0 z-[300] flex items-center justify-center bg-[color:var(--border-strong)]/55"
       @click="onBackdropClick"
     >
       <div
-        class="w-[380px] rounded-[4px] bg-white border-2 border-[color:var(--line-hard)] shadow-[6px_6px_0_var(--line-hard)] overflow-hidden"
+        class="w-[380px] rounded-[4px] bg-white border-2 border-[color:var(--border-strong)] shadow-[6px_6px_0_var(--border-strong)] overflow-hidden"
         @click.stop
       >
         <!-- 헤더 -->
         <div
-          class="flex items-center gap-3 px-4 py-3 border-b-2 border-[color:var(--line)]"
+          class="flex items-center gap-3 px-4 py-3 border-b-2 border-[color:var(--border)]"
           :class="theme.headerBg"
         >
           <div
-            class="w-9 h-9 flex items-center justify-center shrink-0 border-2 border-[color:var(--line-hard)]"
+            class="w-9 h-9 flex items-center justify-center shrink-0 border-2 border-[color:var(--border-strong)]"
             :class="theme.iconWrap"
           >
             <i :class="['fa-solid', theme.icon, 'text-white']"></i>
@@ -27,19 +27,19 @@
             >
               {{ variantLabel }}
             </div>
-            <div class="text-sm font-bold text-[color:var(--ink)] truncate">
+            <div class="text-sm font-bold text-[color:var(--text)] truncate">
               {{ title }}
             </div>
           </div>
         </div>
 
         <!-- 내용 -->
-        <div class="px-4 py-4 text-[13px] text-[color:var(--ink-soft)] whitespace-pre-line">
+        <div class="px-4 py-4 text-[13px] text-[color:var(--text)] whitespace-pre-line">
           {{ message }}
         </div>
 
         <!-- 버튼 -->
-        <div class="flex justify-end gap-2 px-4 py-3 border-t-2 border-[color:var(--line)] bg-[color:var(--surface-2)]">
+        <div class="flex justify-end gap-2 px-4 py-3 border-t-2 border-[color:var(--border)] bg-[color:var(--surface-2)]">
           <button
             v-if="type === 'confirm'"
             class="btn btn-xs"
@@ -92,22 +92,22 @@ const VARIANT_THEMES: Record<Variant, {
 }> = {
   info: {
     icon: "fa-circle-info",
-    iconWrap: "bg-[color:var(--seal)]",
-    headerBg: "bg-[#ede9ff]",
-    label: "text-[color:var(--seal-deep)]",
-    okBtn: "!bg-[color:var(--seal)]",
+    iconWrap: "bg-[color:var(--accent)]",
+    headerBg: "bg-[color:var(--accent-soft)]",
+    label: "text-[color:var(--accent-hover)]",
+    okBtn: "!bg-[color:var(--accent)]",
   },
   warning: {
     icon: "fa-triangle-exclamation",
-    iconWrap: "bg-[color:var(--gold)]",
-    headerBg: "bg-amber-50",
-    label: "text-amber-700",
-    okBtn: "!bg-[color:var(--gold)]",
+    iconWrap: "bg-[color:var(--warning)]",
+    headerBg: "bg-[color:var(--warning-soft)]",
+    label: "text-[color:var(--warning)]",
+    okBtn: "!bg-[color:var(--warning)]",
   },
   danger: {
     icon: "fa-circle-exclamation",
     iconWrap: "bg-[color:var(--danger)]",
-    headerBg: "bg-[#fbe0e2]",
+    headerBg: "bg-[color:var(--danger-soft)]",
     label: "text-[color:var(--danger)]",
     okBtn: "!bg-[color:var(--danger)]",
   },

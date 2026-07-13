@@ -68,9 +68,9 @@ const view = computed(() => {
   55% { transform: translateX(-50%) scale(1.1); opacity: 1; }
 }
 
-.etitle { font-family: var(--font-pixel); font-size: 1.05rem; color: var(--ink); }
-.edesc { margin-top: 0.35rem; font-size: 0.86rem; color: var(--ink-muted); }
-.hint { margin-top: 0.7rem; font-family: var(--font-pixel); font-size: 0.72rem; color: var(--seal-deep); background: #ede9ff; border: 2px solid var(--line-hard); border-radius: 3px; padding: 0.3rem 0.6rem; box-shadow: 2px 2px 0 var(--line-hard); }
+.etitle { font-family: var(--font-sans); font-size: 1.05rem; color: var(--text); }
+.edesc { margin-top: 0.35rem; font-size: 0.86rem; color: var(--text-muted); }
+.hint { margin-top: 0.7rem; font-family: var(--font-sans); font-size: 0.72rem; color: var(--accent-hover); background: var(--accent-soft); border: 2px solid var(--border-strong); border-radius: 3px; padding: 0.3rem 0.6rem; box-shadow: 2px 2px 0 var(--border-strong); }
 .blink { animation: blink 1s steps(1) infinite; }
 @keyframes blink { 50% { opacity: 0; } }
 .cta { margin-top: 0.9rem; }

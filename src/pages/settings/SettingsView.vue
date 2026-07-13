@@ -56,13 +56,13 @@ const activeTab = computed(() => visibleTabs.value.find((t) => t.key === active.
 <style scoped>
 .settings { max-width: 1000px; margin: 0 auto; }
 .phead { margin-bottom: 1.1rem; }
-.eyebrow { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.2em; color: var(--seal); text-transform: uppercase; }
-.ttl { font-size: 1.5rem; font-weight: 800; color: var(--ink); margin-top: 0.25rem; }
+.eyebrow { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.2em; color: var(--accent); text-transform: uppercase; }
+.ttl { font-size: 1.5rem; font-weight: 800; color: var(--text); margin-top: 0.25rem; }
 
-.tabs { display: flex; gap: 0.35rem; border-bottom: 2px solid var(--line); margin-bottom: 1.25rem; flex-wrap: wrap; }
-.tab { display: inline-flex; align-items: center; gap: 0.45rem; padding: 0.6rem 1rem; margin-bottom: -2px; border-bottom: 2px solid transparent; font-size: 0.9rem; font-weight: 600; color: var(--ink-muted); transition: color 0.15s, border-color 0.15s; }
-.tab:hover { color: var(--ink); }
-.tab.on { color: var(--seal); border-bottom-color: var(--seal); font-weight: 700; }
+.tabs { display: flex; gap: 0.35rem; border-bottom: 2px solid var(--border); margin-bottom: 1.25rem; flex-wrap: wrap; }
+.tab { display: inline-flex; align-items: center; gap: 0.45rem; padding: 0.6rem 1rem; margin-bottom: -2px; border-bottom: 2px solid transparent; font-size: 0.9rem; font-weight: 600; color: var(--text-muted); transition: color 0.15s, border-color 0.15s; }
+.tab:hover { color: var(--text); }
+.tab.on { color: var(--accent); border-bottom-color: var(--accent); font-weight: 700; }
 .tab i { font-size: 0.85rem; }
-.pdesc { font-size: 0.85rem; color: var(--ink-muted); margin-bottom: 1rem; }
+.pdesc { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1rem; }
 </style>

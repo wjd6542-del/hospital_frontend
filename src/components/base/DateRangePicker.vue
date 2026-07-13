@@ -4,14 +4,14 @@
     <div v-if="showQuickButtons" class="relative">
       <button
         @click.stop="toggleQuick"
-        class="h-[34px] w-[34px] flex items-center justify-center border-2 border-[color:var(--line-strong)] rounded-[3px] hover:bg-[color:var(--surface-2)] text-[color:var(--ink-muted)] text-xs"
+        class="h-[34px] w-[34px] flex items-center justify-center border-2 border-[color:var(--border-strong)] rounded-[3px] hover:bg-[color:var(--surface-2)] text-[color:var(--text-muted)] text-xs"
       >
         <i class="fa-solid fa-ellipsis-vertical"></i>
       </button>
 
       <div
         v-show="openQuick"
-        class="absolute left-0 mt-1 w-32 bg-white border-2 border-[color:var(--line-hard)] rounded-[3px] shadow-[3px_3px_0_var(--line-hard)] z-50"
+        class="absolute left-0 mt-1 w-32 bg-white border-2 border-[color:var(--border-strong)] rounded-[3px] shadow-[3px_3px_0_var(--border-strong)] z-50"
       >
         <button
           class="flex items-center gap-2 w-full text-left px-2.5 py-1.5 text-xs hover:bg-[color:var(--surface-2)]"
@@ -50,7 +50,7 @@
 
     <!-- 날짜 입력 -->
     <div class="relative flex-1">
-      <div class="flex h-[34px] border-2 border-[color:var(--line-strong)] rounded-[3px] overflow-hidden bg-white">
+      <div class="flex h-[34px] border-2 border-[color:var(--border-strong)] rounded-[3px] overflow-hidden bg-white">
         <input
           :value="formattedRange"
           @click="toggleCalendar"
@@ -69,7 +69,7 @@
 
         <button
           @click.stop="toggleCalendar"
-          class="px-2 h-[34px] border-l hover:bg-[color:var(--surface-2)] text-[color:var(--ink-muted)] text-xs"
+          class="px-2 h-[34px] border-l hover:bg-[color:var(--surface-2)] text-[color:var(--text-muted)] text-xs"
         >
           <i class="fa-regular fa-calendar"></i>
         </button>

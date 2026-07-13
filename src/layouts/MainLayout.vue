@@ -49,7 +49,7 @@ watch(isMobile, (m) => {
   flex: 1;
   overflow: auto;
   /* 한지 질감: 따뜻한 종이색 + 결(섬유)·얼룩을 옅게 겹쳐 */
-  background-color: var(--hanji);
+  background-color: var(--canvas);
   background-image:
     radial-gradient(120% 80% at 12% 0%, rgba(255, 252, 244, 0.55) 0%, transparent 45%),
     radial-gradient(100% 90% at 100% 100%, rgba(200, 176, 128, 0.14) 0%, transparent 50%),

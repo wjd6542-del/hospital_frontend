@@ -49,16 +49,16 @@ function go(p) {
 
 <style scoped>
 .pager { display: flex; align-items: center; justify-content: space-between; gap: 0.8rem; margin-top: 0.9rem; flex-wrap: wrap; }
-.cnt { font-size: 0.78rem; color: var(--ink-muted); }
+.cnt { font-size: 0.78rem; color: var(--text-muted); }
 .nav { display: flex; gap: 0.3rem; }
 .pbtn {
   min-width: 30px; height: 30px; padding: 0 0.4rem; display: grid; place-items: center;
-  font-size: 0.8rem; color: var(--ink); background: var(--surface);
-  border: 2px solid var(--line-hard); border-radius: 3px; box-shadow: 2px 2px 0 var(--line-hard);
+  font-size: 0.8rem; color: var(--text); background: var(--surface);
+  border: 2px solid var(--border-strong); border-radius: 3px; box-shadow: 2px 2px 0 var(--border-strong);
   transition: transform 0.07s, box-shadow 0.07s;
 }
-.pbtn:hover:not(:disabled) { transform: translate(-1px, -1px); box-shadow: 3px 3px 0 var(--line-hard); }
-.pbtn:active:not(:disabled) { transform: translate(1px, 1px); box-shadow: 1px 1px 0 var(--line-hard); }
-.pbtn.on { background: var(--seal); color: #fff; }
+.pbtn:hover:not(:disabled) { transform: translate(-1px, -1px); box-shadow: 3px 3px 0 var(--border-strong); }
+.pbtn:active:not(:disabled) { transform: translate(1px, 1px); box-shadow: 1px 1px 0 var(--border-strong); }
+.pbtn.on { background: var(--accent); color: var(--accent-fg); }
 .pbtn:disabled { opacity: 0.4; box-shadow: none; cursor: default; }
 </style>
