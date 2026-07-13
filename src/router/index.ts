@@ -15,6 +15,9 @@ import PostEditView from "@/pages/board/PostEditView.vue";
 
 import FaqView from "@/pages/faq/FaqView.vue";
 
+import DepartmentView from "@/pages/hr/DepartmentView.vue";
+import EmployeeView from "@/pages/hr/EmployeeView.vue";
+
 import MyPage from "@/pages/mypage/MyPage.vue";
 import SettingsView from "@/pages/settings/SettingsView.vue";
 import AccountSettings from "@/pages/settings/AccountSettings.vue";
@@ -39,6 +42,10 @@ export const router = createRouter({
             { path: "", component: HomePage, meta: { auth: true, title: "대시보드" } },
 
             { path: "faq", component: FaqView, meta: { auth: true, title: "자주 하는 질문", perm: "faq.view" } },
+
+            // 인사
+            { path: "hr/department", component: DepartmentView, meta: { auth: true, title: "부서 관리", perm: "department.view" } },
+            { path: "hr/employee", component: EmployeeView, meta: { auth: true, title: "직원 관리", perm: "hr.view" } },
 
             // 게시판
             { path: "board/:slug", component: BoardView, meta: { auth: true, title: "게시판", perm: "board.view" } },

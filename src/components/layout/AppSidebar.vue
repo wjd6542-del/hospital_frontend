@@ -62,10 +62,18 @@ const emit = defineEmits(["close"]);
 const route = useRoute();
 const auth = useAuthStore();
 const boards = ref([]);
-const expanded = reactive({ 게시판: false });
+const expanded = reactive({ 인사: true, 게시판: false });
 
 const menus = computed(() => [
   { label: "대시보드", to: "/", icon: "fa-gauge-high", exact: true },
+  {
+    label: "인사",
+    icon: "fa-hospital-user",
+    children: [
+      { label: "부서 관리", to: "/hr/department", perm: "department.view" },
+      { label: "직원 관리", to: "/hr/employee", perm: "hr.view" },
+    ],
+  },
   { label: "게시판", icon: "fa-clipboard-list", perm: "board.view", children: boards.value.map((b) => ({ label: b.name, to: `/board/${b.slug}` })) },
   { label: "자주 하는 질문", to: "/faq", icon: "fa-circle-question", perm: "faq.view" },
   {
