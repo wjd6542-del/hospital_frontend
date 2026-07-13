@@ -2,10 +2,10 @@
   <aside class="side" :class="{ open, mobile: isMobile, closed: !open }">
     <div class="scan" aria-hidden="true"></div>
     <div class="brand">
-      <div class="mark" aria-hidden="true">CS</div>
+      <div class="mark" aria-hidden="true">HMS</div>
       <div v-if="open" class="word">
-        <span class="ko">CS</span>
-        <span class="sub">Customer Service</span>
+        <span class="ko">병원 관리</span>
+        <span class="sub">Hospital Management</span>
       </div>
     </div>
 
@@ -120,7 +120,7 @@ watch(() => route.path, (p) => { if (p.startsWith("/board") || p.startsWith("/po
 .scan { position: absolute; inset: 0; pointer-events: none; opacity: 0.35; background-image: repeating-linear-gradient(0deg, rgba(15, 23, 42, 0.025) 0 2px, transparent 2px 4px); }
 
 .brand { position: relative; z-index: 1; height: 64px; display: flex; align-items: center; gap: 0.7rem; padding: 0 1rem; border-bottom: 1px solid var(--border); }
-.mark { flex-shrink: 0; width: 40px; height: 40px; display: grid; place-items: center; font-family: var(--font-sans); font-weight: 700; font-size: 1rem; color: var(--accent-fg); background: var(--accent); border-radius: 6px; letter-spacing: 0.02em; }
+.mark { flex-shrink: 0; width: 40px; height: 40px; display: grid; place-items: center; font-family: var(--font-sans); font-weight: 700; font-size: 0.82rem; color: var(--accent-fg); background: var(--accent); border-radius: 6px; letter-spacing: 0.01em; }
 .word { display: flex; flex-direction: column; line-height: 1.15; overflow: hidden; }
 .word .ko { font-family: var(--font-sans); font-size: 1.1rem; color: var(--text); letter-spacing: 0.04em; }
 .word .sub { font-family: var(--font-sans); font-size: 0.58rem; color: var(--text-subtle); letter-spacing: 0.1em; }

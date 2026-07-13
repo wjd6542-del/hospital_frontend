@@ -25,16 +25,11 @@ const props = defineProps({
 });
 
 const PRESETS = {
-  generic: { icon: "👾", title: "텅~ 비었어요!", desc: "아직 데이터가 없어요.", hint: "새로 추가해 볼까요?" },
-  ledger: { icon: "🪙", title: "장부가 깨끗해요!", desc: "기록된 거래가 아직 없어요.", hint: "＋ 거래 등록으로 첫 기록을 남겨보세요" },
-  settlement: { icon: "🧾", title: "정산 대기 0건!", desc: "정산할 항목이 없어요.", hint: "＋ 정산 등록을 눌러보세요" },
-  support: { icon: "💬", title: "문의함이 조용하네요", desc: "접수된 응대가 없어요.", hint: "＋ 응대 등록으로 시작해요" },
-  faq: { icon: "❓", title: "질문이 없어요", desc: "등록된 FAQ가 아직 없어요.", hint: "＋ FAQ 추가로 채워보세요" },
-  vendor: { icon: "🏪", title: "업체가 없어요", desc: "등록된 업체가 아직 없어요.", hint: "＋ 로 업체를 추가해요" },
-  gameco: { icon: "🎮", title: "게임사가 없어요", desc: "등록된 게임사가 아직 없어요.", hint: "＋ 로 게임사를 추가해요" },
-  board: { icon: "📋", title: "게시글이 없어요", desc: "아직 작성된 글이 없어요.", hint: "첫 글을 남겨보세요" },
-  search: { icon: "🔍", title: "결과 없음", desc: "검색 결과가 없어요.", hint: "다른 조건으로 찾아보세요" },
-  select: { icon: "🕹️", title: "대상을 골라주세요", desc: "좌측에서 항목을 선택하면 여기에 표시돼요.", hint: "클릭해서 시작!" },
+  generic: { icon: "📭", title: "비어 있습니다", desc: "아직 데이터가 없습니다.", hint: "새로 추가해 보세요" },
+  faq: { icon: "❓", title: "질문이 없습니다", desc: "등록된 FAQ가 아직 없습니다.", hint: "＋ FAQ 추가로 채워보세요" },
+  board: { icon: "📋", title: "게시글이 없습니다", desc: "아직 작성된 글이 없습니다.", hint: "첫 글을 남겨보세요" },
+  search: { icon: "🔍", title: "결과 없음", desc: "검색 결과가 없습니다.", hint: "다른 조건으로 찾아보세요" },
+  select: { icon: "👉", title: "대상을 골라주세요", desc: "좌측에서 항목을 선택하면 여기에 표시됩니다.", hint: "클릭해서 시작하세요" },
 };
 
 const view = computed(() => {

@@ -15,7 +15,7 @@
           <tr><th class="c w-sw">{{ $t("색") }}</th><th>{{ $t("태그명") }}</th><th class="c w-sort">{{ $t("정렬") }}</th><th class="c">{{ $t("상태") }}</th><th class="c w-act">{{ $t("관리") }}</th></tr>
         </thead>
         <tbody>
-          <tr v-if="!rows.length"><td colspan="5"><EmptyState icon="🏷️" :title="$t('태그가 없어요')" :desc="$t('CS 응대·FAQ에 붙일 태그를 추가해 보세요.')" :hint="$t('위에서 태그명 입력!')" compact /></td></tr>
+          <tr v-if="!rows.length"><td colspan="5"><EmptyState icon="🏷️" :title="$t('태그가 없어요')" :desc="$t('FAQ에 붙일 태그를 추가해 보세요.')" :hint="$t('위에서 태그명 입력!')" compact /></td></tr>
           <tr v-for="t in rows" :key="t.id">
             <td class="c"><span class="swatch sm" :style="{ background: t.color }" @click="cycleRowColor(t)" :title="$t('색상 변경')"></span></td>
             <td>
