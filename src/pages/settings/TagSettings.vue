@@ -15,7 +15,7 @@
           <tr><th class="c w-sw">{{ $t("색") }}</th><th>{{ $t("태그명") }}</th><th class="c w-sort">{{ $t("정렬") }}</th><th class="c">{{ $t("상태") }}</th><th class="c w-act">{{ $t("관리") }}</th></tr>
         </thead>
         <tbody>
-          <tr v-if="!rows.length"><td colspan="5"><EmptyState icon="🏷️" :title="$t('태그가 없어요')" :desc="$t('FAQ에 붙일 태그를 추가해 보세요.')" :hint="$t('위에서 태그명 입력!')" compact /></td></tr>
+          <tr v-if="!rows.length"><td colspan="5"><EmptyState icon="fa-tag" :title="$t('태그가 없습니다')" :desc="$t('FAQ에 붙일 태그를 추가하세요.')" compact /></td></tr>
           <tr v-for="t in rows" :key="t.id">
             <td class="c"><span class="swatch sm" :style="{ background: t.color }" @click="cycleRowColor(t)" :title="$t('색상 변경')"></span></td>
             <td>
@@ -101,17 +101,17 @@ onMounted(reload);
 .h { font-weight: 700; color: var(--text); }
 .c { color: var(--accent); }
 .addbar { display: flex; gap: 0.5rem; align-items: center; }
-.swatch { width: 26px; height: 26px; flex-shrink: 0; border: 2px solid var(--border-strong); border-radius: 3px; box-shadow: 2px 2px 0 var(--border-strong); cursor: pointer; }
-.swatch.sm { display: inline-block; width: 52px; height: 24px; box-shadow: 2px 2px 0 var(--border-strong); }
-.tablewrap { border: 2px solid var(--border-strong); border-radius: 4px; overflow: hidden; background: var(--surface); box-shadow: var(--shadow-sm); }
+.swatch { width: 26px; height: 26px; flex-shrink: 0; border: 1px solid var(--border-strong); border-radius: var(--radius); box-shadow: var(--shadow-sm); cursor: pointer; }
+.swatch.sm { display: inline-block; width: 52px; height: 24px; box-shadow: var(--shadow-sm); }
+.tablewrap { border: 1px solid var(--border-strong); border-radius: var(--radius); overflow: hidden; background: var(--surface); box-shadow: var(--shadow-sm); }
 .tbl { width: 100%; border-collapse: collapse; }
-.tbl th { text-align: left; padding: 0.6rem 0.8rem; background: var(--surface-2); border-bottom: 2px solid var(--border-strong); font-family: var(--font-sans); font-weight: 600; font-size: 0.74rem; color: var(--text-muted); }
+.tbl th { text-align: left; padding: 0.6rem 0.8rem; background: var(--surface-2); border-bottom: 1px solid var(--border-strong); font-weight: 600; font-size: 0.74rem; color: var(--text-muted); }
 .tbl td { padding: 0.5rem 0.8rem; border-bottom: 1px solid var(--border); font-size: 0.88rem; color: var(--text); }
 .tbl tbody tr:last-child td { border-bottom: none; }
 .c { text-align: center; } .w-sw { width: 84px; } .w-sort { width: 64px; } .w-act { width: 180px; }
 .muted { color: var(--text-muted); }
-.tchip { font-family: var(--font-sans); font-size: 0.66rem; color: var(--accent-fg); border: 1px solid var(--border-strong); border-radius: 3px; padding: 0.1rem 0.45rem; }
-.st { font-size: 0.72rem; font-weight: 700; padding: 0.1rem 0.5rem; border-radius: 3px; font-family: var(--font-sans); }
+.tchip { font-size: 0.66rem; color: var(--accent-fg); border: 1px solid var(--border-strong); border-radius: var(--radius); padding: 0.1rem 0.45rem; }
+.st { font-size: 0.72rem; font-weight: 700; padding: 0.1rem 0.5rem; border-radius: var(--radius); }
 .st.on { color: var(--positive); background: var(--positive-soft); }
 .st.off { color: var(--text-subtle); background: var(--surface-2); }
 .btn-xs + .btn-xs { margin-left: 0.3rem; }

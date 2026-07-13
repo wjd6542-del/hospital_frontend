@@ -21,7 +21,7 @@
         </thead>
         <tbody>
           <tr v-if="!loading && !notices.length && !rows.length">
-            <td colspan="5"><EmptyState variant="board" :hint="$t('＋ 글쓰기로 첫 글을 남겨보세요')" compact /></td>
+            <td colspan="5"><EmptyState variant="board" compact /></td>
           </tr>
 
           <!-- 공지 (1페이지 상단 고정) -->
@@ -105,13 +105,13 @@ watch(slug, loadBoard);
 <style scoped>
 .bview { max-width: 960px; margin: 0 auto; }
 .phead { display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 1.1rem; gap: 1rem; }
-.eyebrow { font-family: var(--font-sans); font-size: 0.66rem; letter-spacing: 0.16em; color: var(--accent); }
-.ttl { font-family: var(--font-sans); font-size: 1.4rem; color: var(--text); margin-top: 0.25rem; }
+.eyebrow { font-size: 0.66rem; letter-spacing: 0.16em; color: var(--accent); }
+.ttl { font-size: 1.4rem; color: var(--text); margin-top: 0.25rem; }
 .desc { font-size: 0.85rem; color: var(--text-muted); margin-top: 0.2rem; }
 
-.tablewrap { border: 2px solid var(--border-strong); border-radius: 4px; overflow: hidden; background: var(--surface); box-shadow: var(--shadow-sm); }
+.tablewrap { border: 1px solid var(--border-strong); border-radius: var(--radius); overflow: hidden; background: var(--surface); box-shadow: var(--shadow-sm); }
 .tbl { width: 100%; border-collapse: collapse; }
-.tbl th { text-align: left; padding: 0.6rem 0.8rem; background: var(--surface-2); border-bottom: 2px solid var(--border-strong); font-family: var(--font-sans); font-weight: 600; font-size: 0.74rem; color: var(--text-muted); }
+.tbl th { text-align: left; padding: 0.6rem 0.8rem; background: var(--surface-2); border-bottom: 1px solid var(--border-strong); font-weight: 600; font-size: 0.74rem; color: var(--text-muted); }
 .tbl td { padding: 0.55rem 0.8rem; border-bottom: 1px solid var(--border); font-size: 0.88rem; color: var(--text); }
 .tbl tbody tr:last-child td { border-bottom: none; }
 .c { text-align: center; }

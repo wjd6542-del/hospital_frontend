@@ -102,28 +102,28 @@ defineExpose({ reload });
 
 <style scoped>
 .ts { position: relative; width: 100%; }
-.trigger { min-height: 34px; display: flex; align-items: center; gap: 0.4rem; padding: 0.2rem 0.5rem; background: var(--surface); border: 2px solid var(--border-strong); border-radius: 3px; cursor: pointer; }
+.trigger { min-height: 34px; display: flex; align-items: center; gap: 0.4rem; padding: 0.2rem 0.5rem; background: var(--surface); border: 1px solid var(--border-strong); border-radius: var(--radius); cursor: pointer; }
 .ts.open .trigger { border-color: var(--accent); box-shadow: var(--ring); }
 .chips { display: flex; flex-wrap: wrap; gap: 0.25rem; flex: 1; }
-.chip { display: inline-flex; align-items: center; gap: 0.25rem; font-family: var(--font-sans); font-size: 0.64rem; border: 1px solid; border-radius: 3px; padding: 0.08rem 0.4rem; }
+.chip { display: inline-flex; align-items: center; gap: 0.25rem; font-size: 0.64rem; border: 1px solid; border-radius: var(--radius); padding: 0.08rem 0.4rem; }
 .chip .x { cursor: pointer; font-size: 0.58rem; opacity: 0.85; }
 .chip .x:hover { opacity: 1; }
 .ph { flex: 1; font-size: 0.8rem; color: var(--text-subtle); display: inline-flex; align-items: center; gap: 0.35rem; }
 .chev { font-size: 0.7rem; color: var(--text-subtle); transition: transform 0.2s; }
 .chev.up { transform: rotate(180deg); }
 
-.panel { position: absolute; left: 0; top: calc(100% + 4px); z-index: 50; width: 100%; min-width: 200px; background: var(--surface); border: 2px solid var(--border-strong); border-radius: 3px; box-shadow: 4px 4px 0 var(--border-strong); overflow: hidden; }
-.tsearch { width: 100%; height: 32px; padding: 0 0.6rem; font-size: 0.8rem; border: none; border-bottom: 2px solid var(--border); outline: none; background: var(--surface-2); }
-.selall { width: 100%; display: flex; align-items: center; gap: 0.4rem; padding: 0.45rem 0.6rem; font-family: var(--font-sans); font-size: 0.68rem; color: var(--accent); background: var(--accent-soft); border-bottom: 2px solid var(--border); text-align: left; }
+.panel { position: absolute; left: 0; top: calc(100% + 4px); z-index: 50; width: 100%; min-width: 200px; background: var(--surface); border: 1px solid var(--border-strong); border-radius: var(--radius); box-shadow: var(--shadow-md); overflow: hidden; }
+.tsearch { width: 100%; height: 32px; padding: 0 0.6rem; font-size: 0.8rem; border: none; border-bottom: 1px solid var(--border); outline: none; background: var(--surface-2); }
+.selall { width: 100%; display: flex; align-items: center; gap: 0.4rem; padding: 0.45rem 0.6rem; font-size: 0.68rem; color: var(--accent); background: var(--accent-soft); border-bottom: 1px solid var(--border); text-align: left; }
 .selall:hover { background: var(--accent-soft); filter: brightness(0.96); }
 .list { max-height: 240px; overflow-y: auto; }
 .opt { display: flex; align-items: center; gap: 0.5rem; padding: 0.4rem 0.6rem; font-size: 0.82rem; color: var(--text); cursor: pointer; }
 .opt:hover { background: var(--surface-2); }
 .opt input { accent-color: var(--accent); width: 15px; height: 15px; }
-.dot { width: 10px; height: 10px; border-radius: 2px; border: 1px solid var(--border-strong); flex-shrink: 0; }
+.dot { width: 10px; height: 10px; border-radius: var(--radius); border: 1px solid var(--border-strong); flex-shrink: 0; }
 .onm { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .none { padding: 0.8rem; text-align: center; color: var(--text-subtle); font-size: 0.8rem; }
-.create { width: 100%; display: flex; align-items: center; gap: 0.4rem; padding: 0.55rem 0.6rem; font-size: 0.82rem; color: var(--accent); background: var(--accent-soft); border-top: 2px solid var(--border); text-align: left; }
+.create { width: 100%; display: flex; align-items: center; gap: 0.4rem; padding: 0.55rem 0.6rem; font-size: 0.82rem; color: var(--accent); background: var(--accent-soft); border-top: 1px solid var(--border); text-align: left; }
 .create:hover { background: var(--accent-soft); filter: brightness(0.96); }
-.create b { font-family: var(--font-sans); }
+.create b { }
 </style>

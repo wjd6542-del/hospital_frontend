@@ -54,11 +54,11 @@ function go(p) {
 .pbtn {
   min-width: 30px; height: 30px; padding: 0 0.4rem; display: grid; place-items: center;
   font-size: 0.8rem; color: var(--text); background: var(--surface);
-  border: 2px solid var(--border-strong); border-radius: 3px; box-shadow: 2px 2px 0 var(--border-strong);
+  border: 1px solid var(--border-strong); border-radius: var(--radius); box-shadow: var(--shadow-sm);
   transition: transform 0.07s, box-shadow 0.07s;
 }
-.pbtn:hover:not(:disabled) { transform: translate(-1px, -1px); box-shadow: 3px 3px 0 var(--border-strong); }
-.pbtn:active:not(:disabled) { transform: translate(1px, 1px); box-shadow: 1px 1px 0 var(--border-strong); }
+.pbtn:hover:not(:disabled) {  box-shadow: var(--shadow-md); }
+.pbtn:active:not(:disabled) {  box-shadow: var(--shadow-sm); }
 .pbtn.on { background: var(--accent); color: var(--accent-fg); }
 .pbtn:disabled { opacity: 0.4; box-shadow: none; cursor: default; }
 </style>

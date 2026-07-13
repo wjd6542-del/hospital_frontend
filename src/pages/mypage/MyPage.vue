@@ -94,45 +94,45 @@ async function changePw() {
 <style scoped>
 .mypage { max-width: 900px; margin: 0 auto; }
 .phead { margin-bottom: 1.25rem; }
-.eyebrow { font-family: var(--font-sans); font-size: 0.66rem; letter-spacing: 0.18em; color: var(--accent); }
-.ttl { font-family: var(--font-sans); font-size: 1.4rem; color: var(--text); margin-top: 0.25rem; }
+.eyebrow { font-size: 0.66rem; letter-spacing: 0.18em; color: var(--accent); }
+.ttl { font-size: 1.4rem; color: var(--text); margin-top: 0.25rem; }
 
 .grid { display: grid; grid-template-columns: 1fr 1.15fr; gap: 1rem; align-items: start; }
 @media (max-width: 760px) { .grid { grid-template-columns: 1fr; } }
 .col { display: flex; flex-direction: column; gap: 1rem; }
 
-.pcard { background: var(--surface); border: 2px solid var(--border-strong); border-radius: 4px; box-shadow: var(--shadow-sm); padding: 1.25rem; }
+.pcard { background: var(--surface); border: 1px solid var(--border-strong); border-radius: var(--radius); box-shadow: var(--shadow-sm); padding: 1.25rem; }
 
 .profile .ptop { display: flex; align-items: center; gap: 0.9rem; }
 .avatar {
   width: 64px; height: 64px; flex-shrink: 0; display: grid; place-items: center;
-  border-radius: 4px; border: 2px solid var(--border-strong); box-shadow: 3px 3px 0 var(--border-strong);
-  font-family: var(--font-sans); font-weight: 700; font-size: 1.7rem; color: var(--accent-fg);
+  border-radius: var(--radius); border: 1px solid var(--border-strong); box-shadow: var(--shadow-md);
+  font-weight: 700; font-size: 1.7rem; color: var(--accent-fg);
   background: linear-gradient(145deg, color-mix(in srgb, var(--accent) 70%, white), var(--accent) 55%, var(--accent-hover));
 }
-.pname { font-family: var(--font-sans); font-size: 1.05rem; color: var(--text); }
+.pname { font-size: 1.05rem; color: var(--text); }
 .pid { font-size: 0.82rem; color: var(--text-muted); margin-top: 0.15rem; }
-.rolechip { display: inline-block; margin-top: 0.5rem; padding: 0.12rem 0.5rem; border-radius: 3px; font-family: var(--font-sans); font-size: 0.64rem; color: var(--accent-hover); background: var(--accent-soft); border: 1px solid var(--border-strong); }
-.pdl { display: grid; grid-template-columns: auto 1fr; gap: 0.5rem 1rem; font-size: 0.85rem; border-top: 2px solid var(--border); padding-top: 1rem; margin-top: 1rem; }
+.rolechip { display: inline-block; margin-top: 0.5rem; padding: 0.12rem 0.5rem; border-radius: var(--radius); font-size: 0.64rem; color: var(--accent-hover); background: var(--accent-soft); border: 1px solid var(--border-strong); }
+.pdl { display: grid; grid-template-columns: auto 1fr; gap: 0.5rem 1rem; font-size: 0.85rem; border-top: 1px solid var(--border); padding-top: 1rem; margin-top: 1rem; }
 .pdl dt { color: var(--text-muted); font-weight: 600; }
 .pdl dd { color: var(--text); word-break: break-word; }
 
-.ch { font-family: var(--font-sans); font-size: 0.95rem; color: var(--text); margin-bottom: 1rem; display: flex; align-items: center; gap: 0.45rem; }
+.ch { font-size: 0.95rem; color: var(--text); margin-bottom: 1rem; display: flex; align-items: center; gap: 0.45rem; }
 .ch i { color: var(--accent); font-size: 0.85rem; }
-.superbadge { font-family: var(--font-sans); font-size: 0.8rem; color: var(--accent-hover); background: var(--accent-soft); border: 2px solid var(--border-strong); border-radius: 3px; box-shadow: 2px 2px 0 var(--border-strong); padding: 0.6rem 0.8rem; text-align: center; }
+.superbadge { font-size: 0.8rem; color: var(--accent-hover); background: var(--accent-soft); border: 1px solid var(--border-strong); border-radius: var(--radius); box-shadow: var(--shadow-sm); padding: 0.6rem 0.8rem; text-align: center; }
 .chips { display: flex; flex-wrap: wrap; gap: 0.35rem; }
-.pchip { font-family: var(--font-sans); font-size: 0.64rem; color: var(--text); background: var(--surface-2); border: 1px solid var(--border-strong); border-radius: 3px; padding: 0.15rem 0.45rem; }
+.pchip { font-size: 0.64rem; color: var(--text); background: var(--surface-2); border: 1px solid var(--border-strong); border-radius: var(--radius); padding: 0.15rem 0.45rem; }
 .noperm { font-size: 0.85rem; color: var(--text-subtle); text-align: center; padding: 0.8rem 0; }
 
 .pwform { display: flex; flex-direction: column; gap: 0.85rem; }
-.fld .lbl { display: block; font-family: var(--font-sans); font-size: 0.66rem; color: var(--text); margin-bottom: 0.4rem; }
+.fld .lbl { display: block; font-size: 0.66rem; color: var(--text); margin-bottom: 0.4rem; }
 .fld input {
   width: 100%; height: 42px; padding: 0 0.8rem; font-size: 0.9rem; color: var(--text);
-  background: var(--surface-2); border: 2px solid var(--border-strong); border-radius: 3px; outline: none;
+  background: var(--surface-2); border: 1px solid var(--border-strong); border-radius: var(--radius); outline: none;
   transition: border-color 0.15s, box-shadow 0.15s, background 0.15s;
 }
 .fld input:focus { border-color: var(--accent); background: var(--surface); box-shadow: var(--ring); }
 .msg { display: flex; align-items: center; gap: 0.4rem; font-size: 0.82rem; font-weight: 700; }
 .msg.ok { color: var(--positive); } .msg.err { color: var(--danger); }
-.save { margin-top: 0.2rem; height: 44px; font-size: 0.92rem; box-shadow: 3px 3px 0 var(--border-strong); }
+.save { margin-top: 0.2rem; height: 44px; font-size: 0.92rem; box-shadow: var(--shadow-md); }
 </style>

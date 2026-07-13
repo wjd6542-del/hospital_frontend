@@ -110,17 +110,17 @@ async function onSubmit() {
 .logo { display: flex; align-items: center; gap: 0.8rem; }
 .logo-mark {
   display: grid; place-items: center; width: 56px; height: 56px;
-  font-family: var(--font-sans); font-size: 1.05rem; font-weight: 700; color: var(--accent-fg);
-  background: var(--accent); border-radius: 10px;
+  font-size: 1.05rem; font-weight: 700; color: var(--accent-fg);
+  background: var(--accent); border-radius: var(--radius-lg);
   box-shadow: var(--shadow-md); letter-spacing: 0.01em;
 }
-.logo-cap { font-family: var(--font-sans); font-size: 0.7rem; letter-spacing: 0.18em; color: rgba(248, 250, 252, 0.6); }
+.logo-cap { font-size: 0.7rem; letter-spacing: 0.18em; color: rgba(248, 250, 252, 0.6); }
 
-.headline { font-family: var(--font-sans); font-size: clamp(1.7rem, 3.4vw, 2.5rem); line-height: 1.35; color: #ffffff; letter-spacing: -0.01em; }
+.headline { font-size: clamp(1.7rem, 3.4vw, 2.5rem); line-height: 1.35; color: #ffffff; letter-spacing: -0.01em; }
 .lead { margin-top: 1.1rem; font-size: 0.95rem; line-height: 1.7; color: rgba(248, 250, 252, 0.7); }
 
 
-.pfoot { font-family: var(--font-sans); font-size: 0.66rem; letter-spacing: 0.08em; color: rgba(248, 250, 252, 0.45); }
+.pfoot { font-size: 0.66rem; letter-spacing: 0.08em; color: rgba(248, 250, 252, 0.45); }
 
 /* ── 우: 폼 ─────────────────────────── */
 .formpane { display: grid; place-items: center; padding: 2.5rem; background: var(--surface); }
@@ -128,13 +128,13 @@ async function onSubmit() {
 .m-brand { display: none; margin-bottom: 1.4rem; }
 .logo-mark.sm { width: 44px; height: 44px; font-size: 0.85rem; box-shadow: var(--shadow-sm); }
 
-.eyebrow { font-family: var(--font-sans); font-size: 0.7rem; letter-spacing: 0.16em; color: var(--accent-hover); }
-.title { margin-top: 0.5rem; font-family: var(--font-sans); font-size: 1.7rem; color: var(--text); }
+.eyebrow { font-size: 0.7rem; letter-spacing: 0.16em; color: var(--accent-hover); }
+.title { margin-top: 0.5rem; font-size: 1.7rem; color: var(--text); }
 .hint { margin-top: 0.5rem; font-size: 0.88rem; color: var(--text-muted); }
 
 .form { margin-top: 2rem; display: flex; flex-direction: column; gap: 1.05rem; }
 .fld { display: block; }
-.lbl { display: block; font-family: var(--font-sans); font-size: 0.72rem; color: var(--text); margin-bottom: 0.45rem; }
+.lbl { display: block; font-size: 0.72rem; color: var(--text); margin-bottom: 0.45rem; }
 .inputwrap { position: relative; display: flex; align-items: center; }
 .inputwrap .ico { position: absolute; left: 0.85rem; font-size: 0.85rem; color: var(--text-subtle); pointer-events: none; }
 .inputwrap input {
@@ -150,7 +150,7 @@ async function onSubmit() {
 .err { display: flex; align-items: center; gap: 0.4rem; font-size: 0.82rem; color: var(--danger); font-weight: 700; }
 
 .enter {
-  margin-top: 0.4rem; height: 52px; font-family: var(--font-sans); font-size: 0.95rem; font-weight: 600;
+  margin-top: 0.4rem; height: 52px; font-size: 0.95rem; font-weight: 600;
   color: var(--accent-fg); background: var(--accent); border: none; border-radius: var(--radius); cursor: pointer;
   box-shadow: var(--shadow-sm); transition: transform 0.08s, box-shadow 0.12s, background 0.12s;
 }

@@ -14,7 +14,7 @@
           <tr><th>{{ $t("분류명") }}</th><th class="c w-sort">{{ $t("정렬") }}</th><th class="c">{{ $t("상태") }}</th><th class="c w-act">{{ $t("관리") }}</th></tr>
         </thead>
         <tbody>
-          <tr v-if="!rows.length"><td colspan="4"><EmptyState icon="🏷️" :title="$t('분류가 없어요')" :desc="$t('FAQ 분류를 추가해 보세요.')" :hint="$t('위에서 분류명을 입력!')" compact /></td></tr>
+          <tr v-if="!rows.length"><td colspan="4"><EmptyState icon="fa-tags" :title="$t('분류가 없습니다')" :desc="$t('FAQ 분류를 추가하세요.')" compact /></td></tr>
           <tr v-for="c in rows" :key="c.id">
             <td>
               <template v-if="editId === c.id">
@@ -93,14 +93,14 @@ onMounted(reload);
 .h { font-weight: 700; color: var(--text); }
 .c { color: var(--accent); }
 .addbar { display: flex; gap: 0.5rem; align-items: center; }
-.tablewrap { border: 2px solid var(--border-strong); border-radius: 4px; overflow: hidden; background: var(--surface); box-shadow: var(--shadow-sm); }
+.tablewrap { border: 1px solid var(--border-strong); border-radius: var(--radius); overflow: hidden; background: var(--surface); box-shadow: var(--shadow-sm); }
 .tbl { width: 100%; border-collapse: collapse; }
-.tbl th { text-align: left; padding: 0.6rem 0.8rem; background: var(--surface-2); border-bottom: 2px solid var(--border-strong); font-family: var(--font-sans); font-weight: 600; font-size: 0.74rem; color: var(--text-muted); }
+.tbl th { text-align: left; padding: 0.6rem 0.8rem; background: var(--surface-2); border-bottom: 1px solid var(--border-strong); font-weight: 600; font-size: 0.74rem; color: var(--text-muted); }
 .tbl td { padding: 0.5rem 0.8rem; border-bottom: 1px solid var(--border); font-size: 0.88rem; color: var(--text); }
 .tbl tbody tr:last-child td { border-bottom: none; }
 .c { text-align: center; } .w-sort { width: 64px; } .w-act { width: 180px; }
 .nm { font-weight: 600; } .muted { color: var(--text-muted); }
-.st { font-size: 0.72rem; font-weight: 700; padding: 0.1rem 0.5rem; border-radius: 3px; font-family: var(--font-sans); }
+.st { font-size: 0.72rem; font-weight: 700; padding: 0.1rem 0.5rem; border-radius: var(--radius); }
 .st.on { color: var(--positive); background: var(--positive-soft); }
 .st.off { color: var(--text-subtle); background: var(--surface-2); }
 .btn-xs + .btn-xs { margin-left: 0.3rem; }
