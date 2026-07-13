@@ -48,13 +48,7 @@ watch(isMobile, (m) => {
 .content {
   flex: 1;
   overflow: auto;
-  /* 한지 질감: 따뜻한 종이색 + 결(섬유)·얼룩을 옅게 겹쳐 */
   background-color: var(--canvas);
-  background-image:
-    radial-gradient(120% 80% at 12% 0%, rgba(255, 252, 244, 0.55) 0%, transparent 45%),
-    radial-gradient(100% 90% at 100% 100%, rgba(200, 176, 128, 0.14) 0%, transparent 50%),
-    repeating-linear-gradient(97deg, rgba(120, 92, 42, 0.028) 0 2px, transparent 2px 6px),
-    repeating-linear-gradient(3deg, rgba(120, 92, 42, 0.022) 0 1px, transparent 1px 5px);
 }
 .content-inner {
   padding: 1.5rem;
@@ -64,7 +58,7 @@ watch(isMobile, (m) => {
   position: fixed;
   inset: 0;
   z-index: 55;
-  background: rgba(20, 16, 13, 0.45);
+  background: rgba(15, 23, 42, 0.45);
 }
 </style>
 

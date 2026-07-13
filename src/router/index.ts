@@ -54,6 +54,8 @@ export const router = createRouter({
         },
       ],
     },
+    // 없는 경로(삭제된 CS 라우트의 옛 북마크 포함)는 대시보드로
+    { path: "/:pathMatch(.*)*", redirect: "/" },
   ],
 });
 
