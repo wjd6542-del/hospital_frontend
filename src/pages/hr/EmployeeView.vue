@@ -62,6 +62,12 @@
           <span v-if="form.resigned_at" class="badge badge-neutral">{{ $t("퇴사") }} · {{ fmt(form.resigned_at) }}</span>
         </header>
 
+        <p v-if="isResigned" class="lockmsg">
+          {{ $t("퇴사한 직원의 정보는 수정할 수 없습니다. 인사 기록은 그대로 보존됩니다.") }}
+        </p>
+
+        <!-- 퇴사자는 전체를 잠근다 — 필드마다 :disabled 를 붙이는 대신 fieldset 하나로 -->
+        <fieldset class="fs" :disabled="isResigned">
         <section class="sec">
           <h3 class="sttl">{{ $t("신원") }}</h3>
           <div class="grid2">
@@ -98,12 +104,13 @@
             <button class="btn btn-xs btn-ghost" @click="form.licenses.splice(i, 1)">✕</button>
           </div>
         </section>
+        </fieldset>
 
         <footer class="dfoot">
           <button v-if="form.id && !form.resigned_at" class="btn btn-xs" @click="resign">{{ $t("퇴사 처리") }}</button>
           <span style="flex: 1"></span>
           <button class="btn btn-xs" @click="showForm = false">{{ $t("닫기") }}</button>
-          <button class="btn btn-xs btn-primary" :disabled="saving" @click="save">
+          <button v-if="!isResigned" class="btn btn-xs btn-primary" :disabled="saving" @click="save">
             {{ saving ? $t("저장 중…") : $t("저장") }}
           </button>
         </footer>
@@ -114,7 +121,7 @@
 
 <script setup lang="ts">
 // @ts-nocheck
-import { ref, reactive, onMounted } from "vue";
+import { ref, reactive, computed, onMounted } from "vue";
 import SearchSelect from "@/components/base/SearchSelect.vue";
 import EmptyState from "@/components/base/EmptyState.vue";
 import Pager from "@/components/base/Pager.vue";
@@ -157,6 +164,7 @@ const blank = () => ({
   licenses: [],
 });
 const form = reactive(blank());
+const isResigned = computed(() => !!form.resigned_at);
 
 function reset(src = blank()) {
   Object.assign(form, blank(), src);
@@ -286,6 +294,15 @@ onMounted(async () => {
 
 .nolic { font-size: 0.82rem; color: var(--text-subtle); padding: 0.6rem 0; }
 .licrow { display: grid; grid-template-columns: 1.2fr 1.2fr 1fr 1fr auto; gap: 0.4rem; margin-bottom: 0.4rem; align-items: center; }
+
+.fs { border: none; padding: 0; margin: 0; min-width: 0; }
+.fs:disabled { opacity: 0.72; }
+.lockmsg {
+  margin-bottom: 1.2rem; padding: 0.6rem 0.8rem;
+  font-size: 0.82rem; color: var(--text-muted);
+  background: var(--surface-2); border-radius: var(--radius);
+  border-left: 3px solid var(--border-strong);
+}
 
 .dfoot { margin-top: auto; padding-top: 1.2rem; display: flex; gap: 0.5rem; align-items: center; border-top: 1px solid var(--border); }
 </style>

@@ -130,5 +130,9 @@ onMounted(load);
 .gitem:hover { background: var(--surface-2); color: var(--text); }
 .gitem.on { background: var(--accent-soft); color: var(--accent); font-weight: 600; }
 
+.listpane { min-width: 0; }
+.listpane .tbl { width: 100%; }
 .addrow { display: flex; gap: 0.4rem; margin-bottom: 0.8rem; }
+.addrow .field { flex: 1; min-width: 0; }
+.addrow .btn { flex-shrink: 0; }
 </style>
