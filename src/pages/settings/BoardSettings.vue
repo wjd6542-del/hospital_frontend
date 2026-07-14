@@ -28,7 +28,7 @@
           <button class="btn btn-xs btn-danger" @click="del(b)">{{ $t("삭제") }}</button>
         </div>
       </li>
-      <li v-if="!boards.length"><EmptyState variant="board" :title="$t('게시판이 없어요')" :desc="$t('게시판을 만들어 보세요.')" :hint="$t('＋ 게시판 추가')" compact /></li>
+      <li v-if="!boards.length"><EmptyState variant="board" :title="$t('게시판이 없습니다')" :desc="$t('게시판을 만들면 여기에 표시됩니다.')" compact /></li>
     </ul>
 
     <div v-if="showForm" class="drawer" @click.self="showForm = false">
@@ -137,38 +137,38 @@ onMounted(load);
 
 <style scoped>
 .head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.9rem; }
-.h { font-family: "Galmuri11", monospace; font-weight: 700; color: var(--ink); }
-.c { color: var(--seal); margin-left: 0.25rem; }
-.hint { font-size: 0.76rem; color: var(--ink-muted); margin-bottom: 0.7rem; }
+.h { font-weight: 700; color: var(--text); }
+.c { color: var(--accent); margin-left: 0.25rem; }
+.hint { font-size: 0.76rem; color: var(--text-muted); margin-bottom: 0.7rem; }
 .list { display: flex; flex-direction: column; gap: 0.5rem; }
-.row { display: flex; align-items: center; gap: 0.8rem; padding: 0.8rem 1rem; background: var(--surface); border: 2px solid var(--line-hard); border-radius: 4px; flex-wrap: wrap; }
+.row { display: flex; align-items: center; gap: 0.8rem; padding: 0.8rem 1rem; background: var(--surface); border: 1px solid var(--border-strong); border-radius: var(--radius); flex-wrap: wrap; }
 .order { display: flex; flex-direction: column; gap: 3px; }
-.ord { width: 26px; height: 18px; display: flex; align-items: center; justify-content: center; border-radius: 3px; font-size: 0.66rem; color: var(--ink); background: var(--surface); border: 2px solid var(--line-hard); box-shadow: 2px 2px 0 var(--line-hard); transition: all 0.075s; }
-.ord:hover:not(:disabled) { color: var(--seal); transform: translate(-1px, -1px); box-shadow: 3px 3px 0 var(--line-hard); }
-.ord:active:not(:disabled) { transform: translate(1px, 1px); box-shadow: 1px 1px 0 var(--line-hard); }
+.ord { width: 26px; height: 18px; display: flex; align-items: center; justify-content: center; border-radius: var(--radius); font-size: 0.66rem; color: var(--text); background: var(--surface); border: 1px solid var(--border-strong); box-shadow: var(--shadow-sm); transition: all 0.075s; }
+.ord:hover:not(:disabled) { color: var(--accent);  box-shadow: var(--shadow-md); }
+.ord:active:not(:disabled) {  box-shadow: var(--shadow-sm); }
 .ord:disabled { opacity: 0.35; cursor: default; box-shadow: none; }
 .rinfo { display: flex; align-items: center; gap: 0.5rem; }
-.bn { font-weight: 700; color: var(--ink); }
-.slug { font-size: 0.75rem; color: var(--ink-faint); }
-.off { font-size: 0.68rem; color: #9a8d76; background: var(--line); padding: 0.05rem 0.4rem; border-radius: 3px; }
+.bn { font-weight: 700; color: var(--text); }
+.slug { font-size: 0.75rem; color: var(--text-subtle); }
+.off { font-size: 0.68rem; color: var(--text-subtle); background: var(--border); padding: 0.05rem 0.4rem; border-radius: var(--radius); }
 .rtags { display: flex; gap: 0.3rem; flex-wrap: wrap; }
-.tag { font-size: 0.68rem; font-weight: 700; color: var(--ink-muted); background: var(--line); padding: 0.1rem 0.5rem; border-radius: 3px; }
-.tag.on { color: var(--seal); background: rgba(122,92,255, 0.1); }
+.tag { font-size: 0.68rem; font-weight: 700; color: var(--text-muted); background: var(--border); padding: 0.1rem 0.5rem; border-radius: var(--radius); }
+.tag.on { color: var(--accent); background: var(--accent-soft); }
 .acts { margin-left: auto; display: flex; gap: 0.35rem; }
-.empty { padding: 1.4rem; text-align: center; color: var(--ink-faint); }
+.empty { padding: 1.4rem; text-align: center; color: var(--text-subtle); }
 
 .drawer { position: fixed; inset: 0; z-index: 210; background: rgba(20, 16, 13, 0.45); display: flex; align-items: center; justify-content: center; padding: 1rem; }
-.panel { width: 480px; max-width: 100%; background: var(--surface); border: 2px solid var(--line-hard); border-radius: 4px; padding: 1.4rem; }
-.ph { font-family: "Galmuri11", monospace; font-size: 1.15rem; font-weight: 700; color: var(--ink); margin-bottom: 1rem; }
+.panel { width: 480px; max-width: 100%; background: var(--surface); border: 1px solid var(--border-strong); border-radius: var(--radius); padding: 1.4rem; }
+.ph { font-size: 1.15rem; font-weight: 700; color: var(--text); margin-bottom: 1rem; }
 .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.9rem; }
 .col2 { grid-column: 1 / -1; }
 .fld { display: block; }
-.lbl { display: block; font-size: 0.72rem; font-weight: 700; color: var(--ink-soft); margin-bottom: 0.4rem; }
-.chk { display: flex; align-items: center; gap: 0.5rem; font-size: 0.84rem; font-weight: 600; color: var(--ink-soft); cursor: pointer; user-select: none; }
-.chk input { appearance: none; -webkit-appearance: none; flex-shrink: 0; width: 18px; height: 18px; border: 2px solid var(--line-hard); border-radius: 3px; background: var(--surface); box-shadow: 2px 2px 0 var(--line-hard); cursor: pointer; position: relative; transition: all 0.075s; }
-.chk input:checked { background: var(--seal); }
-.chk input:checked::after { content: ""; position: absolute; left: 4px; top: 1px; width: 5px; height: 9px; border: solid #fff; border-width: 0 2px 2px 0; transform: rotate(45deg); }
-.chk input:active { transform: translate(1px, 1px); box-shadow: 1px 1px 0 var(--line-hard); }
+.lbl { display: block; font-size: 0.72rem; font-weight: 700; color: var(--text); margin-bottom: 0.4rem; }
+.chk { display: flex; align-items: center; gap: 0.5rem; font-size: 0.84rem; font-weight: 600; color: var(--text); cursor: pointer; user-select: none; }
+.chk input { appearance: none; -webkit-appearance: none; flex-shrink: 0; width: 18px; height: 18px; border: 1px solid var(--border-strong); border-radius: var(--radius); background: var(--surface); box-shadow: var(--shadow-sm); cursor: pointer; position: relative; transition: all 0.075s; }
+.chk input:checked { background: var(--accent); }
+.chk input:checked::after { content: ""; position: absolute; left: 4px; top: 1px; width: 5px; height: 9px; border: solid var(--accent-fg); border-width: 0 2px 2px 0; transform: rotate(45deg); }
+.chk input:active {  box-shadow: var(--shadow-sm); }
 .msg.err { color: var(--danger); font-size: 0.82rem; margin-top: 0.7rem; font-weight: 600; }
 .pacts { display: flex; gap: 0.6rem; margin-top: 1.2rem; }
 </style>

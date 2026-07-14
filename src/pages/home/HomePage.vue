@@ -1,440 +1,89 @@
 <template>
   <div class="home">
-    <!-- 히어로 + 넷플로우 시그니처 -->
-    <section class="hero">
-      <div class="scan" aria-hidden="true"></div>
-      <div class="hero-head">
-        <div class="hi">
-          <span class="badge-you">PLAYER</span>
-          <h1 class="ttl">{{ auth.user?.name || auth.user?.username }}</h1>
-          <p class="sub">고객센터 관리 콘솔 · {{ today }}</p>
-        </div>
-        <div class="mark">CS</div>
-      </div>
+    <header class="phead">
+      <h1 class="ttl">{{ $t("대시보드") }}</h1>
+      <p class="sub">{{ auth.user?.name || auth.user?.username }}{{ $t("님, 환영합니다.") }}</p>
+    </header>
 
-      <!-- 넷플로우 바 (회수 ▲ vs 지급 ▼) -->
-      <div v-if="canMoney" class="flow">
-        <div class="flow-row">
-          <span class="flow-lbl in">{{ $t("▲ 회수") }}</span>
-          <div class="track"><i class="fill in" :style="{ width: barIn + '%' }"></i></div>
-          <span class="flow-val in num">{{ won(totals.COLLECTION) }}</span>
-        </div>
-        <div class="flow-row">
-          <span class="flow-lbl out">{{ $t("▼ 지급") }}</span>
-          <div class="track"><i class="fill out" :style="{ width: barOut + '%' }"></i></div>
-          <span class="flow-val out num">{{ won(totals.PAYMENT) }}</span>
-        </div>
-        <div class="flow-net">
-          <span class="net-lbl">{{ $t("NET (회수−지급)") }}</span>
-          <strong class="net-val num" :class="net >= 0 ? 'pos' : 'neg'">{{ won(net) }}</strong>
-        </div>
-      </div>
-    </section>
+    <div v-if="canBoard" class="grid">
+      <section v-for="b in widgets" :key="b.slug" class="pcard widget">
+        <header class="whead">
+          <h2 class="wttl">{{ b.name }}</h2>
+          <RouterLink :to="`/board/${b.slug}`" class="wmore">{{ $t("더보기 ›") }}</RouterLink>
+        </header>
 
-    <!-- HUD 스탯 -->
-    <div v-if="showStats" class="stats">
-      <router-link v-if="canLedger" to="/ledger" class="stat">
-        <span class="s-ic in"><i class="fa-solid fa-arrow-down-long"></i></span>
-        <div><span class="s-lbl">{{ $t("이번 달 회수") }}</span><strong class="s-val in num">{{ won(totals.COLLECTION) }}</strong></div>
-      </router-link>
-      <router-link v-if="canLedger" to="/ledger" class="stat">
-        <span class="s-ic out"><i class="fa-solid fa-arrow-up-long"></i></span>
-        <div><span class="s-lbl">{{ $t("이번 달 지급") }}</span><strong class="s-val out num">{{ won(totals.PAYMENT) }}</strong></div>
-      </router-link>
-      <router-link v-if="canSettlement" to="/settlement/vendor" class="stat">
-        <span class="s-ic warn"><i class="fa-solid fa-hourglass-half"></i></span>
-        <div><span class="s-lbl">{{ $t("미정산") }}</span><strong class="s-val num">{{ pendingCount }}<em>{{ $t("건") }}</em></strong></div>
-      </router-link>
-      <router-link v-if="canSupport" to="/alerts" class="stat">
-        <span class="s-ic acc"><i class="fa-solid fa-headset"></i></span>
-        <div><span class="s-lbl">{{ $t("진행중 응대") }}</span><strong class="s-val num">{{ openTickets }}<em>{{ $t("건") }}</em></strong></div>
-      </router-link>
-    </div>
-
-    <!-- 올해 월별 정산 처리 차트 -->
-    <section v-if="canSettlement" class="chartcard pcard">
-      <div class="ch-head">
-        <h2 class="ch-ttl"><i class="fa-solid fa-chart-column"></i> {{ chart.year }}년 정산 처리</h2>
-        <span class="ch-sub">{{ $t("1월~이번 달 · 회수(업체) vs 지급(게임사)") }}</span>
-      </div>
-      <v-chart v-if="!chartEmpty" class="chart" :option="chartOption" autoresize />
-      <EmptyState v-else icon="📊" :title="$t('정산 처리 내역이 없어요')" :desc="$t('정산을 처리하면 월별 그래프가 표시돼요.')" :hint="$t('정산 관리에서 처리')" compact />
-    </section>
-
-    <!-- CS 상황판 : 항목별 미해결(접수·처리중) 문의 최근 5건 -->
-    <section v-if="canSupport" class="csboard pcard">
-      <div class="cb-head">
-        <h2 class="cb-ttl"><i class="fa-solid fa-satellite-dish"></i> {{ $t("CS 상황판") }}</h2>
-        <span class="cb-sub">{{ $t("항목별 미해결 문의 · 최근 5건") }}</span>
-      </div>
-      <div class="cb-cols">
-        <div v-for="dk in csDesks" :key="dk.id" class="cb-col">
-          <div class="cbc-head">
-            <span class="cbc-name"><i class="fa-solid" :class="dk.icon || 'fa-headset'"></i> {{ dk.name }}</span>
-            <div class="cbc-chips">
-              <span class="chip open">{{ $t("접수") }} <em>{{ progress[dk.id]?.open || 0 }}</em></span>
-              <span class="chip prog">{{ $t("처리중") }} <em>{{ progress[dk.id]?.prog || 0 }}</em></span>
-            </div>
-          </div>
-          <ul class="cbc-list">
-            <li v-for="t in (progress[dk.id]?.rows || [])" :key="t.id" class="cbc-item" :class="'s-' + t.status.toLowerCase()" @click="openCs(t.id)">
-              <span class="st-pill" :class="'st-' + t.status.toLowerCase()">{{ statusLabel(t.status) }}</span>
-              <div class="ci-main">
-                <span class="ci-title">{{ t.title }}</span>
-                <span class="ci-meta">{{ t.target_name || "미지정" }} · {{ fmt(t.created_at) }}</span>
-              </div>
-              <i v-if="t.priority >= 2" class="ci-flag fa-solid fa-flag" :class="'pr-' + t.priority" :title="$t('우선순위 높음')"></i>
-            </li>
-            <li v-if="!(progress[dk.id]?.rows || []).length" class="cbc-empty">
-              <EmptyState icon="✅" :title="$t('미해결 문의 없음')" :desc="$t('새 문의가 오면 여기 떠요.')" :hint="$t('청정 상태')" compact />
-            </li>
-          </ul>
-          <router-link :to="`/support/${dk.code}`" class="cbc-more">{{ dk.name }} 전체보기 ›</router-link>
-        </div>
-      </div>
-    </section>
-
-    <!-- 공지 + 알림 게시판 -->
-    <div v-if="canBoard" class="cols">
-      <section class="notice pcard">
-        <div class="nhead">
-          <h2 class="nt"><i class="fa-solid fa-bullhorn"></i> {{ $t("공지사항") }}</h2>
-          <router-link v-if="noticeBoard" :to="`/board/${noticeBoard.slug}`" class="more">{{ $t("전체보기 ›") }}</router-link>
-        </div>
-        <ul class="nlist">
-          <li v-for="p in notices" :key="p.id" class="nitem" @click="openPost(p.id)">
-            <span v-if="p.is_notice" class="pin">{{ $t("공지") }}</span>
-            <span class="npt">{{ p.title }}</span>
-            <span class="ndate num">{{ fmt(p.created_at) }}</span>
+        <ul v-if="b.posts.length" class="wlist">
+          <li v-for="p in b.posts" :key="p.id">
+            <RouterLink :to="`/post/${p.id}`" class="wrow">
+              <span class="wtitle">{{ p.title }}</span>
+              <span class="wdate">{{ fmt(p.created_at) }}</span>
+            </RouterLink>
           </li>
-          <li v-if="!notices.length"><EmptyState icon="📭" :title="$t('공지가 없어요')" :desc="$t('등록된 공지사항이 없어요.')" :hint="$t('관리자만 등록할 수 있어요')" compact /></li>
         </ul>
-      </section>
-
-      <section class="notice pcard">
-        <div class="nhead">
-          <h2 class="nt"><i class="fa-solid fa-bell"></i> {{ alarmBoard?.name || "알림" }}</h2>
-          <router-link v-if="alarmBoard" :to="`/board/${alarmBoard.slug}`" class="more">{{ $t("전체보기 ›") }}</router-link>
-        </div>
-        <ul class="nlist">
-          <li v-for="p in alarmPosts" :key="p.id" class="nitem" @click="openPost(p.id)">
-            <span v-if="p.is_notice" class="pin">{{ $t("공지") }}</span>
-            <span class="npt">{{ p.title }}</span>
-            <span class="ndate num">{{ fmt(p.created_at) }}</span>
-          </li>
-          <li v-if="!alarmPosts.length"><EmptyState icon="🔔" :title="$t('알림이 없어요')" :desc="$t('등록된 알림 글이 없어요.')" :hint="$t('게시판에서 작성해요')" compact /></li>
-        </ul>
+        <EmptyState v-else :message="$t('게시글이 없습니다.')" />
       </section>
     </div>
 
-    <!-- 공지 모달 -->
-    <div v-if="modalPost" class="pmodal" @click.self="modalPost = null">
-      <div class="pbox pcard">
-        <button class="pclose" @click="modalPost = null"><i class="fa-solid fa-xmark"></i></button>
-        <p class="peyebrow">{{ $t("공지사항") }}</p>
-        <h3 class="ptitle">{{ modalPost.title }}</h3>
-        <div class="pmeta">
-          <span>{{ modalPost.user?.name || modalPost.user?.username || "-" }}</span>
-          <span class="dot">·</span><span class="num">{{ fmt(modalPost.created_at) }}</span>
-          <span class="dot">·</span><span>조회 {{ modalPost.view_count }}</span>
-        </div>
-        <div class="pcontent prose" v-html="modalPost.content"></div>
-        <router-link :to="`/post/${modalPost.id}`" class="pfull">{{ $t("게시판에서 열기 ›") }}</router-link>
-      </div>
-    </div>
-
-    <!-- CS 문의 읽기 전용 모달 -->
-    <div v-if="csDetail" class="pmodal" @click.self="csDetail = null">
-      <div class="pbox pcard">
-        <button class="pclose" @click="csDetail = null"><i class="fa-solid fa-xmark"></i></button>
-        <p class="peyebrow">{{ csDetail.desk_name }} · 읽기 전용</p>
-        <h3 class="ptitle">
-          <span class="ro-pill" :class="'st-' + csDetail.status.toLowerCase()">{{ statusLabel(csDetail.status) }}</span>
-          {{ csDetail.title }}
-        </h3>
-        <div class="pmeta">
-          <span>{{ csDetail.target_name || '미지정' }}</span>
-          <span class="dot">·</span><span>{{ csDetail.category || '분류없음' }}</span>
-          <span class="dot">·</span><span class="num">{{ fmt(csDetail.created_at) }}</span>
-        </div>
-        <TagChips v-if="csDetail.tags?.length" :tags="csDetail.tags" class="ro-tags" />
-
-        <div class="ro-thread">
-          <div v-if="!csDetail.messages?.length"><EmptyState icon="✉️" :title="$t('등록된 대화가 없어요')" :desc="$t('아직 남긴 메시지가 없어요.')" compact /></div>
-          <div v-for="m in csDetail.messages" :key="m.id" class="ro-msg" :class="{ internal: m.is_internal }">
-            <div class="ro-mmeta"><span v-if="m.is_internal" class="ro-ib">{{ $t("내부") }}</span>{{ fmt(m.created_at) }}</div>
-            <div class="ro-mbody prose" v-html="m.content"></div>
-          </div>
-        </div>
-
-        <div class="ro-foot">
-          <router-link v-if="canManageCs" :to="`/support/${csDetail.desk_code}`" class="btn btn-primary">{{ $t("응대 관리 페이지 ›") }}</router-link>
-          <span v-else class="ro-note"><i class="fa-solid fa-lock"></i> {{ $t("조회 권한 · 읽기 전용") }}</span>
-          <button class="btn" @click="csDetail = null">{{ $t("닫기") }}</button>
-        </div>
-      </div>
-    </div>
+    <EmptyState v-else :message="$t('표시할 항목이 없습니다.')" />
   </div>
 </template>
 
 <script setup lang="ts">
 // @ts-nocheck
+import { ref, computed, onMounted } from "vue";
 import EmptyState from "@/components/base/EmptyState.vue";
-import TagChips from "@/components/base/TagChips.vue";
-import { ref, reactive, computed, onMounted } from "vue";
 import { useAuthStore } from "@/stores/auth";
 import { boardApi } from "@/api/board";
-import { ledgerApi, settlementApi, supportApi, supportDeskApi } from "@/api/cs";
 import { formatDateDot as fmt } from "@/utils/date";
 
 const auth = useAuthStore();
-const canManageCs = computed(() => auth.hasPermission("support.edit"));
-const canLedger = computed(() => auth.hasPermission("ledger.view"));
-const canSettlement = computed(() => auth.hasPermission("settlement.view"));
-const canSupport = computed(() => auth.hasPermission("support.view"));
 const canBoard = computed(() => auth.hasPermission("board.view"));
-const canMoney = computed(() => canLedger.value || canSettlement.value);
-const showStats = computed(() => canLedger.value || canSettlement.value || canSupport.value);
 
-/* 올해 월별 정산 처리 차트 */
-const chart = reactive({ year: new Date().getFullYear(), months: [] });
-const chartOption = computed(() => ({
-  color: ["#0ea88f", "#e07d16"],
-  tooltip: {
-    trigger: "axis",
-    valueFormatter: (v) => (Number(v) || 0).toLocaleString("ko-KR") + "원",
-    textStyle: { fontSize: 12 },
-  },
-  legend: { data: ["회수", "지급"], bottom: 0, itemWidth: 12, itemHeight: 12, textStyle: { color: "#5b607d", fontSize: 11 } },
-  grid: { left: 6, right: 14, top: 16, bottom: 34, containLabel: true },
-  xAxis: {
-    type: "category",
-    data: chart.months.map((m) => m.label),
-    axisLine: { lineStyle: { color: "#b9bccf" } },
-    axisTick: { show: false },
-    axisLabel: { color: "#5b607d", fontFamily: "Galmuri11, monospace", fontSize: 11 },
-  },
-  yAxis: {
-    type: "value",
-    splitLine: { lineStyle: { color: "#eceef6" } },
-    axisLabel: { color: "#9a9fbb", fontSize: 10, formatter: (v) => (v >= 10000 ? Math.round(v / 10000) + "만" : v) },
-  },
-  series: [
-    { name: "회수", type: "bar", barMaxWidth: 22, data: chart.months.map((m) => m.collection), itemStyle: { borderColor: "#1b1d2e", borderWidth: 1.5, borderRadius: [3, 3, 0, 0] } },
-    { name: "지급", type: "bar", barMaxWidth: 22, data: chart.months.map((m) => m.payment), itemStyle: { borderColor: "#1b1d2e", borderWidth: 1.5, borderRadius: [3, 3, 0, 0] } },
-  ],
-}));
-const chartEmpty = computed(() => chart.months.every((m) => !m.collection && !m.payment));
-const csDetail = ref(null);
-async function openCs(id) { try { csDetail.value = await supportApi.get(id); } catch (e) { /* noop */ } }
-const noticeBoard = ref(null);
-const notices = ref([]);
-const alarmBoard = ref(null);
-const alarmPosts = ref([]);
-const modalPost = ref(null);
+// 대시보드에 요약을 띄울 게시판 slug (seed-board 기준)
+const SLUGS = ["notice", "free"];
+const widgets = ref([]);
 
-const totals = reactive({ PAYMENT: 0, COLLECTION: 0 });
-const pendingCount = ref(0);
-const openTickets = ref(0);
-
-const csDesks = ref([]);
-const progress = reactive({}); // { [deskId]: { open, prog, rows } }
-function statusLabel(s) { return { OPEN: "접수", IN_PROGRESS: "처리중" }[s] || s; }
-
-const net = computed(() => totals.COLLECTION - totals.PAYMENT);
-const maxFlow = computed(() => Math.max(totals.PAYMENT, totals.COLLECTION, 1));
-const barIn = computed(() => Math.round((totals.COLLECTION / maxFlow.value) * 100));
-const barOut = computed(() => Math.round((totals.PAYMENT / maxFlow.value) * 100));
-const today = new Date().toLocaleDateString("ko-KR", { year: "numeric", month: "2-digit", day: "2-digit" });
-
-function won(n) { return (Number(n) || 0).toLocaleString("ko-KR") + "원"; }
-function monthStart() { const dt = new Date(); return new Date(dt.getFullYear(), dt.getMonth(), 1).toISOString().slice(0, 10); }
-async function openPost(id) { try { modalPost.value = await boardApi.postGet(id); } catch (e) { /* noop */ } }
+async function loadBoard(slug) {
+  const board = await boardApi.get(slug);
+  const res = await boardApi.postList(board.id, 1, 5);
+  return {
+    slug,
+    name: board.name,
+    posts: [...(res.notices || []), ...(res.rows || [])].slice(0, 5),
+  };
+}
 
 onMounted(async () => {
-  if (canBoard.value) try {
-    noticeBoard.value = await boardApi.get("notice");
-    const res = await boardApi.postList(noticeBoard.value.id, 1, 5);
-    notices.value = [...(res.notices || []), ...(res.rows || [])].slice(0, 5);
-  } catch (e) { /* skip */ }
-  if (canBoard.value) try {
-    alarmBoard.value = await boardApi.get("alarm");
-    const res = await boardApi.postList(alarmBoard.value.id, 1, 5);
-    alarmPosts.value = [...(res.notices || []), ...(res.rows || [])].slice(0, 5);
-  } catch (e) { /* skip */ }
-  if (canLedger.value) try {
-    const led = await ledgerApi.list({ date_from: monthStart(), limit: 1 });
-    totals.PAYMENT = led.totals?.PAYMENT || 0;
-    totals.COLLECTION = led.totals?.COLLECTION || 0;
-  } catch (e) { /* skip */ }
-  if (canSettlement.value) try {
-    const [v, g] = await Promise.all([
-      settlementApi.list({ type: "VENDOR", status: "PENDING", limit: 1 }),
-      settlementApi.list({ type: "GAME_COMPANY", status: "PENDING", limit: 1 }),
-    ]);
-    pendingCount.value = (v.total || 0) + (g.total || 0);
-  } catch (e) { /* skip */ }
-  if (canSettlement.value) try {
-    const res = await settlementApi.yearChart({});
-    chart.year = res.year;
-    chart.months = res.months || [];
-  } catch (e) { /* skip */ }
-  if (canSupport.value) try {
-    const [o, ip] = await Promise.all([
-      supportApi.list({ status: "OPEN", limit: 1 }),
-      supportApi.list({ status: "IN_PROGRESS", limit: 1 }),
-    ]);
-    openTickets.value = (o.total || 0) + (ip.total || 0);
-  } catch (e) { /* skip */ }
-  if (canSupport.value) try {
-    csDesks.value = await supportDeskApi.list();
-    await Promise.all(csDesks.value.map(async (dk) => {
-      const [op, pr] = await Promise.all([
-        supportApi.list({ desk_id: dk.id, status: "OPEN", limit: 5 }),
-        supportApi.list({ desk_id: dk.id, status: "IN_PROGRESS", limit: 5 }),
-      ]);
-      const rows = [...(op.rows || []), ...(pr.rows || [])].sort((a, b) => b.id - a.id).slice(0, 5);
-      progress[dk.id] = { open: op.total || 0, prog: pr.total || 0, rows };
-    }));
-  } catch (e) { /* skip */ }
+  if (!canBoard.value) return;
+  const loaded = [];
+  for (const slug of SLUGS) {
+    try {
+      loaded.push(await loadBoard(slug));
+    } catch (e) {
+      /* 게시판이 없으면 위젯을 건너뛴다 */
+    }
+  }
+  widgets.value = loaded;
 });
 </script>
 
 <style scoped>
 .home { max-width: 1000px; margin: 0 auto; }
+.phead { margin-bottom: 1.1rem; }
+.ttl { font-size: 1.5rem; font-weight: 800; color: var(--text); }
+.sub { font-size: 0.85rem; color: var(--text-muted); margin-top: 0.25rem; }
 
-/* ── 히어로 콘솔 ── */
-.hero { position: relative; overflow: hidden; padding: 1.6rem 1.8rem; color: var(--paper); background: radial-gradient(60% 60% at 88% 0%, rgba(122,92,255,0.4), transparent 60%), #16182a; border: 2px solid var(--line-hard); border-radius: 4px; box-shadow: var(--shadow-hard); }
-.scan { position: absolute; inset: 0; pointer-events: none; opacity: 0.3; background-image: repeating-linear-gradient(0deg, rgba(0,0,0,0.16) 0 2px, transparent 2px 4px); }
-.hero-head { position: relative; z-index: 1; display: flex; align-items: flex-start; justify-content: space-between; }
-.badge-you { font-family: var(--font-pixel); font-size: 0.6rem; letter-spacing: 0.14em; color: #2fe0c4; }
-.ttl { font-family: var(--font-pixel); font-size: 1.7rem; color: #fff; margin-top: 0.25rem; text-shadow: 2px 2px 0 rgba(0,0,0,0.35); }
-.sub { font-size: 0.82rem; color: rgba(231,232,241,0.6); margin-top: 0.3rem; }
-.mark { width: 52px; height: 52px; display: grid; place-items: center; font-family: var(--font-pixel); font-size: 1.25rem; color: #fff; background: var(--seal); border: 2px solid #0d0e1a; box-shadow: 3px 3px 0 #0d0e1a; }
+.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1rem; }
+.widget { padding: 1rem 1.1rem; }
+.whead { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 0.75rem; }
+.wttl { font-size: 1rem; font-weight: 700; color: var(--text); }
+.wmore { font-size: 0.78rem; color: var(--accent); }
+.wmore:hover { color: var(--accent-hover); }
 
-.flow { position: relative; z-index: 1; margin-top: 1.3rem; display: flex; flex-direction: column; gap: 0.55rem; }
-.flow-row { display: flex; align-items: center; gap: 0.7rem; }
-.flow-lbl { font-family: var(--font-pixel); font-size: 0.72rem; width: 64px; }
-.flow-lbl.in { color: #2fe0c4; } .flow-lbl.out { color: #ffb25e; }
-.track { flex: 1; height: 16px; background: rgba(255,255,255,0.08); border: 2px solid #0d0e1a; position: relative; }
-.fill { position: absolute; left: 0; top: 0; height: 100%; transition: width 0.5s steps(12); }
-.fill.in { background: repeating-linear-gradient(90deg, #12b8a6 0 6px, #0ea88f 6px 8px); }
-.fill.out { background: repeating-linear-gradient(90deg, #ff9f1c 0 6px, #e07d16 6px 8px); }
-.flow-val { width: 130px; text-align: right; font-size: 0.82rem; }
-.flow-val.in { color: #2fe0c4; } .flow-val.out { color: #ffb25e; }
-.flow-net { display: flex; align-items: center; justify-content: flex-end; gap: 0.7rem; margin-top: 0.4rem; padding-top: 0.7rem; border-top: 2px solid rgba(122,92,255,0.25); }
-.net-lbl { font-family: var(--font-pixel); font-size: 0.66rem; color: rgba(231,232,241,0.6); }
-.net-val { font-size: 1.15rem; }
-.net-val.pos { color: #2fe0c4; } .net-val.neg { color: #ff8d8d; }
-
-/* ── HUD 스탯 ── */
-.stats { margin-top: 1rem; display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.8rem; }
-.stat { display: flex; align-items: center; gap: 0.7rem; padding: 0.9rem; background: var(--surface); border: 2px solid var(--line-hard); border-radius: 4px; box-shadow: var(--shadow-hard); text-decoration: none; transition: transform 0.08s, box-shadow 0.08s; }
-.stat:hover { transform: translate(-2px, -2px); box-shadow: 5px 5px 0 var(--line-hard); }
-.s-ic { width: 38px; height: 38px; flex-shrink: 0; display: grid; place-items: center; border: 2px solid var(--line-hard); color: #fff; }
-.s-ic.in { background: var(--flow-in); } .s-ic.out { background: var(--flow-out); }
-.s-ic.warn { background: var(--gold); } .s-ic.acc { background: var(--seal); }
-.s-lbl { display: block; font-size: 0.72rem; color: var(--ink-muted); font-weight: 600; }
-.s-val { font-size: 1.15rem; color: var(--ink); }
-.s-val em { font-style: normal; font-size: 0.8rem; color: var(--ink-muted); margin-left: 1px; }
-.s-val.in { color: var(--flow-in); } .s-val.out { color: var(--flow-out); }
-@media (max-width: 720px) { .stats { grid-template-columns: repeat(2, 1fr); } }
-
-/* ── CS 상황판 ── */
-.csboard { margin-top: 1rem; padding: 1.1rem 1.2rem; }
-.cb-head { display: flex; align-items: baseline; gap: 0.6rem; margin-bottom: 0.9rem; }
-.cb-ttl { font-family: var(--font-pixel); font-size: 0.98rem; color: var(--ink); display: flex; align-items: center; gap: 0.45rem; }
-.cb-ttl i { color: var(--seal); font-size: 0.9rem; }
-.cb-sub { font-size: 0.74rem; color: var(--ink-faint); }
-.cb-cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.1rem; }
-@media (max-width: 640px) { .cb-cols { grid-template-columns: 1fr; } }
-.cb-col { display: flex; flex-direction: column; }
-.cb-col + .cb-col { border-left: 2px dashed var(--line); padding-left: 1.1rem; }
-@media (max-width: 900px) { .cb-col + .cb-col { border-left: none; padding-left: 0; border-top: 2px dashed var(--line); padding-top: 0.9rem; } }
-
-.cbc-head { display: flex; align-items: center; justify-content: space-between; gap: 0.5rem; margin-bottom: 0.55rem; }
-.cbc-name { font-family: var(--font-pixel); font-size: 0.8rem; color: var(--ink); display: flex; align-items: center; gap: 0.4rem; }
-.cbc-name i { color: var(--ink-muted); font-size: 0.78rem; }
-.cbc-chips { display: flex; gap: 0.3rem; }
-.chip { font-family: var(--font-pixel); font-size: 0.6rem; padding: 0.12rem 0.4rem; border: 1.5px solid var(--line-hard); border-radius: 3px; color: var(--ink-soft); background: var(--surface); }
-.chip em { font-style: normal; font-weight: 700; }
-.chip.open { color: #9a5b00; background: #fff3e0; }
-.chip.prog { color: var(--seal-deep); background: #ede9ff; }
-
-.cbc-list { display: flex; flex-direction: column; gap: 0.4rem; min-height: 60px; }
-.cbc-item { display: flex; align-items: center; gap: 0.55rem; padding: 0.45rem 0.55rem; background: var(--surface); border: 1.5px solid var(--line); border-radius: 3px; border-left-width: 4px; cursor: pointer; transition: transform 0.07s, box-shadow 0.07s, background 0.07s; }
-.cbc-item.s-open { border-left-color: var(--flow-out); }
-.cbc-item.s-in_progress { border-left-color: var(--seal); }
-.cbc-item:hover { transform: translate(-1px, -1px); box-shadow: 3px 3px 0 var(--line-hard); background: var(--surface-2); }
-.st-pill { flex-shrink: 0; font-family: var(--font-pixel); font-size: 0.56rem; padding: 0.14rem 0.35rem; border-radius: 3px; border: 1px solid var(--line-hard); color: #fff; }
-.st-pill.st-open { background: var(--flow-out); }
-.st-pill.st-in_progress { background: var(--seal); }
-.ci-main { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 1px; }
-.ci-title { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 0.84rem; font-weight: 600; color: var(--ink); }
-.ci-meta { font-size: 0.68rem; color: var(--ink-faint); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.ci-flag { flex-shrink: 0; font-size: 0.72rem; }
-.ci-flag.pr-2 { color: var(--flow-out); }
-.ci-flag.pr-3 { color: var(--danger); }
-.cbc-empty { padding: 0.3rem 0; }
-.cbc-more { margin-top: 0.7rem; font-size: 0.74rem; font-weight: 700; color: var(--ink-muted); text-decoration: none; align-self: flex-start; }
-.cbc-more:hover { color: var(--seal); }
-
-/* ── 정산 처리 차트 ── */
-.chartcard { margin-top: 1rem; padding: 1.1rem 1.2rem; }
-.ch-head { display: flex; align-items: baseline; gap: 0.6rem; margin-bottom: 0.6rem; }
-.ch-ttl { font-family: var(--font-pixel); font-size: 0.98rem; color: var(--ink); display: flex; align-items: center; gap: 0.45rem; }
-.ch-ttl i { color: var(--seal); font-size: 0.9rem; }
-.ch-sub { font-size: 0.74rem; color: var(--ink-faint); }
-.chart { height: 280px; width: 100%; }
-
-/* ── 공지 + 알림 ── */
-.cols { margin-top: 1rem; display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; align-items: start; }
-@media (max-width: 720px) { .cols { grid-template-columns: 1fr; } }
-.notice { padding: 1.1rem 1.2rem; }
-.nhead { display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.6rem; }
-.nt { font-family: var(--font-pixel); font-size: 0.95rem; color: var(--ink); display: flex; align-items: center; gap: 0.5rem; }
-.nt i { color: var(--seal); font-size: 0.85rem; }
-.more { font-size: 0.78rem; color: var(--ink-muted); text-decoration: none; }
-.more:hover { color: var(--seal); }
-.nlist { display: flex; flex-direction: column; }
-.nitem { display: flex; align-items: center; gap: 0.6rem; padding: 0.55rem 0.1rem; border-bottom: 1px solid var(--line); cursor: pointer; font-size: 0.88rem; }
-.nitem:last-child { border-bottom: none; }
-.nitem:hover .npt { color: var(--seal); }
-.pin { font-family: var(--font-pixel); font-size: 0.6rem; color: var(--seal-deep); background: #ede9ff; padding: 0.1rem 0.35rem; border: 1px solid var(--line-hard); }
-.npt { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--ink); font-weight: 600; }
-.ndate { color: var(--ink-faint); font-size: 0.72rem; }
-.nempty { color: var(--ink-faint); font-size: 0.86rem; padding: 0.8rem 0.1rem; }
-
-
-/* ── 모달 ── */
-.pmodal { position: fixed; inset: 0; z-index: 220; background: rgba(27,29,46,0.55); display: flex; align-items: center; justify-content: center; padding: 1rem; }
-.pbox { position: relative; width: 560px; max-width: 100%; max-height: 85vh; overflow-y: auto; padding: 1.6rem; }
-.pclose { position: absolute; top: 1rem; right: 1rem; width: 34px; height: 34px; border: 2px solid var(--line-hard); color: var(--ink); box-shadow: 2px 2px 0 var(--line-hard); }
-.pclose:hover { background: var(--surface-2); }
-.peyebrow { font-family: var(--font-pixel); font-size: 0.66rem; letter-spacing: 0.12em; color: var(--seal-deep); }
-.ptitle { font-family: var(--font-pixel); font-size: 1.2rem; color: var(--ink); margin-top: 0.3rem; }
-.pmeta { display: flex; gap: 0.4rem; align-items: center; margin-top: 0.5rem; font-size: 0.8rem; color: var(--ink-muted); padding-bottom: 0.9rem; border-bottom: 2px solid var(--line); }
-.pmeta .dot { color: var(--ink-faint); }
-.pcontent { padding: 1.1rem 0; font-size: 0.95rem; line-height: 1.75; color: var(--ink-soft); }
-.prose :deep(blockquote) { border-left: 3px solid var(--seal); margin: 0.5rem 0; padding: 0.25rem 0.9rem; color: var(--ink-muted); background: var(--surface-2); }
-.prose :deep(ul), .prose :deep(ol) { padding-left: 1.4rem; margin: 0.4rem 0; }
-.prose :deep(a) { color: var(--seal); text-decoration: underline; }
-.prose :deep(img) { max-width: 100%; margin: 0.4rem 0; }
-.pfull { display: inline-block; margin-top: 0.6rem; font-size: 0.84rem; font-weight: 700; color: var(--seal); text-decoration: none; }
-
-/* CS 읽기 전용 모달 */
-.ptitle .ro-pill { font-family: var(--font-pixel); font-size: 0.62rem; padding: 0.12rem 0.4rem; border-radius: 3px; border: 1px solid var(--line-hard); color: #fff; margin-right: 0.4rem; vertical-align: middle; }
-.ro-pill.st-open { background: var(--flow-out); }
-.ro-pill.st-in_progress { background: var(--seal); }
-.ro-tags { margin-top: 0.6rem; }
-.ro-thread { margin-top: 0.9rem; padding-top: 0.9rem; border-top: 2px solid var(--line); display: flex; flex-direction: column; gap: 0.7rem; }
-.ro-msg { border: 1.5px solid var(--line); border-left: 4px solid var(--seal); border-radius: 3px; padding: 0.6rem 0.75rem; background: var(--surface); }
-.ro-msg.internal { border-left-color: var(--gold); background: #fffdf5; }
-.ro-mmeta { display: flex; align-items: center; gap: 0.4rem; font-size: 0.7rem; color: var(--ink-faint); margin-bottom: 0.35rem; }
-.ro-ib { font-family: var(--font-pixel); font-size: 0.56rem; color: #7a5b00; background: #fff0cc; border: 1px solid var(--line-hard); border-radius: 2px; padding: 0.04rem 0.3rem; }
-.ro-mbody { font-size: 0.9rem; line-height: 1.7; color: var(--ink-soft); }
-.ro-foot { display: flex; align-items: center; gap: 0.6rem; margin-top: 1.1rem; padding-top: 0.9rem; border-top: 2px solid var(--line); }
-.ro-foot .btn { text-decoration: none; }
-.ro-note { display: inline-flex; align-items: center; gap: 0.35rem; font-size: 0.76rem; color: var(--ink-muted); font-weight: 600; }
-.ro-note i { color: var(--ink-faint); }
+.wlist { display: flex; flex-direction: column; }
+.wrow { display: flex; align-items: center; justify-content: space-between; gap: 0.75rem; padding: 0.5rem 0; border-bottom: 1px solid var(--border); }
+.wlist li:last-child .wrow { border-bottom: none; }
+.wtitle { font-size: 0.85rem; color: var(--text); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.wrow:hover .wtitle { color: var(--accent); }
+.wdate { font-size: 0.72rem; color: var(--text-subtle); flex-shrink: 0; font-variant-numeric: tabular-nums; }
 </style>

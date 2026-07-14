@@ -130,34 +130,34 @@ onMounted(load);
 <style scoped>
 .cols { display: grid; grid-template-columns: 220px 1fr; gap: 1rem; }
 @media (max-width: 640px) { .cols { grid-template-columns: 1fr; } }
-.h { font-family: "Galmuri11", monospace; font-weight: 700; color: var(--ink); }
+.h { font-weight: 700; color: var(--text); }
 
-.rolelist { background: var(--surface); border: 2px solid var(--line-hard); border-radius: 4px; padding: 0.8rem; height: max-content; }
+.rolelist { background: var(--surface); border: 1px solid var(--border-strong); border-radius: var(--radius); padding: 0.8rem; height: max-content; }
 .rl-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.6rem; }
 .rl { display: flex; flex-direction: column; gap: 2px; }
-.ritem { display: flex; align-items: center; justify-content: space-between; padding: 0.5rem 0.6rem; border-radius: 3px; cursor: pointer; transition: background 0.14s; }
+.ritem { display: flex; align-items: center; justify-content: space-between; padding: 0.5rem 0.6rem; border-radius: var(--radius); cursor: pointer; transition: background 0.14s; }
 .ritem:hover { background: var(--surface-2); }
-.ritem.on { background: rgba(122,92,255, 0.12); }
-.rname { font-weight: 600; color: var(--ink); font-size: 0.9rem; }
-.super { font-size: 0.64rem; font-weight: 700; color: var(--seal); background: rgba(122,92,255, 0.12); padding: 0.05rem 0.35rem; border-radius: 3px; }
+.ritem.on { background: var(--accent-soft); }
+.rname { font-weight: 600; color: var(--text); font-size: 0.9rem; }
+.super { font-size: 0.64rem; font-weight: 700; color: var(--accent); background: var(--accent-soft); padding: 0.05rem 0.35rem; border-radius: var(--radius); }
 
-.perm { background: var(--surface); border: 2px solid var(--line-hard); border-radius: 4px; padding: 1.1rem; min-height: 240px; }
+.perm { background: var(--surface); border: 1px solid var(--border-strong); border-radius: var(--radius); padding: 1.1rem; min-height: 240px; }
 .p-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; margin-bottom: 1rem; }
-.pdesc { font-size: 0.82rem; color: var(--ink-muted); margin-top: 0.2rem; }
-.supernote { color: var(--ink-muted); font-size: 0.88rem; }
+.pdesc { font-size: 0.82rem; color: var(--text-muted); margin-top: 0.2rem; }
+.supernote { color: var(--text-muted); font-size: 0.88rem; }
 .groups { display: flex; flex-direction: column; gap: 1.1rem; }
-.gtitle { font-family: "Galmuri11", monospace; font-weight: 700; font-size: 0.85rem; color: var(--seal); margin-bottom: 0.4rem; padding-bottom: 0.3rem; border-bottom: 1px dashed var(--line); }
-.pcheck { display: flex; align-items: center; gap: 0.55rem; padding: 0.3rem 0; font-size: 0.88rem; color: var(--ink); cursor: pointer; user-select: none; }
-.pcheck input { appearance: none; -webkit-appearance: none; flex-shrink: 0; width: 18px; height: 18px; border: 2px solid var(--line-hard); border-radius: 3px; background: var(--surface); box-shadow: 2px 2px 0 var(--line-hard); cursor: pointer; position: relative; transition: all 0.075s; }
-.pcheck input:checked { background: var(--seal); }
-.pcheck input:checked::after { content: ""; position: absolute; left: 4px; top: 1px; width: 5px; height: 9px; border: solid #fff; border-width: 0 2px 2px 0; transform: rotate(45deg); }
-.pcheck input:active { transform: translate(1px, 1px); box-shadow: 1px 1px 0 var(--line-hard); }
-.pcheck code { margin-left: auto; font-size: 0.72rem; color: var(--ink-faint); }
-.empty { color: var(--ink-faint); font-size: 0.9rem; padding: 2rem 0; text-align: center; }
+.gtitle { font-weight: 700; font-size: 0.85rem; color: var(--accent); margin-bottom: 0.4rem; padding-bottom: 0.3rem; border-bottom: 1px dashed var(--border); }
+.pcheck { display: flex; align-items: center; gap: 0.55rem; padding: 0.3rem 0; font-size: 0.88rem; color: var(--text); cursor: pointer; user-select: none; }
+.pcheck input { appearance: none; -webkit-appearance: none; flex-shrink: 0; width: 18px; height: 18px; border: 1px solid var(--border-strong); border-radius: var(--radius); background: var(--surface); box-shadow: var(--shadow-sm); cursor: pointer; position: relative; transition: all 0.075s; }
+.pcheck input:checked { background: var(--accent); }
+.pcheck input:checked::after { content: ""; position: absolute; left: 4px; top: 1px; width: 5px; height: 9px; border: solid var(--accent-fg); border-width: 0 2px 2px 0; transform: rotate(45deg); }
+.pcheck input:active {  box-shadow: var(--shadow-sm); }
+.pcheck code { margin-left: auto; font-size: 0.72rem; color: var(--text-subtle); }
+.empty { color: var(--text-subtle); font-size: 0.9rem; padding: 2rem 0; text-align: center; }
 
 .drawer { position: fixed; inset: 0; z-index: 210; background: rgba(20, 16, 13, 0.45); display: flex; align-items: center; justify-content: center; padding: 1rem; }
-.panel { width: 400px; max-width: 100%; background: var(--surface); border: 2px solid var(--line-hard); border-radius: 4px; padding: 1.4rem; }
-.ph { font-family: "Galmuri11", monospace; font-size: 1.1rem; font-weight: 700; color: var(--ink); margin-bottom: 1rem; }
+.panel { width: 400px; max-width: 100%; background: var(--surface); border: 1px solid var(--border-strong); border-radius: var(--radius); padding: 1.4rem; }
+.ph { font-size: 1.1rem; font-weight: 700; color: var(--text); margin-bottom: 1rem; }
 .msg { margin-top: 0.7rem; font-size: 0.82rem; font-weight: 600; }
 .msg.err { color: var(--danger); }
 .acts { display: flex; gap: 0.6rem; margin-top: 1.1rem; }

@@ -13,12 +13,10 @@ import BoardView from "@/pages/board/BoardView.vue";
 import PostDetailView from "@/pages/board/PostDetailView.vue";
 import PostEditView from "@/pages/board/PostEditView.vue";
 
-import LedgerView from "@/pages/ledger/LedgerView.vue";
-import SettlementView from "@/pages/settlement/SettlementView.vue";
-import SupportView from "@/pages/support/SupportView.vue";
 import FaqView from "@/pages/faq/FaqView.vue";
-import AlertsView from "@/pages/alerts/AlertsView.vue";
-import ExchangeRateView from "@/pages/exchange/ExchangeRateView.vue";
+
+import DepartmentView from "@/pages/hr/DepartmentView.vue";
+import EmployeeView from "@/pages/hr/EmployeeView.vue";
 
 import MyPage from "@/pages/mypage/MyPage.vue";
 import SettingsView from "@/pages/settings/SettingsView.vue";
@@ -43,16 +41,11 @@ export const router = createRouter({
           children: [
             { path: "", component: HomePage, meta: { auth: true, title: "대시보드" } },
 
-            // 지급/회수
-            { path: "ledger", component: LedgerView, meta: { auth: true, title: "장부 관리", perm: "ledger.view" } },
-            { path: "settlement/vendor", component: SettlementView, props: { type: "VENDOR" }, meta: { auth: true, title: "업체 정산", perm: "settlement.view" } },
-            { path: "settlement/gameco", component: SettlementView, props: { type: "GAME_COMPANY" }, meta: { auth: true, title: "게임사 정산", perm: "settlement.view" } },
-
-            // CS 관리
-            { path: "support/:deskCode", component: SupportView, meta: { auth: true, title: "CS 응대", perm: "support.view" } },
             { path: "faq", component: FaqView, meta: { auth: true, title: "자주 하는 질문", perm: "faq.view" } },
-            { path: "alerts", component: AlertsView, meta: { auth: true, title: "알림" } },
-            { path: "exchange", component: ExchangeRateView, meta: { auth: true, title: "환율 정보" } },
+
+            // 인사
+            { path: "hr/department", component: DepartmentView, meta: { auth: true, title: "부서 관리", perm: "department.view" } },
+            { path: "hr/employee", component: EmployeeView, meta: { auth: true, title: "직원 관리", perm: "hr.view" } },
 
             // 게시판
             { path: "board/:slug", component: BoardView, meta: { auth: true, title: "게시판", perm: "board.view" } },
@@ -63,11 +56,13 @@ export const router = createRouter({
             { path: "mypage", component: MyPage, meta: { auth: true, title: "마이페이지" } },
             { path: "account/roles", component: AccountSettings, meta: { auth: true, title: "계정 권한", perm: ["usermanager.view", "permission.user.view"] } },
             { path: "account/whiteip", component: WhiteIpSettings, meta: { auth: true, title: "화이트 아이피", perm: "usermanager.view" } },
-            { path: "settings", component: SettingsView, meta: { auth: true, title: "환경설정", perm: ["gameCompany.view", "vendor.view", "permission.menu.view"] } },
+            { path: "settings", component: SettingsView, meta: { auth: true, title: "환경설정", perm: ["permission.menu.view"] } },
           ],
         },
       ],
     },
+    // 없는 경로(삭제된 CS 라우트의 옛 북마크 포함)는 대시보드로
+    { path: "/:pathMatch(.*)*", redirect: "/" },
   ],
 });
 

@@ -20,7 +20,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-if="!filtered.length"><td colspan="7"><EmptyState icon="🌐" :title="$t('번역팩이 없어요')" :desc="$t('행을 추가해 다국어 문구를 등록해요.')" :hint="$t('＋ 행 추가')" compact /></td></tr>
+          <tr v-if="!filtered.length"><td colspan="7"><EmptyState icon="fa-language" :title="$t('번역팩이 없습니다')" :desc="$t('행을 추가해 다국어 문구를 등록하세요.')" compact /></td></tr>
           <tr v-for="(r, i) in filtered" :key="r._k">
             <td><input v-model="r.name.ko" class="cell" :placeholder="$t('한국어')" /></td>
             <td><input v-model="r.name.en" class="cell" placeholder="English" /></td>
@@ -45,7 +45,7 @@ import { ref, computed, onMounted } from "vue";
 import { useToast } from "vue-toastification";
 import { confirmDelete } from "@/lib/ui";
 import EmptyState from "@/components/base/EmptyState.vue";
-import { langPackApi } from "@/api/cs";
+import { langPackApi } from "@/api/settings";
 import { useI18nStore } from "@/stores/i18n";
 
 const toast = useToast();
@@ -118,21 +118,21 @@ onMounted(load);
 
 <style scoped>
 .head { display: flex; align-items: center; justify-content: space-between; gap: 0.6rem; margin-bottom: 0.6rem; flex-wrap: wrap; }
-.h { font-weight: 700; color: var(--ink); }
-.c { color: var(--seal); }
+.h { font-weight: 700; color: var(--text); }
+.c { color: var(--accent); }
 .tools { display: flex; gap: 0.5rem; align-items: center; }
-.hint { font-size: 0.78rem; color: var(--ink-muted); margin-bottom: 0.8rem; }
-.hint code { font-family: var(--font-pixel); font-size: 0.72rem; background: var(--surface-2); border: 1px solid var(--line); border-radius: 3px; padding: 0.02rem 0.3rem; }
-.tablewrap { border: 2px solid var(--line-hard); border-radius: 4px; overflow-x: auto; background: var(--surface); box-shadow: var(--shadow-hard); }
-.tbl { width: 100%; border-collapse: collapse; min-width: 860px; }
-.tbl th { text-align: left; padding: 0.55rem 0.7rem; background: var(--surface-2); border-bottom: 2px solid var(--line-strong); font-family: var(--font-pixel); font-size: 0.72rem; color: var(--ink-muted); white-space: nowrap; }
-.tbl td { padding: 0.35rem 0.5rem; border-bottom: 1px solid var(--line); }
-.tbl tbody tr:last-child td { border-bottom: none; }
+.hint { font-size: 0.78rem; color: var(--text-muted); margin-bottom: 0.8rem; }
+.hint code { font-size: 0.72rem; background: var(--surface-2); border: 1px solid var(--border); border-radius: var(--radius); padding: 0.02rem 0.3rem; }
+.tablewrap { border: 1px solid var(--border-strong); border-radius: var(--radius); overflow-x: auto; background: var(--surface); box-shadow: var(--shadow-sm); }
+/* 편집 그리드 — 조밀하게, 좁으면 가로 스크롤 */
+.tbl { min-width: 860px; }
+.tbl th { padding: 0.55rem 0.7rem; font-size: 0.72rem; }
+.tbl td { padding: 0.35rem 0.5rem; }
 .c { text-align: center; } .w-act { width: 60px; } .w-st { width: 60px; } .w-del { width: 72px; }
-.cell { width: 100%; height: 30px; padding: 0 0.5rem; font-size: 0.84rem; border: 2px solid var(--line); border-radius: 3px; outline: none; background: var(--surface); }
-.cell:focus { border-color: var(--seal); box-shadow: 0 0 0 2px rgba(122,92,255,0.15); }
-.sw { display: inline-block; width: 40px; height: 22px; border-radius: 3px; background: var(--surface-2); border: 2px solid var(--line-hard); position: relative; cursor: pointer; transition: background 0.18s; }
-.sw.on { background: #2e7d43; }
-.sw .knob { position: absolute; top: 2px; left: 2px; width: 14px; height: 14px; border-radius: 2px; background: var(--surface); border: 1px solid var(--line-hard); transition: transform 0.18s; }
+.cell { width: 100%; height: 30px; padding: 0 0.5rem; font-size: 0.84rem; border: 1px solid var(--border); border-radius: var(--radius); outline: none; background: var(--surface); }
+.cell:focus { border-color: var(--accent); box-shadow: var(--ring); }
+.sw { display: inline-block; width: 40px; height: 22px; border-radius: var(--radius); background: var(--surface-2); border: 1px solid var(--border-strong); position: relative; cursor: pointer; transition: background 0.18s; }
+.sw.on { background: var(--positive); }
+.sw .knob { position: absolute; top: 2px; left: 2px; width: 14px; height: 14px; border-radius: var(--radius); background: var(--surface); border: 1px solid var(--border-strong); transition: transform 0.18s; }
 .sw.on .knob { transform: translateX(18px); }
 </style>

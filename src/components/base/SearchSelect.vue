@@ -7,7 +7,7 @@
     <!-- 트리거 -->
     <div :class="triggerClasses" @click="toggle">
       <div class="flex-1 truncate leading-none flex items-center gap-2">
-        <span v-if="selectedItem && selectedItem[colorKey]" class="w-3 h-3 rounded-[2px] border border-[color:var(--line-hard)] shrink-0" :style="{ backgroundColor: selectedItem[colorKey] }"></span>
+        <span v-if="selectedItem && selectedItem[colorKey]" class="w-3 h-3 rounded-[2px] border border-[color:var(--border-strong)] shrink-0" :style="{ backgroundColor: selectedItem[colorKey] }"></span>
         <span class="truncate">{{ selectedLabel || placeholder }}</span>
       </div>
 
@@ -15,7 +15,7 @@
         <button
           v-if="modelValue !== null && modelValue !== ''"
           @click.stop="clear"
-          class="text-[color:var(--ink-faint)] hover:text-[#7a5cff] transition-colors flex items-center justify-center text-[10px]"
+          class="text-[color:var(--text-subtle)] hover:text-[color:var(--accent)] transition-colors flex items-center justify-center text-[10px]"
         >
           <i class="fa-solid fa-xmark"></i>
         </button>
@@ -23,7 +23,7 @@
         <i
           class="fa-solid fa-chevron-down transition-transform duration-200 flex items-center justify-center"
           :class="[
-            open ? 'rotate-180 text-[#7a5cff]' : 'text-[color:var(--ink-faint)]',
+            open ? 'rotate-180 text-[color:var(--accent)]' : 'text-[color:var(--text-subtle)]',
             isLargeSize ? 'text-xl' : 'text-[9px]',
           ]"
         ></i>
@@ -36,15 +36,15 @@
         v-if="open"
         ref="dropdown"
         :style="dropdownStyle"
-        class="bg-[color:var(--surface)] border-2 border-[color:var(--line-hard)] rounded-[3px] shadow-[4px_4px_0_var(--line-hard)] overflow-hidden"
+        class="bg-[color:var(--surface)] border-2 border-[color:var(--border-strong)] rounded-[3px] shadow-[4px_4px_0_var(--border-strong)] overflow-hidden"
       >
-        <div class="p-2 bg-[color:var(--surface-2)] border-b-2 border-[color:var(--line-hard)]">
+        <div class="p-2 bg-[color:var(--surface-2)] border-b-2 border-[color:var(--border-strong)]">
           <input
             ref="searchInput"
             v-model="keyword"
             type="text"
             :placeholder="searchPlaceholder"
-            class="w-full h-[30px] px-2 text-xs border-2 border-[color:var(--line-strong)] rounded-[3px] focus:outline-none focus:ring-2 focus:ring-[#7a5cff]/25 focus:border-[#7a5cff] bg-[color:var(--surface)]"
+            class="w-full h-[30px] px-2 text-xs border-2 border-[color:var(--border-strong)] rounded-[3px] focus:outline-none focus:ring-2 focus:ring-[color:var(--accent)] focus:border-[color:var(--accent)] bg-[color:var(--surface)]"
           />
         </div>
 
@@ -55,26 +55,26 @@
             class="px-3 py-1.5 text-xs hover:bg-[color:var(--surface-2)] cursor-pointer flex justify-between items-center group transition-colors"
             @click="select(item)"
           >
-            <span class="text-[color:var(--ink-soft)] group-hover:text-[#7a5cff] font-medium flex items-center gap-2">
-              <span v-if="item[colorKey]" class="w-3 h-3 rounded-[2px] border border-[color:var(--line-hard)] shrink-0" :style="{ backgroundColor: item[colorKey] }"></span>
+            <span class="text-[color:var(--text)] group-hover:text-[color:var(--accent)] font-medium flex items-center gap-2">
+              <span v-if="item[colorKey]" class="w-3 h-3 rounded-[2px] border border-[color:var(--border-strong)] shrink-0" :style="{ backgroundColor: item[colorKey] }"></span>
               {{ item[labelKey] }}
             </span>
             <i
               v-if="item[valueKey] === modelValue"
-              class="fa-solid fa-check text-[#7a5cff] text-[10px]"
+              class="fa-solid fa-check text-[color:var(--accent)] text-[10px]"
             ></i>
           </div>
           <button
             v-if="canCreate"
             type="button"
-            class="w-full px-3 py-2 text-xs text-left text-[#5f3fe0] bg-[#ede9ff] hover:bg-[#e0d9ff] border-t-2 border-[color:var(--line-hard)] flex items-center gap-1.5"
+            class="w-full px-3 py-2 text-xs text-left text-[color:var(--accent-hover)] bg-[color:var(--accent-soft)] hover:brightness-95 border-t-2 border-[color:var(--border-strong)] flex items-center gap-1.5"
             @click="createItem"
           >
-            <i class="fa-solid fa-plus"></i> "<b class="font-[var(--font-pixel)]">{{ keyword.trim() }}</b>" 추가
+            <i class="fa-solid fa-plus"></i> "<b class="font-[var(--font-sans)]">{{ keyword.trim() }}</b>" 추가
           </button>
           <div
             v-if="filteredOptions.length === 0 && !canCreate"
-            class="px-3 py-5 text-[color:var(--ink-faint)] text-center text-xs"
+            class="px-3 py-5 text-[color:var(--text-subtle)] text-center text-xs"
           >
             {{ emptyText }}
           </div>
@@ -157,11 +157,11 @@ export default {
       const hasText = /text-/.test(parentClass);
 
       return [
-        "flex justify-between items-center cursor-pointer transition-all box-border relative text-[color:var(--ink)]",
+        "flex justify-between items-center cursor-pointer transition-all box-border relative text-[color:var(--text)]",
         // 기본값 세팅 (주입된 클래스가 없을 때만)
         !hasHeight && !hasPadding && "h-[34px] px-2.5",
         !hasPadding && hasHeight && "px-2.5",
-        !hasBorder && "border-2 border-[color:var(--line-strong)]",
+        !hasBorder && "border-2 border-[color:var(--border-strong)]",
         !hasRounded && "rounded-[3px]",
         !hasText && "text-xs",
         !hasPadding && !hasHeight && "bg-white",
@@ -169,8 +169,8 @@ export default {
         parentClass,
         // 상태값
         this.open
-          ? "ring-2 ring-[#7a5cff]/25 border-[#7a5cff]"
-          : "hover:border-[#7a5cff]",
+          ? "ring-2 ring-[color:var(--accent)] border-[color:var(--accent)]"
+          : "hover:border-[color:var(--accent)]",
       ];
     },
   },
@@ -224,8 +224,8 @@ export default {
     },
     // 선택을 해제한다
     clear() {
-      this.$emit("update:modelValue", "");
-      this.$emit("change", "");
+      this.$emit("update:modelValue", null);
+      this.$emit("change", null);
       this.open = false;
     },
     // 컴포넌트 외부 클릭 시 드롭다운을 닫는다 (Teleport 된 dropdown 도 wrapper 외부로 보지 않도록 분기)
