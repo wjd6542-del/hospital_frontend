@@ -84,6 +84,7 @@ const form = reactive({
   type_id: null,
   head_employee_id: null,
   is_active: true,
+  sort: 0,
 });
 
 async function onSelect(node) {
@@ -100,6 +101,9 @@ async function onSelect(node) {
   form.type_id = d.type_id ?? null;
   form.head_employee_id = d.head_employee_id ?? null;
   form.is_active = d.is_active;
+  // 백엔드 sort 스키마(z.coerce.number().int().default(0))는 값이 없으면 0을 채워 넣고
+  // 그대로 UPDATE한다. 드래그 정렬로 옮긴 위치가 저장 시 날아가지 않도록 그대로 보존한다.
+  form.sort = d.sort;
 }
 
 async function save() {

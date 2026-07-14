@@ -51,8 +51,6 @@
         </template>
         <template v-else>
           <span class="nm">{{ row.node.name }}</span>
-          <span v-if="row.node.open_count" class="cnt open" :title="`접수 ${row.node.open_count}건`">{{ row.node.open_count }}</span>
-          <span v-if="row.node.progress_count" class="cnt prog" :title="`처리중 ${row.node.progress_count}건`">{{ row.node.progress_count }}</span>
           <span class="acts">
             <button class="ico" :title="$t('하위 추가')" @click.stop="startAdd(row.node)"><i class="fa-solid fa-plus"></i></button>
             <button class="ico" :title="$t('명칭 수정')" @click.stop="startEdit(row.node)"><i class="fa-solid fa-pen"></i></button>
@@ -74,7 +72,7 @@ import EmptyState from "@/components/base/EmptyState.vue";
 const props = defineProps({
   api: { type: Object, required: true }, // { tree, save, remove }
   label: { type: String, default: "항목" },
-  emptyIcon: { type: String, default: "🏪" },
+  emptyIcon: { type: String, default: "fa-sitemap" },
   selectedId: { type: Number, default: null },
 });
 const emit = defineEmits(["select", "change"]);
@@ -323,18 +321,15 @@ onBeforeUnmount(() => {
 .grip { flex-shrink: 0; width: 12px; display: grid; place-items: center; color: var(--text-subtle); font-size: 0.72rem; cursor: grab; opacity: 0.35; }
 .vt-row:hover .grip { opacity: 0.9; }
 .grip:active { cursor: grabbing; }
-.vt-row.on { background: rgba(122, 92, 255, 0.16); box-shadow: inset 0 0 0 2px var(--accent); }
+.vt-row.on { background: color-mix(in srgb, var(--accent) 16%, transparent); box-shadow: inset 0 0 0 2px var(--accent); }
 .vt-row.on .nm { color: var(--text); }
 .vt-row.dim .nm { color: var(--text-subtle); text-decoration: line-through; }
 .vt-row.dragging { opacity: 0.45; }
-.vt-row.dz-inside { background: rgba(122, 92, 255, 0.24); box-shadow: inset 0 0 0 2px var(--accent); }
+.vt-row.dz-inside { background: color-mix(in srgb, var(--accent) 24%, transparent); box-shadow: inset 0 0 0 2px var(--accent); }
 .vt-row.dz-before { box-shadow: inset 0 3px 0 var(--accent); }
 .vt-row.dz-after { box-shadow: inset 0 -3px 0 var(--accent); }
 .rootdrop { margin: 0.2rem; padding: 0.5rem; text-align: center; font-family: var(--font-sans); font-size: 0.66rem; color: var(--accent-hover); background: var(--surface-2); border: 2px dashed var(--accent); border-radius: var(--radius); }
-.rootdrop.over { background: rgba(122, 92, 255, 0.24); }
-.cnt { flex-shrink: 0; min-width: 18px; height: 18px; padding: 0 4px; display: grid; place-items: center; font-family: var(--font-sans); font-size: 0.6rem; color: #fff; border: 1px solid var(--border-strong); border-radius: var(--radius); cursor: help; }
-.cnt.open { background: #f59e0b; } /* 접수 */
-.cnt.prog { background: #7a5cff; } /* 처리중 */
+.rootdrop.over { background: color-mix(in srgb, var(--accent) 24%, transparent); }
 .caret { width: 18px; height: 18px; flex-shrink: 0; display: grid; place-items: center; color: var(--text-muted); font-size: 0.75rem; }
 .caret.ph { visibility: hidden; }
 .nm { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-weight: 600; color: var(--text); }
@@ -343,5 +338,5 @@ onBeforeUnmount(() => {
 .ico { width: 24px; height: 22px; display: grid; place-items: center; border-radius: var(--radius); font-size: 0.72rem; color: var(--text-muted); }
 .ico:hover { background: var(--surface); color: var(--accent); box-shadow: var(--shadow-sm); }
 .ico.del:hover { color: var(--danger); }
-.ico.ok { color: var(--flow-in); }
+.ico.ok { color: var(--positive); }
 </style>

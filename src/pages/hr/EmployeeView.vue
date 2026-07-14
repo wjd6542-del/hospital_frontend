@@ -220,15 +220,26 @@ async function save() {
   try {
     const body = { ...form };
     delete body.resigned_at; // 퇴사는 resign 으로만 처리한다
+    // 신규 등록 시 id는 blank()의 null을 그대로 들고 있다. 백엔드 스키마는 id를
+    // z.coerce.number().int().positive().optional()로 받아 undefined만 통과시키므로
+    // (null은 coerce로 0이 되어 .positive()에서 실패한다) 아예 키를 지워야 한다.
+    if (!body.id) delete body.id;
     // SearchSelect의 '지우기' 버튼은 빈 문자열을 emit 하므로, 서버 검증(z.coerce.number().nullish())이
     // 통과하도록 저장 시점에 null로 정규화한다. id는 항상 양의 정수라 falsy 값(""·0·null)은 안전하게 null로 취급 가능하다.
     body.department_id = form.department_id || null;
     body.position_id = form.position_id || null;
     body.job_type_id = form.job_type_id || null;
     body.employment_type_id = form.employment_type_id || null;
+    // <input type="date">는 clear 시 ""를 v-model에 넣는다. licenseSchema의
+    // z.coerce.date().nullish()는 ""를 Invalid Date로 만들어 실패하므로 null로 정규화한다.
     body.licenses = form.licenses
       .filter((l) => l.license_type_id && l.license_no?.trim())
-      .map((l) => ({ ...l, license_type_id: l.license_type_id || null }));
+      .map((l) => ({
+        ...l,
+        license_type_id: l.license_type_id || null,
+        issued_at: l.issued_at || null,
+        expires_at: l.expires_at || null,
+      }));
     await employeeApi.save(body);
     toast.success("직원이 저장되었습니다.");
     showForm.value = false;

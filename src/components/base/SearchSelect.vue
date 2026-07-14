@@ -224,8 +224,8 @@ export default {
     },
     // 선택을 해제한다
     clear() {
-      this.$emit("update:modelValue", "");
-      this.$emit("change", "");
+      this.$emit("update:modelValue", null);
+      this.$emit("change", null);
       this.open = false;
     },
     // 컴포넌트 외부 클릭 시 드롭다운을 닫는다 (Teleport 된 dropdown 도 wrapper 외부로 보지 않도록 분기)
