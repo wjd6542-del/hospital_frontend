@@ -17,6 +17,8 @@ import FaqView from "@/pages/faq/FaqView.vue";
 
 import DepartmentView from "@/pages/hr/DepartmentView.vue";
 import EmployeeView from "@/pages/hr/EmployeeView.vue";
+import ScheduleView from "@/pages/hr/ScheduleView.vue";
+import AttendanceView from "@/pages/hr/AttendanceView.vue";
 
 import MyPage from "@/pages/mypage/MyPage.vue";
 import SettingsView from "@/pages/settings/SettingsView.vue";
@@ -46,6 +48,8 @@ export const router = createRouter({
             // 인사
             { path: "hr/department", component: DepartmentView, meta: { auth: true, title: "부서 관리", perm: "department.view" } },
             { path: "hr/employee", component: EmployeeView, meta: { auth: true, title: "직원 관리", perm: "hr.view" } },
+            { path: "hr/schedule", component: ScheduleView, meta: { auth: true, title: "근무표", perm: "attendance.view" } },
+            { path: "hr/attendance", component: AttendanceView, meta: { auth: true, title: "출퇴근", perm: "attendance.view" } },
 
             // 게시판
             { path: "board/:slug", component: BoardView, meta: { auth: true, title: "게시판", perm: "board.view" } },
