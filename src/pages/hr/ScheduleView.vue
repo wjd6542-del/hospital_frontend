@@ -185,9 +185,17 @@ async function endDrag() {
 
   try {
     if (brush.value === "ERASE") {
+      let failed = 0;
       for (const c of cells) {
-        await shiftScheduleApi.deleteCell(c.employee_id, c.work_date).catch(() => {});
+        try {
+          await shiftScheduleApi.deleteCell(c.employee_id, c.work_date);
+        } catch (e) {
+          // 근무가 없는 칸을 드래그로 지우는 건 정상 동작이라 404 NOT_FOUND는 실패로 세지 않는다.
+          const isNotFound = e?.code === "NOT_FOUND" || String(e?.message || "").includes("찾을 수 없");
+          if (!isNotFound) failed++;
+        }
       }
+      if (failed) toast.error(`${failed}칸을 지우지 못했습니다.`);
     } else {
       await shiftScheduleApi.saveBulk(
         cells.map((c) => ({

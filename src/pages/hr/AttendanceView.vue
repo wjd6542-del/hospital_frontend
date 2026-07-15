@@ -138,8 +138,16 @@ const filter = reactive({
 /** ISO → "2026-08-03" */
 const ymd = (v) => (v ? String(v).slice(0, 10) : "-");
 
-/** ISO → "2026-08-03T22:00" (datetime-local 이 요구하는 형식) */
-const toLocal = (v) => (v ? String(v).slice(0, 16) : "");
+/** 서버 ISO(UTC) → datetime-local 이 요구하는 로컬 벽시계 "YYYY-MM-DDTHH:MM"
+ *  주의: .slice(0, 16) 로 문자열만 잘라내면 UTC 벽시계가 그대로 보여 KST(+9)에서
+ *  9시간이 어긋난다. new Date() 로 파싱해 로컬 getHours 등을 읽어야 저장 경로
+ *  (new Date(datetime-local 값) → 서버 로컬로 해석) 와 왕복이 맞는다. */
+const toLocal = (v) => {
+  if (!v) return "";
+  const d = new Date(v);
+  const pad = (n) => String(n).padStart(2, "0");
+  return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
+};
 
 /** 분 → "8h 30m" */
 const hm = (m) => (m ? `${Math.floor(m / 60)}h ${m % 60}m` : "-");
