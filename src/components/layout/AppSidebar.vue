@@ -72,6 +72,8 @@ const menus = computed(() => [
     children: [
       { label: "부서 관리", to: "/hr/department", perm: "department.view" },
       { label: "직원 관리", to: "/hr/employee", perm: "hr.view" },
+      { label: "근무표", to: "/hr/schedule", perm: "attendance.view" },
+      { label: "출퇴근", to: "/hr/attendance", perm: "attendance.view" },
     ],
   },
   { label: "게시판", icon: "fa-clipboard-list", perm: "board.view", children: boards.value.map((b) => ({ label: b.name, to: `/board/${b.slug}` })) },
