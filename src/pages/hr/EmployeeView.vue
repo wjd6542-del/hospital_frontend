@@ -10,11 +10,8 @@
       <span class="f-label">{{ $t("직종") }}</span>
       <SearchSelect v-model="filter.job_type_id" :options="jobOptions" :placeholder="$t('전체')" />
       <span class="f-label">{{ $t("상태") }}</span>
-      <select v-model="filter.status" class="field field-xs" style="width: 110px">
-        <option :value="undefined">{{ $t("전체") }}</option>
-        <option value="active">{{ $t("재직") }}</option>
-        <option value="resigned">{{ $t("퇴사") }}</option>
-      </select>
+      <BaseSelect v-model="filter.status" :options="statusOptions" size="xs" style="width: 110px" />
+
       <input v-model="filter.q" class="field field-xs" style="width: 180px" :placeholder="$t('이름 · 사번')" @keyup.enter="load(1)" />
       <button class="btn btn-xs" @click="load(1)">{{ $t("검색") }}</button>
       <button class="btn btn-xs btn-primary" style="margin-left: auto" @click="openNew">＋ {{ $t("직원 등록") }}</button>
@@ -123,6 +120,7 @@
 // @ts-nocheck
 import { ref, reactive, computed, onMounted } from "vue";
 import SearchSelect from "@/components/base/SearchSelect.vue";
+import BaseSelect from "@/components/base/BaseSelect.vue";
 import EmptyState from "@/components/base/EmptyState.vue";
 import Pager from "@/components/base/Pager.vue";
 import { employeeApi, departmentApi, categoryApi } from "@/api/hr";
@@ -139,7 +137,12 @@ const limit = ref(20);
 const saving = ref(false);
 const showForm = ref(false);
 
-const filter = reactive({ q: "", department_id: null, job_type_id: null, status: undefined });
+const filter = reactive({ q: "", department_id: null, job_type_id: null, status: null });
+const statusOptions = [
+  { value: null, label: "전체" },
+  { value: "active", label: "재직" },
+  { value: "resigned", label: "퇴사" },
+];
 
 const deptOptions = ref([]);
 const posOptions = ref([]);
@@ -178,6 +181,8 @@ async function load(p = page.value) {
     ...filter,
     department_id: filter.department_id || null,
     job_type_id: filter.job_type_id || null,
+    // BaseSelect의 '전체'는 null 을 emit → status 스키마는 optional(undefined)만 허용하므로 정규화
+    status: filter.status || undefined,
     page: p,
     limit: limit.value,
   });

@@ -74,6 +74,8 @@ const menus = computed(() => [
       { label: "직원 관리", to: "/hr/employee", perm: "hr.view" },
       { label: "근무표", to: "/hr/schedule", perm: "attendance.view" },
       { label: "출퇴근", to: "/hr/attendance", perm: "attendance.view" },
+      { label: "휴가 관리", to: "/hr/leave", perm: "leave.view" },
+      { label: "연차 부여", to: "/hr/leave-grant", perm: "leave.view" },
     ],
   },
   { label: "게시판", icon: "fa-clipboard-list", perm: "board.view", children: boards.value.map((b) => ({ label: b.name, to: `/board/${b.slug}` })) },

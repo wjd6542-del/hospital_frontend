@@ -7,17 +7,9 @@
     <div class="filterbar">
       <span class="f-label">{{ $t("부서") }}</span>
       <SearchSelect v-model="filter.department_id" :options="deptOptions" :placeholder="$t('전체')" />
-      <input v-model="filter.date_from" type="date" class="field field-xs" style="width: 140px" />
-      <span class="f-label">~</span>
-      <input v-model="filter.date_to" type="date" class="field field-xs" style="width: 140px" />
-      <select v-model="filter.status" class="field field-xs" style="width: 110px">
-        <option :value="undefined">{{ $t("전체") }}</option>
-        <option value="NORMAL">{{ $t("정상") }}</option>
-        <option value="LATE">{{ $t("지각") }}</option>
-        <option value="EARLY_LEAVE">{{ $t("조퇴") }}</option>
-        <option value="ABSENT">{{ $t("결근") }}</option>
-        <option value="LEAVE">{{ $t("휴가") }}</option>
-      </select>
+      <span class="f-label">{{ $t("기간") }}</span>
+      <DateRangePicker v-model="range" mode="date" @change="onRangeChange" />
+      <BaseSelect v-model="filter.status" :options="statusOptions" size="xs" style="width: 110px" />
       <input v-model="filter.q" class="field field-xs" style="width: 150px" :placeholder="$t('이름 · 사번')" @keyup.enter="load(1)" />
       <button class="btn btn-xs" @click="load(1)">{{ $t("검색") }}</button>
       <button class="btn btn-xs btn-primary" style="margin-left: auto" :disabled="!filter.department_id || generating" @click="generate">
@@ -100,10 +92,13 @@
 // @ts-nocheck
 import { ref, reactive, onMounted } from "vue";
 import SearchSelect from "@/components/base/SearchSelect.vue";
+import BaseSelect from "@/components/base/BaseSelect.vue";
 import EmptyState from "@/components/base/EmptyState.vue";
 import Pager from "@/components/base/Pager.vue";
+import DateRangePicker from "@/components/base/DateRangePicker.vue";
 import { attendanceApi } from "@/api/attendance";
 import { departmentApi } from "@/api/hr";
+import { formatDateOnly } from "@/utils/date";
 import { useToast } from "vue-toastification";
 
 const toast = useToast();
@@ -115,6 +110,11 @@ const STATUS = {
   ABSENT: { label: "결근", cls: "badge-error" },
   LEAVE: { label: "휴가", cls: "badge-neutral" },
 };
+
+const statusOptions = [
+  { value: null, label: "전체" },
+  ...Object.entries(STATUS).map(([value, s]) => ({ value, label: s.label })),
+];
 
 const today = new Date().toISOString().slice(0, 10);
 const rows = ref([]);
@@ -131,9 +131,19 @@ const filter = reactive({
   department_id: null,
   date_from: today,
   date_to: today,
-  status: undefined,
+  status: null,
   q: "",
 });
+
+// DateRangePicker 는 { start, end } Date 객체로 v-model 한다.
+// 백엔드는 date_from/date_to 를 "YYYY-MM-DD" 로 받으므로 어댑터로 변환한다.
+const range = ref({ start: new Date(), end: new Date() });
+
+function onRangeChange() {
+  if (range.value?.start) filter.date_from = formatDateOnly(range.value.start);
+  if (range.value?.end) filter.date_to = formatDateOnly(range.value.end);
+  load(1);
+}
 
 /** ISO → "2026-08-03" */
 const ymd = (v) => (v ? String(v).slice(0, 10) : "-");

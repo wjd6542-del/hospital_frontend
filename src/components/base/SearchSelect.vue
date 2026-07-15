@@ -36,15 +36,15 @@
         v-if="open"
         ref="dropdown"
         :style="dropdownStyle"
-        class="bg-[color:var(--surface)] border-2 border-[color:var(--border-strong)] rounded-[3px] shadow-[4px_4px_0_var(--border-strong)] overflow-hidden"
+        class="bg-[color:var(--surface)] border border-[color:var(--border-strong)] rounded-[6px] shadow-[var(--shadow-lg)] overflow-hidden"
       >
-        <div class="p-2 bg-[color:var(--surface-2)] border-b-2 border-[color:var(--border-strong)]">
+        <div class="p-2 bg-[color:var(--surface-2)] border-b border-[color:var(--border-strong)]">
           <input
             ref="searchInput"
             v-model="keyword"
             type="text"
             :placeholder="searchPlaceholder"
-            class="w-full h-[30px] px-2 text-xs border-2 border-[color:var(--border-strong)] rounded-[3px] focus:outline-none focus:ring-2 focus:ring-[color:var(--accent)] focus:border-[color:var(--accent)] bg-[color:var(--surface)]"
+            class="w-full h-[30px] px-2.5 text-xs border border-[color:var(--border-strong)] rounded-[6px] outline-none transition focus:border-[color:var(--accent)] focus:shadow-[var(--ring)] bg-[color:var(--surface)]"
           />
         </div>
 
@@ -67,7 +67,7 @@
           <button
             v-if="canCreate"
             type="button"
-            class="w-full px-3 py-2 text-xs text-left text-[color:var(--accent-hover)] bg-[color:var(--accent-soft)] hover:brightness-95 border-t-2 border-[color:var(--border-strong)] flex items-center gap-1.5"
+            class="w-full px-3 py-2 text-xs text-left text-[color:var(--accent-hover)] bg-[color:var(--accent-soft)] hover:brightness-95 border-t border-[color:var(--border-strong)] flex items-center gap-1.5"
             @click="createItem"
           >
             <i class="fa-solid fa-plus"></i> "<b class="font-[var(--font-sans)]">{{ keyword.trim() }}</b>" 추가
@@ -161,15 +161,15 @@ export default {
         // 기본값 세팅 (주입된 클래스가 없을 때만)
         !hasHeight && !hasPadding && "h-[34px] px-2.5",
         !hasPadding && hasHeight && "px-2.5",
-        !hasBorder && "border-2 border-[color:var(--border-strong)]",
-        !hasRounded && "rounded-[3px]",
+        !hasBorder && "border border-[color:var(--border-strong)]",
+        !hasRounded && "rounded-[6px]",
         !hasText && "text-xs",
-        !hasPadding && !hasHeight && "bg-white",
+        !hasPadding && !hasHeight && "bg-[color:var(--surface)]",
         // 부모 주입 클래스
         parentClass,
         // 상태값
         this.open
-          ? "ring-2 ring-[color:var(--accent)] border-[color:var(--accent)]"
+          ? "border-[color:var(--accent)] shadow-[var(--ring)]"
           : "hover:border-[color:var(--accent)]",
       ];
     },

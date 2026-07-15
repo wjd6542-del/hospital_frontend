@@ -178,7 +178,7 @@
     box-shadow: var(--shadow-sm);
   }
   .btn:active { transform: translateY(1px); }
-  .btn-xs { @apply px-2 h-[26px] text-[11px] gap-1; }
+  .btn-xs { @apply px-2 h-[28px] text-[11px] gap-1; }
 
   .btn-primary {
     @apply border-transparent;

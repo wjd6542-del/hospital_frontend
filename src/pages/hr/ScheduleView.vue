@@ -7,12 +7,8 @@
     <div class="filterbar">
       <span class="f-label">{{ $t("부서") }}</span>
       <SearchSelect v-model="deptId" :options="deptOptions" :placeholder="$t('부서 선택')" @change="load" />
-      <select v-model.number="year" class="field field-xs" style="width: 100px" @change="load">
-        <option v-for="y in years" :key="y" :value="y">{{ y }}년</option>
-      </select>
-      <select v-model.number="month" class="field field-xs" style="width: 90px" @change="load">
-        <option v-for="m in 12" :key="m" :value="m">{{ m }}월</option>
-      </select>
+      <BaseSelect v-model="year" :options="yearOptions" size="xs" style="width: 100px" @change="load" />
+      <BaseSelect v-model="month" :options="monthOptions" size="xs" style="width: 90px" @change="load" />
       <button class="btn btn-xs" :disabled="!deptId || copying" @click="copyLastMonth">
         {{ copying ? $t("복사 중…") : $t("지난달 복사") }}
       </button>
@@ -101,6 +97,7 @@
 // @ts-nocheck
 import { ref, reactive, computed, onMounted } from "vue";
 import SearchSelect from "@/components/base/SearchSelect.vue";
+import BaseSelect from "@/components/base/BaseSelect.vue";
 import EmptyState from "@/components/base/EmptyState.vue";
 import { shiftScheduleApi, shiftTypeApi } from "@/api/attendance";
 import { departmentApi } from "@/api/hr";
@@ -113,10 +110,11 @@ const now = new Date();
 const deptId = ref(null);
 const year = ref(now.getFullYear());
 const month = ref(now.getMonth() + 1);
-const years = computed(() => {
+const yearOptions = computed(() => {
   const y = now.getFullYear();
-  return [y - 1, y, y + 1];
+  return [y - 1, y, y + 1].map((v) => ({ value: v, label: `${v}년` }));
 });
+const monthOptions = Array.from({ length: 12 }, (_, i) => ({ value: i + 1, label: `${i + 1}월` }));
 
 const deptOptions = ref([]);
 const shiftTypes = ref([]);
