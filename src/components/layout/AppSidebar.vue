@@ -79,6 +79,14 @@ const menus = computed(() => [
     ],
   },
   {
+    label: "진료",
+    icon: "fa-stethoscope",
+    children: [
+      { label: "환자 관리", to: "/emr/patients", perm: "patient.view" },
+      { label: "진료", to: "/emr/encounters", perm: "emr.view" },
+    ],
+  },
+  {
     label: "재무",
     icon: "fa-won-sign",
     children: [
