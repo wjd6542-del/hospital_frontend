@@ -32,6 +32,7 @@ import StockMovementView from "@/pages/inventory/StockMovementView.vue";
 import AssetView from "@/pages/asset/AssetView.vue";
 import MaintenanceView from "@/pages/facility/MaintenanceView.vue";
 import AppointmentView from "@/pages/reservation/AppointmentView.vue";
+import AdmissionView from "@/pages/ward/AdmissionView.vue";
 
 import MyPage from "@/pages/mypage/MyPage.vue";
 import SettingsView from "@/pages/settings/SettingsView.vue";
@@ -88,6 +89,9 @@ export const router = createRouter({
 
             // 예약
             { path: "reservation/appointments", component: AppointmentView, meta: { auth: true, title: "진료 예약", perm: "reservation.view" } },
+
+            // 병동
+            { path: "ward/admissions", component: AdmissionView, meta: { auth: true, title: "입원 관리", perm: "ward.view" } },
 
             // 게시판
             { path: "board/:slug", component: BoardView, meta: { auth: true, title: "게시판", perm: "board.view" } },
