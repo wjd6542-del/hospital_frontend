@@ -88,6 +88,14 @@ const menus = computed(() => [
       { label: "기간 비교", to: "/finance/report", perm: "finance.view" },
     ],
   },
+  {
+    label: "구매",
+    icon: "fa-cart-shopping",
+    children: [
+      { label: "발주 관리", to: "/purchase/orders", perm: "purchase.view" },
+      { label: "거래처", to: "/purchase/vendors", perm: "purchase.view" },
+    ],
+  },
   { label: "게시판", icon: "fa-clipboard-list", perm: "board.view", children: boards.value.map((b) => ({ label: b.name, to: `/board/${b.slug}` })) },
   { label: "자주 하는 질문", to: "/faq", icon: "fa-circle-question", perm: "faq.view" },
   {

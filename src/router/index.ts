@@ -25,6 +25,8 @@ import TransactionView from "@/pages/finance/TransactionView.vue";
 import FinanceDashboardView from "@/pages/finance/DashboardView.vue";
 import FinanceBudgetView from "@/pages/finance/BudgetView.vue";
 import FinanceReportView from "@/pages/finance/ReportView.vue";
+import PurchaseOrderView from "@/pages/purchase/PurchaseOrderView.vue";
+import VendorView from "@/pages/purchase/VendorView.vue";
 
 import MyPage from "@/pages/mypage/MyPage.vue";
 import SettingsView from "@/pages/settings/SettingsView.vue";
@@ -64,6 +66,10 @@ export const router = createRouter({
             { path: "finance/transactions", component: TransactionView, meta: { auth: true, title: "수입·지출 내역", perm: "finance.view" } },
             { path: "finance/budget", component: FinanceBudgetView, meta: { auth: true, title: "예산 관리", perm: "finance.view" } },
             { path: "finance/report", component: FinanceReportView, meta: { auth: true, title: "기간 비교", perm: "finance.view" } },
+
+            // 구매
+            { path: "purchase/orders", component: PurchaseOrderView, meta: { auth: true, title: "발주 관리", perm: "purchase.view" } },
+            { path: "purchase/vendors", component: VendorView, meta: { auth: true, title: "거래처", perm: "purchase.view" } },
 
             // 게시판
             { path: "board/:slug", component: BoardView, meta: { auth: true, title: "게시판", perm: "board.view" } },
