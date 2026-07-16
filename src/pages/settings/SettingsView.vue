@@ -1,9 +1,5 @@
 <template>
   <div class="settings">
-    <header class="phead">
-      <h1 class="ttl">{{ $t("환경설정") }}</h1>
-    </header>
-
     <div class="tabs" role="tablist">
       <button
         v-for="t in visibleTabs"
@@ -33,6 +29,7 @@ import FaqCategorySettings from "@/pages/settings/FaqCategorySettings.vue";
 import TagSettings from "@/pages/settings/TagSettings.vue";
 import CategorySettings from "@/pages/settings/CategorySettings.vue";
 import ShiftTypeSettings from "@/pages/settings/ShiftTypeSettings.vue";
+import FinanceAccountSettings from "@/pages/settings/FinanceAccountSettings.vue";
 import LangPackSettings from "@/pages/settings/LangPackSettings.vue";
 import { useAuthStore } from "@/stores/auth";
 
@@ -43,6 +40,7 @@ const tabs = [
   { key: "tag", label: "태그", icon: "fa-tag", perm: "faq.view", comp: markRaw(TagSettings), desc: "FAQ에 붙이는 공통 태그를 등록·관리합니다. 검색 중 없으면 즉시 만들 수도 있습니다." },
   { key: "category", label: "분류 관리", icon: "fa-list-check", superOnly: true, comp: markRaw(CategorySettings), desc: "직급·직종·고용형태·면허종류·부서유형 코드를 관리합니다. 인사 화면의 선택 항목이 됩니다." },
   { key: "shifttype", label: "근무유형", icon: "fa-clock", superOnly: true, comp: markRaw(ShiftTypeSettings), desc: "데이·이브닝·나이트 등 근무유형을 등록합니다. 근무표 그리드의 팔레트가 됩니다." },
+  { key: "account", label: "계정과목", icon: "fa-coins", perm: "finance.edit", comp: markRaw(FinanceAccountSettings), desc: "수입·지출 계정과목을 관리합니다. 재무 거래 등록 시 이 분류를 선택합니다." },
   { key: "lang", label: "다국어", icon: "fa-language", superOnly: true, comp: markRaw(LangPackSettings), desc: "화면 문구의 다국어 번역팩을 등록·관리합니다. 한국어를 키로 사용합니다." },
 ];
 function allowed(t) {

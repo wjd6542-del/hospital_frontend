@@ -78,6 +78,13 @@ const menus = computed(() => [
       { label: "연차 부여", to: "/hr/leave-grant", perm: "leave.view" },
     ],
   },
+  {
+    label: "재무",
+    icon: "fa-won-sign",
+    children: [
+      { label: "수입·지출 내역", to: "/finance/transactions", perm: "finance.view" },
+    ],
+  },
   { label: "게시판", icon: "fa-clipboard-list", perm: "board.view", children: boards.value.map((b) => ({ label: b.name, to: `/board/${b.slug}` })) },
   { label: "자주 하는 질문", to: "/faq", icon: "fa-circle-question", perm: "faq.view" },
   {

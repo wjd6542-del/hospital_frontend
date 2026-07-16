@@ -21,6 +21,7 @@ import ScheduleView from "@/pages/hr/ScheduleView.vue";
 import AttendanceView from "@/pages/hr/AttendanceView.vue";
 import LeaveView from "@/pages/hr/LeaveView.vue";
 import LeaveGrantView from "@/pages/hr/LeaveGrantView.vue";
+import TransactionView from "@/pages/finance/TransactionView.vue";
 
 import MyPage from "@/pages/mypage/MyPage.vue";
 import SettingsView from "@/pages/settings/SettingsView.vue";
@@ -54,6 +55,9 @@ export const router = createRouter({
             { path: "hr/attendance", component: AttendanceView, meta: { auth: true, title: "출퇴근", perm: "attendance.view" } },
             { path: "hr/leave", component: LeaveView, meta: { auth: true, title: "휴가 관리", perm: "leave.view" } },
             { path: "hr/leave-grant", component: LeaveGrantView, meta: { auth: true, title: "연차 부여", perm: "leave.view" } },
+
+            // 재무
+            { path: "finance/transactions", component: TransactionView, meta: { auth: true, title: "수입·지출 내역", perm: "finance.view" } },
 
             // 게시판
             { path: "board/:slug", component: BoardView, meta: { auth: true, title: "게시판", perm: "board.view" } },
