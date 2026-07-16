@@ -104,6 +104,7 @@ const menus = computed(() => [
       { label: "입출고", to: "/inventory/movements", perm: "inventory.view" },
     ],
   },
+  { label: "자산", to: "/assets", icon: "fa-heart-pulse", perm: "asset.view" },
   { label: "게시판", icon: "fa-clipboard-list", perm: "board.view", children: boards.value.map((b) => ({ label: b.name, to: `/board/${b.slug}` })) },
   { label: "자주 하는 질문", to: "/faq", icon: "fa-circle-question", perm: "faq.view" },
   {

@@ -29,6 +29,7 @@ import PurchaseOrderView from "@/pages/purchase/PurchaseOrderView.vue";
 import VendorView from "@/pages/purchase/VendorView.vue";
 import ItemView from "@/pages/inventory/ItemView.vue";
 import StockMovementView from "@/pages/inventory/StockMovementView.vue";
+import AssetView from "@/pages/asset/AssetView.vue";
 
 import MyPage from "@/pages/mypage/MyPage.vue";
 import SettingsView from "@/pages/settings/SettingsView.vue";
@@ -76,6 +77,9 @@ export const router = createRouter({
             // 재고
             { path: "inventory/items", component: ItemView, meta: { auth: true, title: "품목·현재고", perm: "inventory.view" } },
             { path: "inventory/movements", component: StockMovementView, meta: { auth: true, title: "입출고", perm: "inventory.view" } },
+
+            // 자산
+            { path: "assets", component: AssetView, meta: { auth: true, title: "자산 대장", perm: "asset.view" } },
 
             // 게시판
             { path: "board/:slug", component: BoardView, meta: { auth: true, title: "게시판", perm: "board.view" } },
