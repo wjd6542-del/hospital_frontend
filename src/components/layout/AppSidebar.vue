@@ -96,6 +96,14 @@ const menus = computed(() => [
       { label: "거래처", to: "/purchase/vendors", perm: "purchase.view" },
     ],
   },
+  {
+    label: "재고",
+    icon: "fa-boxes-stacked",
+    children: [
+      { label: "품목·현재고", to: "/inventory/items", perm: "inventory.view" },
+      { label: "입출고", to: "/inventory/movements", perm: "inventory.view" },
+    ],
+  },
   { label: "게시판", icon: "fa-clipboard-list", perm: "board.view", children: boards.value.map((b) => ({ label: b.name, to: `/board/${b.slug}` })) },
   { label: "자주 하는 질문", to: "/faq", icon: "fa-circle-question", perm: "faq.view" },
   {

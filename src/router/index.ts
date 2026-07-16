@@ -27,6 +27,8 @@ import FinanceBudgetView from "@/pages/finance/BudgetView.vue";
 import FinanceReportView from "@/pages/finance/ReportView.vue";
 import PurchaseOrderView from "@/pages/purchase/PurchaseOrderView.vue";
 import VendorView from "@/pages/purchase/VendorView.vue";
+import ItemView from "@/pages/inventory/ItemView.vue";
+import StockMovementView from "@/pages/inventory/StockMovementView.vue";
 
 import MyPage from "@/pages/mypage/MyPage.vue";
 import SettingsView from "@/pages/settings/SettingsView.vue";
@@ -70,6 +72,10 @@ export const router = createRouter({
             // 구매
             { path: "purchase/orders", component: PurchaseOrderView, meta: { auth: true, title: "발주 관리", perm: "purchase.view" } },
             { path: "purchase/vendors", component: VendorView, meta: { auth: true, title: "거래처", perm: "purchase.view" } },
+
+            // 재고
+            { path: "inventory/items", component: ItemView, meta: { auth: true, title: "품목·현재고", perm: "inventory.view" } },
+            { path: "inventory/movements", component: StockMovementView, meta: { auth: true, title: "입출고", perm: "inventory.view" } },
 
             // 게시판
             { path: "board/:slug", component: BoardView, meta: { auth: true, title: "게시판", perm: "board.view" } },
