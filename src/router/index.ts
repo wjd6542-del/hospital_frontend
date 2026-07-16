@@ -30,6 +30,7 @@ import VendorView from "@/pages/purchase/VendorView.vue";
 import ItemView from "@/pages/inventory/ItemView.vue";
 import StockMovementView from "@/pages/inventory/StockMovementView.vue";
 import AssetView from "@/pages/asset/AssetView.vue";
+import MaintenanceView from "@/pages/facility/MaintenanceView.vue";
 
 import MyPage from "@/pages/mypage/MyPage.vue";
 import SettingsView from "@/pages/settings/SettingsView.vue";
@@ -80,6 +81,9 @@ export const router = createRouter({
 
             // 자산
             { path: "assets", component: AssetView, meta: { auth: true, title: "자산 대장", perm: "asset.view" } },
+
+            // 시설
+            { path: "facility/maintenance", component: MaintenanceView, meta: { auth: true, title: "유지보수 요청", perm: "facility.view" } },
 
             // 게시판
             { path: "board/:slug", component: BoardView, meta: { auth: true, title: "게시판", perm: "board.view" } },
