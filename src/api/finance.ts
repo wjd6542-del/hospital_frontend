@@ -8,6 +8,12 @@ export const accountApi = {
   remove: (id) => api.post("/financeAccount/delete", { id }).then((r) => r.data),
 };
 
+// 연간 예산 (계정과목별)
+export const budgetApi = {
+  list: (body) => api.post("/financeBudget/list", body).then((r) => r.data),
+  save: (body) => api.post("/financeBudget/save", body).then((r) => r.data),
+};
+
 // 수입·지출 거래
 export const txnApi = {
   list: (body) => api.post("/financeTxn/list", body).then((r) => r.data),
