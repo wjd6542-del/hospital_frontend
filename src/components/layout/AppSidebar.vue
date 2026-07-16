@@ -108,6 +108,7 @@ const menus = computed(() => [
   { label: "시설", to: "/facility/maintenance", icon: "fa-screwdriver-wrench", perm: "facility.view" },
   { label: "예약", to: "/reservation/appointments", icon: "fa-calendar-check", perm: "reservation.view" },
   { label: "병동", to: "/ward/admissions", icon: "fa-bed-pulse", perm: "ward.view" },
+  { label: "보험청구", to: "/insurance/claims", icon: "fa-file-invoice-dollar", perm: "insurance.view" },
   { label: "게시판", icon: "fa-clipboard-list", perm: "board.view", children: boards.value.map((b) => ({ label: b.name, to: `/board/${b.slug}` })) },
   { label: "자주 하는 질문", to: "/faq", icon: "fa-circle-question", perm: "faq.view" },
   {

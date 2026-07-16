@@ -33,6 +33,7 @@ import AssetView from "@/pages/asset/AssetView.vue";
 import MaintenanceView from "@/pages/facility/MaintenanceView.vue";
 import AppointmentView from "@/pages/reservation/AppointmentView.vue";
 import AdmissionView from "@/pages/ward/AdmissionView.vue";
+import ClaimView from "@/pages/insurance/ClaimView.vue";
 
 import MyPage from "@/pages/mypage/MyPage.vue";
 import SettingsView from "@/pages/settings/SettingsView.vue";
@@ -92,6 +93,9 @@ export const router = createRouter({
 
             // 병동
             { path: "ward/admissions", component: AdmissionView, meta: { auth: true, title: "입원 관리", perm: "ward.view" } },
+
+            // 보험청구
+            { path: "insurance/claims", component: ClaimView, meta: { auth: true, title: "보험청구", perm: "insurance.view" } },
 
             // 게시판
             { path: "board/:slug", component: BoardView, meta: { auth: true, title: "게시판", perm: "board.view" } },
