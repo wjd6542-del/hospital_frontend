@@ -84,6 +84,7 @@ const menus = computed(() => [
     children: [
       { label: "환자 관리", to: "/emr/patients", perm: "patient.view" },
       { label: "진료", to: "/emr/encounters", perm: "emr.view" },
+      { label: "처방", to: "/emr/prescriptions", perm: "prescription.view" },
     ],
   },
   {
