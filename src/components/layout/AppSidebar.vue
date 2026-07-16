@@ -86,6 +86,7 @@ const menus = computed(() => [
       { label: "진료", to: "/emr/encounters", perm: "emr.view" },
       { label: "처방", to: "/emr/prescriptions", perm: "prescription.view" },
       { label: "검사", to: "/emr/lab-orders", perm: "lab.view" },
+      { label: "수납", to: "/emr/bills", perm: "billing.view" },
     ],
   },
   {
