@@ -34,6 +34,7 @@ import MaintenanceView from "@/pages/facility/MaintenanceView.vue";
 import PatientView from "@/pages/emr/PatientView.vue";
 import EncounterView from "@/pages/emr/EncounterView.vue";
 import PrescriptionView from "@/pages/emr/PrescriptionView.vue";
+import LabOrderView from "@/pages/emr/LabOrderView.vue";
 import AppointmentView from "@/pages/reservation/AppointmentView.vue";
 import AdmissionView from "@/pages/ward/AdmissionView.vue";
 import ClaimView from "@/pages/insurance/ClaimView.vue";
@@ -96,6 +97,7 @@ export const router = createRouter({
             { path: "emr/patients", component: PatientView, meta: { auth: true, title: "환자 관리", perm: "patient.view" } },
             { path: "emr/encounters", component: EncounterView, meta: { auth: true, title: "진료", perm: "emr.view" } },
             { path: "emr/prescriptions", component: PrescriptionView, meta: { auth: true, title: "처방", perm: "prescription.view" } },
+            { path: "emr/lab-orders", component: LabOrderView, meta: { auth: true, title: "검사", perm: "lab.view" } },
 
             // 예약
             { path: "reservation/appointments", component: AppointmentView, meta: { auth: true, title: "진료 예약", perm: "reservation.view" } },
