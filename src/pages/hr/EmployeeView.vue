@@ -293,7 +293,7 @@ onMounted(async () => {
 </script>
 
 <style scoped>
-.emp { max-width: 1200px; margin: 0 auto; }
+.emp { margin: 0; }
 .phead { margin-bottom: 1.1rem; }
 .ttl { font-size: 1.5rem; font-weight: 700; color: var(--text); }
 

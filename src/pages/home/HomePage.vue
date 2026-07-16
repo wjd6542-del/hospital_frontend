@@ -68,7 +68,7 @@ onMounted(async () => {
 </script>
 
 <style scoped>
-.home { max-width: 1000px; margin: 0 auto; }
+.home { max-width: 80%; margin: 0; }
 .phead { margin-bottom: 1.1rem; }
 .ttl { font-size: 1.5rem; font-weight: 800; color: var(--text); }
 .sub { font-size: 0.85rem; color: var(--text-muted); margin-top: 0.25rem; }

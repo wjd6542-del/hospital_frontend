@@ -128,7 +128,7 @@ onMounted(load);
 </script>
 
 <style scoped>
-.inv { max-width: 1100px; margin: 0 auto; }
+.inv { margin: 0; }
 .topbar { display: flex; align-items: center; gap: 0.6rem; margin-bottom: 1rem; }
 .chk { display: inline-flex; align-items: center; gap: 0.4rem; font-size: 0.78rem; color: var(--text-muted); }
 .tbl td.strong { font-weight: 700; color: var(--text); }

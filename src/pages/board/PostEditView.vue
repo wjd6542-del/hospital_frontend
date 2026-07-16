@@ -99,7 +99,7 @@ onMounted(loadBoard);
 </script>
 
 <style scoped>
-.pedit { max-width: 780px; margin: 0 auto; }
+.pedit { max-width: 80%; margin: 0; }
 .phead { margin-bottom: 1rem; }
 .eyebrow { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.15em; color: var(--accent); }
 .ttl { font-size: 1.5rem; font-weight: 700; color: var(--text); margin-top: 0.2rem; }

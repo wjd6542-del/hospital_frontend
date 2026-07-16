@@ -91,7 +91,7 @@ onMounted(load);
 </script>
 
 <style scoped>
-.frep { max-width: 1100px; margin: 0 auto; }
+.frep { margin: 0; }
 .topbar { display: flex; align-items: center; gap: 0.6rem; margin-bottom: 1rem; }
 .topbar > :nth-child(1) { width: 110px; flex: 0 0 auto; }
 .topbar > :nth-child(2) { width: 90px; flex: 0 0 auto; }

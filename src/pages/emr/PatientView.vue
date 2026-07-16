@@ -248,7 +248,7 @@ onMounted(() => load(1));
 </script>
 
 <style scoped>
-.pat { max-width: 1200px; margin: 0 auto; }
+.pat { margin: 0; }
 .phead { margin-bottom: 1.1rem; }
 .ttl { font-size: 1.5rem; font-weight: 700; color: var(--text); }
 .req { color: var(--danger); margin-left: 2px; }

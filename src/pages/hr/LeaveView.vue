@@ -443,7 +443,7 @@ onMounted(async () => {
 </script>
 
 <style scoped>
-.att { max-width: 1300px; margin: 0 auto; }
+.att { margin: 0; }
 .phead { margin-bottom: 1.1rem; }
 .ttl { font-size: 1.5rem; font-weight: 700; color: var(--text); }
 .chip {

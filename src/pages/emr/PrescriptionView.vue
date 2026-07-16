@@ -375,7 +375,7 @@ onMounted(async () => {
 </script>
 
 <style scoped>
-.enc { max-width: 1300px; margin: 0 auto; }
+.enc { margin: 0; }
 .phead { margin-bottom: 1.1rem; }
 .ttl { font-size: 1.5rem; font-weight: 700; color: var(--text); }
 .req { color: var(--danger); margin-left: 2px; }

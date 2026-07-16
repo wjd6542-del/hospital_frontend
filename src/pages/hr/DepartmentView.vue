@@ -138,7 +138,7 @@ onMounted(async () => {
 </script>
 
 <style scoped>
-.dept { max-width: 1100px; margin: 0 auto; }
+.dept { margin: 0; }
 .phead { margin-bottom: 1.1rem; }
 .ttl { font-size: 1.5rem; font-weight: 700; color: var(--text); }
 .sub { margin-top: 0.3rem; font-size: 0.85rem; color: var(--text-muted); }

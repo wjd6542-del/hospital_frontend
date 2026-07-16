@@ -56,7 +56,7 @@ const activeTab = computed(() => visibleTabs.value.find((t) => t.key === active.
 </script>
 
 <style scoped>
-.settings { max-width: 1000px; margin: 0 auto; }
+.settings { max-width: 80%; margin: 0; }
 .phead { margin-bottom: 1.1rem; }
 .eyebrow { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.2em; color: var(--accent); text-transform: uppercase; }
 .ttl { font-size: 1.5rem; font-weight: 800; color: var(--text); margin-top: 0.25rem; }

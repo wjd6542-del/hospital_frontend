@@ -149,7 +149,7 @@ onMounted(load);
 </script>
 
 <style scoped>
-.page { max-width: 940px; margin: 0 auto; }
+.page { max-width: 80%; margin: 0; }
 .phead { display: flex; align-items: flex-end; justify-content: space-between; gap: 1rem; margin-bottom: 1.1rem; }
 .ttl { font-size: 1.3rem; color: var(--text); }
 .desc { font-size: 0.82rem; color: var(--text-muted); margin-top: 0.3rem; max-width: 660px; }

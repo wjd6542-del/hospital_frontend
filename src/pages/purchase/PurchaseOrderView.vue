@@ -257,7 +257,7 @@ onMounted(async () => {
 </script>
 
 <style scoped>
-.po { max-width: 1300px; margin: 0 auto; }
+.po { margin: 0; }
 .tbl td.strong { font-weight: 800; }
 .acts { display: flex; gap: 0.3rem; white-space: nowrap; }
 .req { color: var(--danger); margin-left: 2px; }

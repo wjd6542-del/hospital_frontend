@@ -121,7 +121,7 @@ onMounted(load);
 </script>
 
 <style scoped>
-.fbud { max-width: 1200px; margin: 0 auto; }
+.fbud { margin: 0; }
 .topbar { display: flex; align-items: center; gap: 0.8rem; margin-bottom: 1rem; }
 .topbar > :first-child { width: 110px; flex: 0 0 auto; }
 .hint { font-size: 0.78rem; color: var(--text-subtle); }

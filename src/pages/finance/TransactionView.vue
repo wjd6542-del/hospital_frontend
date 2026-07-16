@@ -367,7 +367,7 @@ onMounted(async () => {
 </script>
 
 <style scoped>
-.fin { max-width: 1300px; margin: 0 auto; }
+.fin { margin: 0; }
 
 .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.8rem; margin-bottom: 1rem; }
 .scard { display: flex; flex-direction: column; gap: 0.35rem; padding: 0.9rem 1.1rem; border-radius: 8px; border: 1px solid var(--border); background: var(--surface); box-shadow: var(--shadow-sm); }

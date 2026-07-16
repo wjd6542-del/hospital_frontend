@@ -236,7 +236,7 @@ onMounted(async () => {
 </script>
 
 <style scoped>
-.rsv { max-width: 1300px; margin: 0 auto; }
+.rsv { margin: 0; }
 .tbl td.strong { font-weight: 700; color: var(--text); }
 .rowclick { cursor: pointer; }
 .rowclick:hover td { background: var(--surface-2); }

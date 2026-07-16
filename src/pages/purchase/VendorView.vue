@@ -146,7 +146,7 @@ onMounted(load);
 </script>
 
 <style scoped>
-.ven { max-width: 1100px; margin: 0 auto; }
+.ven { margin: 0; }
 .topbar { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1rem; }
 .tbl td.strong { font-weight: 700; color: var(--text); }
 .rowclick { cursor: pointer; }

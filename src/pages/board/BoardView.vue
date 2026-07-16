@@ -103,7 +103,7 @@ watch(slug, loadBoard);
 </script>
 
 <style scoped>
-.bview { max-width: 960px; margin: 0 auto; }
+.bview { max-width: 80%; margin: 0; }
 .phead { display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 1.1rem; gap: 1rem; }
 .eyebrow { font-size: 0.66rem; letter-spacing: 0.16em; color: var(--accent); }
 .ttl { font-size: 1.4rem; color: var(--text); margin-top: 0.25rem; }

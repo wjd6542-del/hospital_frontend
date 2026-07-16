@@ -110,7 +110,7 @@ watch(() => route.params.id, (id) => { if (id) load(id); });
 </script>
 
 <style scoped>
-.pdetail { max-width: 780px; margin: 0 auto; }
+.pdetail { max-width: 80%; margin: 0; }
 .back { font-size: 0.78rem; color: var(--text-muted); text-decoration: none; }
 .back:hover { color: var(--accent); }
 .ttl { font-size: 1.5rem; font-weight: 700; color: var(--text); margin-top: 0.4rem; }

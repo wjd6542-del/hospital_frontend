@@ -195,7 +195,7 @@ onMounted(async () => {
 </script>
 
 <style scoped>
-.mov { max-width: 1300px; margin: 0 auto; }
+.mov { margin: 0; }
 .tbl td.strong { font-weight: 800; }
 .tbl td.pos { color: var(--positive); }
 .tbl td.neg { color: var(--danger); }

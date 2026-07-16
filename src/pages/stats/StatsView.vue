@@ -77,7 +77,7 @@ onMounted(async () => {
 </script>
 
 <style scoped>
-.stat { max-width: 1300px; margin: 0 auto; }
+.stat { margin: 0; }
 .kgrid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.8rem; margin-bottom: 1rem; }
 .ktile { display: flex; align-items: center; gap: 0.8rem; padding: 0.9rem 1rem; border-radius: 8px; border: 1px solid var(--border); background: var(--surface); box-shadow: var(--shadow-sm); transition: border-color 0.12s, transform 0.12s; }
 .ktile:hover { border-color: var(--accent); transform: translateY(-1px); }

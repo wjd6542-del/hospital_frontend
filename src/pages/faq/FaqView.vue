@@ -220,7 +220,7 @@ onMounted(async () => { await Promise.all([reload(), loadCats(), loadPopular()])
 </script>
 
 <style scoped>
-.page { max-width: 1120px; margin: 0 auto; }
+.page { max-width: 80%; margin: 0; }
 .phead { display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 1.1rem; }
 .eyebrow { font-size: 0.66rem; letter-spacing: 0.16em; color: var(--accent); }
 .ttl { font-size: 1.35rem; color: var(--text); margin-top: 0.25rem; }

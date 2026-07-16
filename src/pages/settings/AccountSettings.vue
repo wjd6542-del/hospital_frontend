@@ -19,7 +19,7 @@ const sub = ref("user");
 </script>
 
 <style scoped>
-.account { max-width: 940px; margin: 0 auto; }
+.account { max-width: 80%; margin: 0; }
 .subtabs { display: flex; gap: 0.4rem; margin-bottom: 1.1rem; }
 .st {
   display: inline-flex; align-items: center; gap: 0.4rem;

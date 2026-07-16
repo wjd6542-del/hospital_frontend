@@ -92,7 +92,7 @@ async function changePw() {
 </script>
 
 <style scoped>
-.mypage { max-width: 900px; margin: 0 auto; }
+.mypage { max-width: 80%; margin: 0; }
 .phead { margin-bottom: 1.25rem; }
 .eyebrow { font-size: 0.66rem; letter-spacing: 0.18em; color: var(--accent); }
 .ttl { font-size: 1.4rem; color: var(--text); margin-top: 0.25rem; }

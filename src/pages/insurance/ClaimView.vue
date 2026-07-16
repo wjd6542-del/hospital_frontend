@@ -253,7 +253,7 @@ onMounted(async () => {
 </script>
 
 <style scoped>
-.ins { max-width: 1300px; margin: 0 auto; }
+.ins { margin: 0; }
 .cards { display: grid; grid-template-columns: 1fr 1.4fr 1.4fr; gap: 0.8rem; margin-bottom: 1rem; max-width: 720px; }
 .scard { display: flex; flex-direction: column; gap: 0.3rem; padding: 0.8rem 1rem; border-radius: 8px; border: 1px solid var(--border); background: var(--surface); box-shadow: var(--shadow-sm); }
 .scard .lbl { font-size: 0.7rem; font-weight: 600; color: var(--text-subtle); }

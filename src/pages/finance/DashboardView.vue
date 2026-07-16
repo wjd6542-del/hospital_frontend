@@ -140,7 +140,7 @@ onMounted(async () => {
 </script>
 
 <style scoped>
-.fdash { max-width: 1300px; margin: 0 auto; }
+.fdash { margin: 0; }
 .topbar { display: flex; gap: 0.6rem; margin-bottom: 1rem; }
 .topbar > :nth-child(1) { width: 110px; flex: 0 0 auto; }
 .topbar > :nth-child(2) { width: 180px; flex: 0 0 auto; }
