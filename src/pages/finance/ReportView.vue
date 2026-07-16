@@ -1,8 +1,8 @@
 <template>
   <div class="frep">
     <div class="topbar">
-      <SearchSelect v-model="year" size="xs" :options="yearOptions" :clearable="false" style="width: 110px" @change="load" />
-      <SearchSelect v-model="month" size="xs" :options="monthOptions" :clearable="false" style="width: 90px" @change="load" />
+      <SearchSelect v-model="year" size="xs" :options="yearOptions" :clearable="false" @change="load" />
+      <SearchSelect v-model="month" size="xs" :options="monthOptions" :clearable="false" @change="load" />
       <span class="hint">{{ $t("선택한 달을 지난달·전년동월과 비교합니다.") }}</span>
     </div>
 
@@ -93,6 +93,8 @@ onMounted(load);
 <style scoped>
 .frep { max-width: 1100px; margin: 0 auto; }
 .topbar { display: flex; align-items: center; gap: 0.6rem; margin-bottom: 1rem; }
+.topbar > :nth-child(1) { width: 110px; flex: 0 0 auto; }
+.topbar > :nth-child(2) { width: 90px; flex: 0 0 auto; }
 .hint { font-size: 0.78rem; color: var(--text-subtle); margin-left: 0.3rem; }
 
 .tbl td.strong { font-weight: 800; color: var(--text); }

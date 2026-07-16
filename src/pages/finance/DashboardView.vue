@@ -1,7 +1,7 @@
 <template>
   <div class="fdash">
     <div class="topbar">
-      <SearchSelect v-model="year" size="xs" :options="yearOptions" :clearable="false" style="width: 110px" @change="load" />
+      <SearchSelect v-model="year" size="xs" :options="yearOptions" :clearable="false" @change="load" />
       <SearchSelect v-model="deptId" size="xs" :options="deptOptions" :placeholder="$t('전체 부서')" @change="load" />
     </div>
 
@@ -142,7 +142,8 @@ onMounted(async () => {
 <style scoped>
 .fdash { max-width: 1300px; margin: 0 auto; }
 .topbar { display: flex; gap: 0.6rem; margin-bottom: 1rem; }
-.topbar > :nth-child(2) { width: 180px; }
+.topbar > :nth-child(1) { width: 110px; flex: 0 0 auto; }
+.topbar > :nth-child(2) { width: 180px; flex: 0 0 auto; }
 
 .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.8rem; margin-bottom: 1rem; }
 .scard { display: flex; flex-direction: column; gap: 0.35rem; padding: 0.9rem 1.1rem; border-radius: 8px; border: 1px solid var(--border); background: var(--surface); box-shadow: var(--shadow-sm); }

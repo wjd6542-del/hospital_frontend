@@ -1,7 +1,7 @@
 <template>
   <div class="fbud">
     <div class="topbar">
-      <SearchSelect v-model="year" size="xs" :options="yearOptions" :clearable="false" style="width: 110px" @change="load" />
+      <SearchSelect v-model="year" size="xs" :options="yearOptions" :clearable="false" @change="load" />
       <span class="hint">{{ $t("계정과목별 연간 예산을 편성하고 실적 대비 집행률을 확인합니다.") }}</span>
     </div>
 
@@ -123,6 +123,7 @@ onMounted(load);
 <style scoped>
 .fbud { max-width: 1200px; margin: 0 auto; }
 .topbar { display: flex; align-items: center; gap: 0.8rem; margin-bottom: 1rem; }
+.topbar > :first-child { width: 110px; flex: 0 0 auto; }
 .hint { font-size: 0.78rem; color: var(--text-subtle); }
 
 .cards { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.8rem; margin-bottom: 1rem; }
