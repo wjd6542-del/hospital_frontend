@@ -1,18 +1,18 @@
 <template>
   <div class="att">
-    <header class="phead">
-      <h1 class="ttl">{{ $t("휴가 관리") }}</h1>
-    </header>
+    <div class="ltabs">
+      <button class="ltab" :class="{ on: tab === 'list' }" @click="tab = 'list'"><i class="fa-solid fa-list-ul"></i> {{ $t("목록") }}</button>
+      <button class="ltab" :class="{ on: tab === 'calendar' }" @click="openCalendar"><i class="fa-regular fa-calendar-days"></i> {{ $t("캘린더") }}</button>
+    </div>
 
+    <template v-if="tab === 'list'">
     <div class="filterbar">
       <span class="f-label">{{ $t("부서") }}</span>
-      <SearchSelect v-model="filter.department_id" :options="deptOptions" :placeholder="$t('전체')" />
+      <SearchSelect v-model="filter.department_id" size="xs" :options="deptOptions" :placeholder="$t('전체')" />
       <span class="f-label">{{ $t("상태") }}</span>
-      <select v-model="filter.status" class="field field-xs" style="width: 110px" @change="load(1)">
-        <option v-for="s in statusOptions" :key="String(s.value)" :value="s.value">{{ $t(s.label) }}</option>
-      </select>
+      <SearchSelect v-model="filter.status" size="xs" :options="statusOptions" :placeholder="$t('전체')" @change="load(1)" />
       <span class="f-label">{{ $t("기간") }}</span>
-      <DateRangePicker v-model="range" mode="date" @change="onRangeChange" />
+      <DateRangePicker v-model="range" mode="date" size="xs" @change="onRangeChange" />
       <input v-model="filter.q" class="field field-xs" style="width: 150px" :placeholder="$t('이름 · 사번')" @keyup.enter="load(1)" />
       <button class="btn btn-xs" @click="load(1)">{{ $t("검색") }}</button>
       <button class="btn btn-xs btn-primary" style="margin-left: auto" @click="openNew">＋ {{ $t("휴가 신청") }}</button>
@@ -68,6 +68,51 @@
       </table>
       <Pager v-if="totalPages > 1" :page="page" :total="total" :total-pages="totalPages" @change="load" />
     </div>
+    </template>
+
+    <!-- 캘린더 탭 — 휴가자 한눈에 -->
+    <template v-else>
+      <div class="calbar">
+        <SearchSelect v-model="calDept" size="xs" :options="deptOptions" :placeholder="$t('전체 부서')" @change="loadCalendar" />
+        <div class="navg">
+          <button class="btn btn-xs" @click="moveMonth(-1)"><i class="fa-solid fa-chevron-left"></i></button>
+          <span class="ymlabel">{{ calYear }}{{ $t("년") }} {{ calMonth }}{{ $t("월") }}</span>
+          <button class="btn btn-xs" @click="moveMonth(1)"><i class="fa-solid fa-chevron-right"></i></button>
+          <button class="btn btn-xs" @click="goToday">{{ $t("오늘") }}</button>
+        </div>
+        <div class="leg">
+          <span class="lgi"><span class="dot solid"></span>{{ $t("승인") }}</span>
+          <span class="lgi"><span class="dot dash"></span>{{ $t("대기") }}</span>
+        </div>
+      </div>
+
+      <div class="pcard calwrap">
+        <div class="calgrid">
+          <div v-for="w in WEEK" :key="w" class="calhd" :class="{ sun: w === '일', sat: w === '토' }">{{ w }}</div>
+          <div
+            v-for="(c, i) in calCells"
+            :key="i"
+            class="calcell"
+            :class="{ empty: !c, today: c && c.iso === todayIso, sun: c && c.dow === 0, sat: c && c.dow === 6 }"
+          >
+            <template v-if="c">
+              <div class="cd">{{ c.day }}</div>
+              <div class="cl">
+                <span
+                  v-for="l in c.leaves"
+                  :key="l.id"
+                  class="lchip"
+                  :class="{ pend: l.status === 'PENDING' }"
+                  :style="chipStyle(l)"
+                  :title="`${l.employee.name} · ${l.leave_type.name}${l.status === 'PENDING' ? ' (대기)' : ''}`"
+                >{{ l.employee.name }}</span>
+              </div>
+            </template>
+          </div>
+        </div>
+        <div v-if="!calLeaves.length" class="calempty">{{ $t("이 달 휴가자가 없습니다.") }}</div>
+      </div>
+    </template>
 
     <!-- 휴가 신청 모달 -->
     <div v-if="showForm" class="drawer" @click.self="showForm = false">
@@ -133,7 +178,7 @@
 
 <script setup lang="ts">
 // @ts-nocheck
-import { ref, reactive, onMounted } from "vue";
+import { ref, reactive, computed, onMounted } from "vue";
 import SearchSelect from "@/components/base/SearchSelect.vue";
 import DatePicker from "@/components/base/DatePicker.vue";
 import DateRangePicker from "@/components/base/DateRangePicker.vue";
@@ -143,8 +188,10 @@ import { leaveTypeApi, leaveRequestApi } from "@/api/leave";
 import { departmentApi, employeeApi } from "@/api/hr";
 import { formatDateOnly } from "@/utils/date";
 import { useToast } from "vue-toastification";
+import { useI18nStore } from "@/stores/i18n";
 
 const toast = useToast();
+const i18n = useI18nStore();
 
 const STATUS = {
   PENDING: { label: "대기", cls: "badge-neutral" },
@@ -153,13 +200,15 @@ const STATUS = {
   CANCELED: { label: "취소", cls: "badge-neutral" },
 };
 
-const statusOptions = [
+const STATUS_OPTS = [
   { value: null, label: "전체" },
   { value: "PENDING", label: "대기" },
   { value: "APPROVED", label: "승인" },
   { value: "REJECTED", label: "반려" },
   { value: "CANCELED", label: "취소" },
 ];
+// SearchSelect 는 라벨을 그대로 렌더하므로, 로케일 번역을 옵션에 미리 반영한다.
+const statusOptions = computed(() => STATUS_OPTS.map((o) => ({ ...o, label: i18n.t(o.label) })));
 
 const rows = ref([]);
 const total = ref(0);
@@ -174,6 +223,75 @@ const empOptions = ref([]);
 const typeOptions = ref([]);
 const rejectTarget = ref(null);
 const rejectReason = ref("");
+
+// ── 캘린더 탭 (휴가자 한눈에) ──
+const tab = ref("list");
+const _now = new Date();
+const calYear = ref(_now.getFullYear());
+const calMonth = ref(_now.getMonth() + 1);
+const calDept = ref(null);
+const calLeaves = ref([]);
+const WEEK = ["일", "월", "화", "수", "목", "금", "토"];
+const todayIso = formatDateOnly(new Date());
+
+// 그 달의 달력 셀(앞뒤 빈칸 포함) — 각 날짜에 걸치는 휴가를 계산
+const calCells = computed(() => {
+  const y = calYear.value;
+  const m = calMonth.value;
+  const pad = new Date(y, m - 1, 1).getDay();
+  const days = new Date(y, m, 0).getDate();
+  const cells = [];
+  for (let i = 0; i < pad; i++) cells.push(null);
+  for (let d = 1; d <= days; d++) {
+    const date = new Date(y, m - 1, d);
+    const iso = formatDateOnly(date);
+    const leaves = calLeaves.value.filter((l) => {
+      const s = String(l.start_date).slice(0, 10);
+      const e = String(l.end_date).slice(0, 10);
+      return s <= iso && iso <= e;
+    });
+    cells.push({ day: d, iso, dow: date.getDay(), leaves });
+  }
+  while (cells.length % 7 !== 0) cells.push(null);
+  return cells;
+});
+
+// 승인=단색, 대기=점선 테두리
+function chipStyle(l) {
+  const c = l.leave_type?.color || "#64748b";
+  if (l.status === "PENDING") return { color: c, borderColor: c, background: "transparent" };
+  return { background: c, color: "#fff", borderColor: c };
+}
+
+async function loadCalendar() {
+  const start = new Date(calYear.value, calMonth.value - 1, 1);
+  const end = new Date(calYear.value, calMonth.value, 0);
+  const res = await leaveRequestApi.list({
+    department_id: calDept.value || undefined,
+    date_from: formatDateOnly(start),
+    date_to: formatDateOnly(end),
+    limit: 500,
+  });
+  calLeaves.value = (res.rows || []).filter((l) => l.status === "APPROVED" || l.status === "PENDING");
+}
+function openCalendar() {
+  tab.value = "calendar";
+  loadCalendar();
+}
+function moveMonth(d) {
+  let m = calMonth.value + d;
+  let y = calYear.value;
+  if (m < 1) { m = 12; y--; } else if (m > 12) { m = 1; y++; }
+  calMonth.value = m;
+  calYear.value = y;
+  loadCalendar();
+}
+function goToday() {
+  const t = new Date();
+  calYear.value = t.getFullYear();
+  calMonth.value = t.getMonth() + 1;
+  loadCalendar();
+}
 
 const filter = reactive({
   department_id: null,
@@ -344,4 +462,38 @@ onMounted(async () => {
 .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 0.7rem 0.9rem; }
 .fld { display: block; }
 .dfoot { margin-top: auto; padding-top: 1.2rem; display: flex; gap: 0.5rem; align-items: center; border-top: 1px solid var(--border); }
+
+/* ── 탭 ── */
+.ltabs { display: flex; gap: 2px; margin-bottom: 1rem; border-bottom: 1px solid var(--border); }
+.ltab { display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.55rem 0.95rem; font-size: 0.82rem; font-weight: 600; color: var(--text-subtle); border-bottom: 2px solid transparent; margin-bottom: -1px; transition: color 0.12s; }
+.ltab:hover { color: var(--text); }
+.ltab.on { color: var(--accent); border-bottom-color: var(--accent); }
+
+/* ── 캘린더 ── */
+.calbar { display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; margin-bottom: 0.8rem; }
+.calbar > :first-child { width: 170px; flex: 0 0 auto; }
+.navg { display: flex; align-items: center; gap: 0.4rem; }
+.ymlabel { font-size: 0.95rem; font-weight: 700; color: var(--text); min-width: 120px; text-align: center; }
+.leg { display: flex; gap: 0.9rem; margin-left: auto; font-size: 0.7rem; color: var(--text-subtle); }
+.lgi { display: inline-flex; align-items: center; gap: 0.3rem; }
+.leg .dot { width: 12px; height: 12px; border-radius: 3px; border: 1px solid var(--accent); }
+.leg .dot.solid { background: var(--accent); }
+.leg .dot.dash { background: transparent; border-style: dashed; }
+
+.calwrap { padding: 0; overflow: hidden; }
+.calgrid { display: grid; grid-template-columns: repeat(7, 1fr); }
+.calhd { padding: 0.5rem; text-align: center; font-size: 0.72rem; font-weight: 700; color: var(--text-muted); background: var(--surface-2); border-bottom: 1px solid var(--border-strong); }
+.calhd.sun { color: var(--danger); }
+.calhd.sat { color: var(--accent); }
+.calcell { min-height: 98px; border-right: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 0.35rem; display: flex; flex-direction: column; gap: 0.25rem; }
+.calcell:nth-child(7n) { border-right: none; }
+.calcell.empty { background: var(--surface-2); }
+.calcell.today { background: var(--accent-soft); }
+.cd { font-size: 0.72rem; font-weight: 700; color: var(--text-muted); }
+.calcell.sun .cd { color: var(--danger); }
+.calcell.sat .cd { color: var(--accent); }
+.cl { display: flex; flex-direction: column; gap: 2px; overflow: hidden; }
+.lchip { font-size: 0.66rem; font-weight: 700; padding: 1px 5px; border-radius: 4px; border: 1px solid; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.lchip.pend { border-style: dashed; }
+.calempty { padding: 1.6rem; text-align: center; color: var(--text-subtle); font-size: 0.85rem; }
 </style>
