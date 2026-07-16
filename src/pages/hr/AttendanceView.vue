@@ -6,10 +6,10 @@
 
     <div class="filterbar">
       <span class="f-label">{{ $t("부서") }}</span>
-      <SearchSelect v-model="filter.department_id" :options="deptOptions" :placeholder="$t('전체')" />
+      <SearchSelect v-model="filter.department_id" size="xs" :options="deptOptions" :placeholder="$t('전체')" />
       <span class="f-label">{{ $t("기간") }}</span>
-      <DateRangePicker v-model="range" mode="date" @change="onRangeChange" />
-      <BaseSelect v-model="filter.status" :options="statusOptions" size="xs" style="width: 110px" />
+      <DateRangePicker v-model="range" mode="date" size="xs" @change="onRangeChange" />
+      <SearchSelect v-model="filter.status" size="xs" :options="statusOptions" :placeholder="$t('전체')" />
       <input v-model="filter.q" class="field field-xs" style="width: 150px" :placeholder="$t('이름 · 사번')" @keyup.enter="load(1)" />
       <button class="btn btn-xs" @click="load(1)">{{ $t("검색") }}</button>
       <button class="btn btn-xs btn-primary" style="margin-left: auto" :disabled="!filter.department_id || generating" @click="generate">
@@ -58,22 +58,24 @@
               <span v-if="r.shift_type" class="chip" :style="{ background: r.shift_type.color }">{{ r.shift_type.code }}</span>
               <span v-else class="muted">-</span>
             </td>
-            <td>
-              <input
-                :value="toLocal(r.check_in)"
-                type="datetime-local"
-                class="cell-input"
+            <td class="tcell">
+              <DatePicker
+                mode="dateTime"
+                size="xs"
+                :model-value="r.check_in"
                 :disabled="saving === r.id"
-                @change="onTime(r, 'check_in', $event.target.value)"
+                :placeholder="$t('출근 시각')"
+                @change="(v) => onTime(r, 'check_in', v)"
               />
             </td>
-            <td>
-              <input
-                :value="toLocal(r.check_out)"
-                type="datetime-local"
-                class="cell-input"
+            <td class="tcell">
+              <DatePicker
+                mode="dateTime"
+                size="xs"
+                :model-value="r.check_out"
                 :disabled="saving === r.id"
-                @change="onTime(r, 'check_out', $event.target.value)"
+                :placeholder="$t('퇴근 시각')"
+                @change="(v) => onTime(r, 'check_out', v)"
               />
             </td>
             <td><span class="badge" :class="STATUS[r.status].cls">{{ $t(STATUS[r.status].label) }}</span></td>
@@ -90,9 +92,9 @@
 
 <script setup lang="ts">
 // @ts-nocheck
-import { ref, reactive, onMounted } from "vue";
+import { ref, reactive, computed, onMounted } from "vue";
 import SearchSelect from "@/components/base/SearchSelect.vue";
-import BaseSelect from "@/components/base/BaseSelect.vue";
+import DatePicker from "@/components/base/DatePicker.vue";
 import EmptyState from "@/components/base/EmptyState.vue";
 import Pager from "@/components/base/Pager.vue";
 import DateRangePicker from "@/components/base/DateRangePicker.vue";
@@ -100,8 +102,10 @@ import { attendanceApi } from "@/api/attendance";
 import { departmentApi } from "@/api/hr";
 import { formatDateOnly } from "@/utils/date";
 import { useToast } from "vue-toastification";
+import { useI18nStore } from "@/stores/i18n";
 
 const toast = useToast();
+const i18n = useI18nStore();
 
 const STATUS = {
   NORMAL: { label: "정상", cls: "badge-success" },
@@ -111,10 +115,10 @@ const STATUS = {
   LEAVE: { label: "휴가", cls: "badge-neutral" },
 };
 
-const statusOptions = [
-  { value: null, label: "전체" },
-  ...Object.entries(STATUS).map(([value, s]) => ({ value, label: s.label })),
-];
+const statusOptions = computed(() => [
+  { value: null, label: i18n.t("전체") },
+  ...Object.entries(STATUS).map(([value, s]) => ({ value, label: i18n.t(s.label) })),
+]);
 
 const today = new Date().toISOString().slice(0, 10);
 const rows = ref([]);

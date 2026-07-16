@@ -13,7 +13,7 @@
 
       <div class="flex items-center gap-1 ml-1.5 h-full">
         <button
-          v-if="modelValue !== null && modelValue !== ''"
+          v-if="clearable && modelValue !== null && modelValue !== ''"
           @click.stop="clear"
           class="text-[color:var(--text-subtle)] hover:text-[color:var(--accent)] transition-colors flex items-center justify-center text-[10px]"
         >
@@ -99,6 +99,10 @@ export default {
     emptyText: { type: String, default: "검색 결과가 없습니다" },
     colorKey: { type: String, default: "color" },
     creatable: { type: Boolean, default: false },
+    // 초기화(X) 버튼 노출 여부. 연/월처럼 비울 수 없는 필터는 false 로 끈다.
+    clearable: { type: Boolean, default: true },
+    // 트리거 높이. 'sm'=34px(.field), 'xs'=28px(.field-xs). 필터바에서는 xs 로 인풋·버튼과 정렬.
+    size: { type: String, default: "sm" },
   },
   emits: ["update:modelValue", "change", "create"],
   data() {
@@ -159,11 +163,11 @@ export default {
       return [
         "flex justify-between items-center cursor-pointer transition-all box-border relative text-[color:var(--text)]",
         // 기본값 세팅 (주입된 클래스가 없을 때만)
-        !hasHeight && !hasPadding && "h-[34px] px-2.5",
-        !hasPadding && hasHeight && "px-2.5",
+        !hasHeight && !hasPadding && (this.size === "xs" ? "h-[28px] px-2" : "h-[34px] px-2.5"),
+        !hasPadding && hasHeight && (this.size === "xs" ? "px-2" : "px-2.5"),
         !hasBorder && "border border-[color:var(--border-strong)]",
         !hasRounded && "rounded-[6px]",
-        !hasText && "text-xs",
+        !hasText && (this.size === "xs" ? "text-[11px]" : "text-xs"),
         !hasPadding && !hasHeight && "bg-[color:var(--surface)]",
         // 부모 주입 클래스
         parentClass,

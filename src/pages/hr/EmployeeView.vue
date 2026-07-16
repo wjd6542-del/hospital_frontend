@@ -6,11 +6,11 @@
 
     <div class="filterbar">
       <span class="f-label">{{ $t("부서") }}</span>
-      <SearchSelect v-model="filter.department_id" :options="deptOptions" :placeholder="$t('전체')" />
+      <SearchSelect v-model="filter.department_id" size="xs" :options="deptOptions" :placeholder="$t('전체')" />
       <span class="f-label">{{ $t("직종") }}</span>
-      <SearchSelect v-model="filter.job_type_id" :options="jobOptions" :placeholder="$t('전체')" />
+      <SearchSelect v-model="filter.job_type_id" size="xs" :options="jobOptions" :placeholder="$t('전체')" />
       <span class="f-label">{{ $t("상태") }}</span>
-      <BaseSelect v-model="filter.status" :options="statusOptions" size="xs" style="width: 110px" />
+      <SearchSelect v-model="filter.status" size="xs" :options="statusOptions" :placeholder="$t('전체')" />
 
       <input v-model="filter.q" class="field field-xs" style="width: 180px" :placeholder="$t('이름 · 사번')" @keyup.enter="load(1)" />
       <button class="btn btn-xs" @click="load(1)">{{ $t("검색") }}</button>
@@ -120,14 +120,15 @@
 // @ts-nocheck
 import { ref, reactive, computed, onMounted } from "vue";
 import SearchSelect from "@/components/base/SearchSelect.vue";
-import BaseSelect from "@/components/base/BaseSelect.vue";
 import EmptyState from "@/components/base/EmptyState.vue";
 import Pager from "@/components/base/Pager.vue";
 import { employeeApi, departmentApi, categoryApi } from "@/api/hr";
 import { useToast } from "vue-toastification";
+import { useI18nStore } from "@/stores/i18n";
 import { formatDateDot as fmt } from "@/utils/date";
 
 const toast = useToast();
+const i18n = useI18nStore();
 
 const rows = ref([]);
 const total = ref(0);
@@ -138,11 +139,13 @@ const saving = ref(false);
 const showForm = ref(false);
 
 const filter = reactive({ q: "", department_id: null, job_type_id: null, status: null });
-const statusOptions = [
-  { value: null, label: "전체" },
-  { value: "active", label: "재직" },
-  { value: "resigned", label: "퇴사" },
-];
+const statusOptions = computed(() =>
+  [
+    { value: null, label: "전체" },
+    { value: "active", label: "재직" },
+    { value: "resigned", label: "퇴사" },
+  ].map((o) => ({ ...o, label: i18n.t(o.label) })),
+);
 
 const deptOptions = ref([]);
 const posOptions = ref([]);
@@ -181,7 +184,7 @@ async function load(p = page.value) {
     ...filter,
     department_id: filter.department_id || null,
     job_type_id: filter.job_type_id || null,
-    // BaseSelect의 '전체'는 null 을 emit → status 스키마는 optional(undefined)만 허용하므로 정규화
+    // '전체'(null) · 초기화 시 status 스키마(optional=undefined 만 허용)에 맞춰 정규화
     status: filter.status || undefined,
     page: p,
     limit: limit.value,

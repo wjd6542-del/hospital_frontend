@@ -4,14 +4,15 @@
     <div v-if="showQuickButtons" class="relative">
       <button
         @click.stop="toggleQuick"
-        class="h-[34px] w-[34px] flex items-center justify-center border-2 border-[color:var(--border-strong)] rounded-[3px] hover:bg-[color:var(--surface-2)] text-[color:var(--text-muted)] text-xs"
+        class="flex items-center justify-center border border-[color:var(--border-strong)] rounded-[6px] hover:bg-[color:var(--surface-2)] text-[color:var(--text-muted)] text-xs"
+        :class="isXs ? 'h-[28px] w-[28px]' : 'h-[34px] w-[34px]'"
       >
         <i class="fa-solid fa-ellipsis-vertical"></i>
       </button>
 
       <div
         v-show="openQuick"
-        class="absolute left-0 mt-1 w-32 bg-white border-2 border-[color:var(--border-strong)] rounded-[3px] shadow-[3px_3px_0_var(--border-strong)] z-50"
+        class="absolute left-0 mt-1 w-32 bg-[color:var(--surface)] border border-[color:var(--border-strong)] rounded-[6px] shadow-[var(--shadow-lg)] overflow-hidden z-50"
       >
         <button
           class="flex items-center gap-2 w-full text-left px-2.5 py-1.5 text-xs hover:bg-[color:var(--surface-2)]"
@@ -50,26 +51,30 @@
 
     <!-- 날짜 입력 -->
     <div class="relative flex-1">
-      <div class="flex h-[34px] border-2 border-[color:var(--border-strong)] rounded-[3px] overflow-hidden bg-white">
+      <div
+        class="flex border border-[color:var(--border-strong)] rounded-[6px] overflow-hidden bg-[color:var(--surface)] transition focus-within:border-[color:var(--accent)]"
+        :class="isXs ? 'h-[28px]' : 'h-[34px]'"
+      >
         <input
           :value="formattedRange"
           @click="toggleCalendar"
           readonly
           :placeholder="placeholder"
-          class="flex-1 px-2.5 text-xs outline-none cursor-pointer"
+          class="flex-1 min-w-0 px-2.5 outline-none cursor-pointer bg-transparent text-[color:var(--text)]"
+          :class="isXs ? 'text-[11px]' : 'text-xs'"
         />
 
         <button
           v-if="innerValue.start || innerValue.end"
           @click.stop="clearRange"
-          class="px-2 h-[34px] border-l hover:bg-[color:var(--surface-2)] text-red-500 text-xs"
+          class="px-2 border-l border-[color:var(--border-strong)] hover:bg-[color:var(--surface-2)] text-[color:var(--danger)] text-xs"
         >
           <i class="fa-solid fa-xmark"></i>
         </button>
 
         <button
           @click.stop="toggleCalendar"
-          class="px-2 h-[34px] border-l hover:bg-[color:var(--surface-2)] text-[color:var(--text-muted)] text-xs"
+          class="px-2 border-l border-[color:var(--border-strong)] hover:bg-[color:var(--surface-2)] text-[color:var(--text-muted)] text-xs"
         >
           <i class="fa-regular fa-calendar"></i>
         </button>
@@ -78,7 +83,7 @@
       <!-- 달력 -->
       <div
         v-show="openCalendar"
-        class="absolute left-0 mt-1 z-50 bg-white border rounded-[3px] shadow-lg"
+        class="absolute left-0 mt-1 z-50 bg-[color:var(--surface)] border border-[color:var(--border-strong)] rounded-[6px] shadow-[var(--shadow-lg)] overflow-hidden"
       >
         <DatePicker color="purple" :is-dark="isDark"
           v-model.range="innerValue"
@@ -144,6 +149,12 @@ export default {
       type: String,
       default: "dateTime",
     },
+
+    // 트리거 높이. 'sm'=34px, 'xs'=28px(필터바에서 인풋·셀렉트와 정렬).
+    size: {
+      type: String,
+      default: "sm",
+    },
   },
 
   emits: ["update:modelValue", "change"],
@@ -179,6 +190,7 @@ export default {
 
   computed: {
     isDark(): boolean { return useThemeStore().dark; },
+    isXs(): boolean { return this.size === "xs"; },
     // 선택된 시작/종료 날짜를 표시용 문자열로 포맷팅한다
     formattedRange(): string {
       if (!this.innerValue?.start || !this.innerValue?.end) return "";

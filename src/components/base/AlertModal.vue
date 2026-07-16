@@ -6,16 +6,16 @@
       @click="onBackdropClick"
     >
       <div
-        class="w-[380px] rounded-[4px] bg-white border-2 border-[color:var(--border-strong)] shadow-[6px_6px_0_var(--border-strong)] overflow-hidden"
+        class="w-[380px] rounded-[10px] bg-[color:var(--surface)] border border-[color:var(--border)] shadow-[var(--shadow-lg)] overflow-hidden"
         @click.stop
       >
         <!-- 헤더 -->
         <div
-          class="flex items-center gap-3 px-4 py-3 border-b-2 border-[color:var(--border)]"
+          class="flex items-center gap-3 px-4 py-3 border-b border-[color:var(--border)]"
           :class="theme.headerBg"
         >
           <div
-            class="w-9 h-9 flex items-center justify-center shrink-0 border-2 border-[color:var(--border-strong)]"
+            class="w-9 h-9 flex items-center justify-center shrink-0 rounded-[8px] border border-[color:var(--border-strong)]"
             :class="theme.iconWrap"
           >
             <i :class="['fa-solid', theme.icon, 'text-white']"></i>
@@ -39,7 +39,7 @@
         </div>
 
         <!-- 버튼 -->
-        <div class="flex justify-end gap-2 px-4 py-3 border-t-2 border-[color:var(--border)] bg-[color:var(--surface-2)]">
+        <div class="flex justify-end gap-2 px-4 py-3 border-t border-[color:var(--border)] bg-[color:var(--surface-2)]">
           <button
             v-if="type === 'confirm'"
             class="btn btn-xs"

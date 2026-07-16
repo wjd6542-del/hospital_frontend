@@ -1,19 +1,23 @@
 <template>
   <div class="relative w-full">
-    <div class="flex h-[34px] border-2 border-[color:var(--border-strong)] rounded-[3px] overflow-hidden bg-white">
+    <div
+      class="flex border border-[color:var(--border-strong)] rounded-[6px] overflow-hidden bg-[color:var(--surface)] transition focus-within:border-[color:var(--accent)]"
+      :class="isXs ? 'h-[28px]' : 'h-[34px]'"
+    >
       <input
         :value="formattedDate"
         @click="toggleCalendar"
         readonly
         :placeholder="placeholder"
-        class="flex-1 px-2.5 text-xs outline-none cursor-pointer"
+        class="flex-1 min-w-0 px-2.5 outline-none cursor-pointer bg-transparent text-[color:var(--text)]"
+        :class="isXs ? 'text-[11px]' : 'text-xs'"
       />
 
       <button
         v-if="innerValue"
         type="button"
         @click.stop="clearDate"
-        class="px-2 h-[34px] border-l hover:bg-[color:var(--surface-2)] text-red-500 text-xs"
+        class="px-2 border-l border-[color:var(--border-strong)] hover:bg-[color:var(--surface-2)] text-[color:var(--danger)] text-xs"
       >
         <i class="fa-solid fa-xmark"></i>
       </button>
@@ -21,7 +25,7 @@
       <button
         type="button"
         @click.stop="toggleCalendar"
-        class="px-2 h-[34px] border-l hover:bg-[color:var(--surface-2)] text-[color:var(--text-muted)] text-xs"
+        class="px-2 border-l border-[color:var(--border-strong)] hover:bg-[color:var(--surface-2)] text-[color:var(--text-muted)] text-xs"
       >
         <i class="fa-regular fa-calendar"></i>
       </button>
@@ -29,7 +33,7 @@
 
     <div
       v-show="openCalendar"
-      class="absolute left-0 mt-2 z-50 bg-white border-2 border-[color:var(--border-strong)] rounded-[3px] shadow-[4px_4px_0_var(--border-strong)]"
+      class="absolute left-0 mt-2 z-50 bg-[color:var(--surface)] border border-[color:var(--border-strong)] rounded-[6px] shadow-[var(--shadow-lg)] overflow-hidden"
     >
       <VCDatePicker color="purple" :is-dark="isDark"
         v-model="innerValue"
@@ -68,6 +72,11 @@ export default {
       type: Number,
       default: 10,
     },
+    // 트리거 높이. 'sm'=34px, 'xs'=28px(필터바 정렬용).
+    size: {
+      type: String,
+      default: "sm",
+    },
   },
 
   emits: ["update:modelValue", "change"],
@@ -94,6 +103,7 @@ export default {
 
   computed: {
     isDark(): boolean { return useThemeStore().dark; },
+    isXs(): boolean { return this.size === "xs"; },
     formattedDate(): string {
       if (!this.innerValue) return "";
       const d = this.innerValue;

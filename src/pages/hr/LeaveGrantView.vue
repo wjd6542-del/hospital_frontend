@@ -6,11 +6,9 @@
 
     <div class="filterbar">
       <span class="f-label">{{ $t("부서") }}</span>
-      <SearchSelect v-model="filter.department_id" :options="deptOptions" :placeholder="$t('전체')" />
+      <SearchSelect v-model="filter.department_id" size="xs" :options="deptOptions" :placeholder="$t('전체')" />
       <span class="f-label">{{ $t("연도") }}</span>
-      <select v-model.number="filter.year" class="field field-xs" style="width: 100px" @change="load">
-        <option v-for="y in yearOptions" :key="y" :value="y">{{ y }}</option>
-      </select>
+      <SearchSelect v-model="filter.year" size="xs" :options="yearOptions" :clearable="false" @change="load" />
       <input v-model="filter.q" class="field field-xs" style="width: 150px" :placeholder="$t('이름 · 사번')" @keyup.enter="load" />
       <button class="btn btn-xs" @click="load">{{ $t("검색") }}</button>
       <button class="btn btn-xs btn-primary" style="margin-left: auto" :disabled="applying || !rows.length" @click="applySuggested">
@@ -72,7 +70,7 @@ import { useToast } from "vue-toastification";
 const toast = useToast();
 
 const thisYear = new Date().getFullYear();
-const yearOptions = [thisYear + 1, thisYear, thisYear - 1, thisYear - 2, thisYear - 3];
+const yearOptions = [thisYear + 1, thisYear, thisYear - 1, thisYear - 2, thisYear - 3].map((y) => ({ value: y, label: String(y) }));
 
 const rows = ref([]);
 const deptOptions = ref([]);

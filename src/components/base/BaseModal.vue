@@ -7,14 +7,14 @@
       :style="{ zIndex: 200 + index * 10 }"
     >
       <div
-        class="relative bg-white rounded-[4px] border-2 border-[color:var(--border-strong)] shadow-[6px_6px_0_var(--border-strong)] w-full mx-4 max-h-[90vh] overflow-hidden flex flex-col"
+        class="relative bg-[color:var(--surface)] rounded-[10px] border border-[color:var(--border)] shadow-[var(--shadow-lg)] w-full mx-4 max-h-[90vh] overflow-hidden flex flex-col"
         :class="sizeClass(entry.size)"
       >
         <!-- 공용 닫기 버튼 (우측 상단) -->
         <button
           type="button"
           @click="modal.closeModal()"
-          class="absolute top-2.5 right-2.5 z-10 w-8 h-8 flex items-center justify-center rounded-[3px] border-2 border-[color:var(--border-strong)] bg-white text-[color:var(--text)] shadow-[2px_2px_0_var(--border-strong)] hover:bg-[color:var(--surface-2)] transition"
+          class="absolute top-2.5 right-2.5 z-10 w-8 h-8 flex items-center justify-center rounded-[6px] border border-[color:var(--border-strong)] bg-[color:var(--surface)] text-[color:var(--text-muted)] hover:bg-[color:var(--surface-2)] hover:text-[color:var(--text)] transition"
           :aria-label="$t('닫기')"
         >
           <i class="fa-solid fa-xmark text-base"></i>
@@ -69,7 +69,7 @@ onBeforeUnmount(() => document.removeEventListener("keydown", handleKeydown));
 .modal-enter-from,
 .modal-leave-to {
   opacity: 0;
-  transform: translate(4px, 4px);
+  transform: translateY(8px) scale(0.985);
 }
 
 .modal-enter-to,

@@ -6,9 +6,9 @@
 
     <div class="filterbar">
       <span class="f-label">{{ $t("부서") }}</span>
-      <SearchSelect v-model="deptId" :options="deptOptions" :placeholder="$t('부서 선택')" @change="load" />
-      <BaseSelect v-model="year" :options="yearOptions" size="xs" style="width: 100px" @change="load" />
-      <BaseSelect v-model="month" :options="monthOptions" size="xs" style="width: 90px" @change="load" />
+      <SearchSelect v-model="deptId" size="xs" :options="deptOptions" :placeholder="$t('부서 선택')" @change="load" />
+      <SearchSelect v-model="year" size="xs" :options="yearOptions" :clearable="false" @change="load" />
+      <SearchSelect v-model="month" size="xs" :options="monthOptions" :clearable="false" @change="load" />
       <button class="btn btn-xs" :disabled="!deptId || copying" @click="copyLastMonth">
         {{ copying ? $t("복사 중…") : $t("지난달 복사") }}
       </button>
@@ -97,7 +97,6 @@
 // @ts-nocheck
 import { ref, reactive, computed, onMounted } from "vue";
 import SearchSelect from "@/components/base/SearchSelect.vue";
-import BaseSelect from "@/components/base/BaseSelect.vue";
 import EmptyState from "@/components/base/EmptyState.vue";
 import { shiftScheduleApi, shiftTypeApi } from "@/api/attendance";
 import { departmentApi } from "@/api/hr";
