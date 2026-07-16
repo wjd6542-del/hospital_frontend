@@ -1,7 +1,5 @@
 <template>
-  <div class="fa">
-    <p class="desc">{{ $t("수입·지출 계정과목을 관리합니다. 재무 거래 등록 시 이 분류를 선택합니다.") }}</p>
-
+  <div class="facc">
     <table class="tbl">
       <thead>
         <tr>
@@ -33,7 +31,7 @@
     </table>
 
     <div class="addrow">
-      <SearchSelect v-model="draft.type" size="xs" :options="typeOptions" :clearable="false" style="width: 110px" />
+      <div class="tsel"><SearchSelect v-model="draft.type" size="xs" :options="typeOptions" :clearable="false" /></div>
       <input v-model="draft.name" class="field field-xs" style="width: 200px" :placeholder="$t('계정과목명')" @keyup.enter="add" />
       <button class="btn btn-xs btn-primary" @click="add">＋ {{ $t("추가") }}</button>
     </div>
@@ -100,8 +98,11 @@ onMounted(load);
 </script>
 
 <style scoped>
-.fa { min-width: 0; }
+.facc { min-width: 0; }
 .desc { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1rem; }
 .tbl { width: 100%; }
 .addrow { display: flex; gap: 0.4rem; margin-top: 0.9rem; align-items: center; }
+.addrow .tsel { width: 110px; flex: 0 0 auto; }
+.addrow .field { flex: 0 0 auto; }
+.addrow .btn { flex: 0 0 auto; white-space: nowrap; }
 </style>
