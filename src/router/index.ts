@@ -22,6 +22,7 @@ import AttendanceView from "@/pages/hr/AttendanceView.vue";
 import LeaveView from "@/pages/hr/LeaveView.vue";
 import LeaveGrantView from "@/pages/hr/LeaveGrantView.vue";
 import TransactionView from "@/pages/finance/TransactionView.vue";
+import FinanceDashboardView from "@/pages/finance/DashboardView.vue";
 
 import MyPage from "@/pages/mypage/MyPage.vue";
 import SettingsView from "@/pages/settings/SettingsView.vue";
@@ -57,6 +58,7 @@ export const router = createRouter({
             { path: "hr/leave-grant", component: LeaveGrantView, meta: { auth: true, title: "연차 부여", perm: "leave.view" } },
 
             // 재무
+            { path: "finance/dashboard", component: FinanceDashboardView, meta: { auth: true, title: "재무 대시보드", perm: "finance.view" } },
             { path: "finance/transactions", component: TransactionView, meta: { auth: true, title: "수입·지출 내역", perm: "finance.view" } },
 
             // 게시판

@@ -82,6 +82,7 @@ const menus = computed(() => [
     label: "재무",
     icon: "fa-won-sign",
     children: [
+      { label: "대시보드", to: "/finance/dashboard", perm: "finance.view" },
       { label: "수입·지출 내역", to: "/finance/transactions", perm: "finance.view" },
     ],
   },
