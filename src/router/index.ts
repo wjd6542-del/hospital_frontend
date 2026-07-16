@@ -31,6 +31,7 @@ import ItemView from "@/pages/inventory/ItemView.vue";
 import StockMovementView from "@/pages/inventory/StockMovementView.vue";
 import AssetView from "@/pages/asset/AssetView.vue";
 import MaintenanceView from "@/pages/facility/MaintenanceView.vue";
+import AppointmentView from "@/pages/reservation/AppointmentView.vue";
 
 import MyPage from "@/pages/mypage/MyPage.vue";
 import SettingsView from "@/pages/settings/SettingsView.vue";
@@ -84,6 +85,9 @@ export const router = createRouter({
 
             // 시설
             { path: "facility/maintenance", component: MaintenanceView, meta: { auth: true, title: "유지보수 요청", perm: "facility.view" } },
+
+            // 예약
+            { path: "reservation/appointments", component: AppointmentView, meta: { auth: true, title: "진료 예약", perm: "reservation.view" } },
 
             // 게시판
             { path: "board/:slug", component: BoardView, meta: { auth: true, title: "게시판", perm: "board.view" } },

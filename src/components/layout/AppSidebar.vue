@@ -106,6 +106,7 @@ const menus = computed(() => [
   },
   { label: "자산", to: "/assets", icon: "fa-heart-pulse", perm: "asset.view" },
   { label: "시설", to: "/facility/maintenance", icon: "fa-screwdriver-wrench", perm: "facility.view" },
+  { label: "예약", to: "/reservation/appointments", icon: "fa-calendar-check", perm: "reservation.view" },
   { label: "게시판", icon: "fa-clipboard-list", perm: "board.view", children: boards.value.map((b) => ({ label: b.name, to: `/board/${b.slug}` })) },
   { label: "자주 하는 질문", to: "/faq", icon: "fa-circle-question", perm: "faq.view" },
   {
