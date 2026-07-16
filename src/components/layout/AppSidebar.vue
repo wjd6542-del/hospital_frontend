@@ -85,6 +85,7 @@ const menus = computed(() => [
       { label: "대시보드", to: "/finance/dashboard", perm: "finance.view" },
       { label: "수입·지출 내역", to: "/finance/transactions", perm: "finance.view" },
       { label: "예산 관리", to: "/finance/budget", perm: "finance.view" },
+      { label: "기간 비교", to: "/finance/report", perm: "finance.view" },
     ],
   },
   { label: "게시판", icon: "fa-clipboard-list", perm: "board.view", children: boards.value.map((b) => ({ label: b.name, to: `/board/${b.slug}` })) },

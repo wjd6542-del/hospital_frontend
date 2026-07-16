@@ -24,6 +24,7 @@ import LeaveGrantView from "@/pages/hr/LeaveGrantView.vue";
 import TransactionView from "@/pages/finance/TransactionView.vue";
 import FinanceDashboardView from "@/pages/finance/DashboardView.vue";
 import FinanceBudgetView from "@/pages/finance/BudgetView.vue";
+import FinanceReportView from "@/pages/finance/ReportView.vue";
 
 import MyPage from "@/pages/mypage/MyPage.vue";
 import SettingsView from "@/pages/settings/SettingsView.vue";
@@ -62,6 +63,7 @@ export const router = createRouter({
             { path: "finance/dashboard", component: FinanceDashboardView, meta: { auth: true, title: "재무 대시보드", perm: "finance.view" } },
             { path: "finance/transactions", component: TransactionView, meta: { auth: true, title: "수입·지출 내역", perm: "finance.view" } },
             { path: "finance/budget", component: FinanceBudgetView, meta: { auth: true, title: "예산 관리", perm: "finance.view" } },
+            { path: "finance/report", component: FinanceReportView, meta: { auth: true, title: "기간 비교", perm: "finance.view" } },
 
             // 게시판
             { path: "board/:slug", component: BoardView, meta: { auth: true, title: "게시판", perm: "board.view" } },

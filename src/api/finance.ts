@@ -20,6 +20,7 @@ export const txnApi = {
   save: (body) => api.post("/financeTxn/save", body).then((r) => r.data),
   summary: (body) => api.post("/financeTxn/summary", body).then((r) => r.data),
   dashboard: (body) => api.post("/financeTxn/dashboard", body).then((r) => r.data),
+  compare: (body) => api.post("/financeTxn/compare", body).then((r) => r.data),
   remove: (id) => api.post("/financeTxn/delete", { id }).then((r) => r.data),
   // 영수증/증빙 업로드 (multipart) → [{ path, filename, mime_type, size, is_image }]
   upload: (files) => {
