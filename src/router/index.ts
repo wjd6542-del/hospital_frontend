@@ -34,6 +34,7 @@ import MaintenanceView from "@/pages/facility/MaintenanceView.vue";
 import AppointmentView from "@/pages/reservation/AppointmentView.vue";
 import AdmissionView from "@/pages/ward/AdmissionView.vue";
 import ClaimView from "@/pages/insurance/ClaimView.vue";
+import StatsView from "@/pages/stats/StatsView.vue";
 
 import MyPage from "@/pages/mypage/MyPage.vue";
 import SettingsView from "@/pages/settings/SettingsView.vue";
@@ -96,6 +97,9 @@ export const router = createRouter({
 
             // 보험청구
             { path: "insurance/claims", component: ClaimView, meta: { auth: true, title: "보험청구", perm: "insurance.view" } },
+
+            // 통계
+            { path: "stats", component: StatsView, meta: { auth: true, title: "통계", perm: "stats.view" } },
 
             // 게시판
             { path: "board/:slug", component: BoardView, meta: { auth: true, title: "게시판", perm: "board.view" } },
